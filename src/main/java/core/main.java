@@ -21,10 +21,17 @@ public class main {
 		process(r.execute());
 		
 		ISparqlRequest q=RequestFacotry.getIntance().getRequestByName(RequestName.SIMPLE_QUERY.toString());
-		process(q.execute());
+//		process(q.execute());
+		
+		ISparqlRequest q2=RequestFacotry.getIntance().getRequestByName(RequestName.SIMPLE_QUERY.toString());
+//		process(q.execute());
+		
+		System.out.println("--->"+Inspector.areEq(((QueryResponse) q.execute()).getBindingsResults(),((QueryResponse) q2.execute()).getBindingsResults()));
 		
 		ISparqlRequest d=RequestFacotry.getIntance().getRequestByName(RequestName.SIMPLE_DELETE.toString());
 		process(d.execute());
+		
+	
 		
 		q=RequestFacotry.getIntance().getRequestByName(RequestName.SIMPLE_QUERY.toString());
 		process(q.execute());
