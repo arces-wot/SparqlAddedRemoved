@@ -1,0 +1,1768 @@
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_0.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 271 271
+Department 1 1
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 10
+AssociateProfessor 14 14
+AssistantProfessor 10 10
+Lecturer 7 7
+Student 0 0
+UndergraduateStudent 532 532
+GraduateStudent 146 146
+TeachingAssistant 29 29
+ResearchAssistant 39 39
+Course 61 61
+GraduateCourse 67 67
+Publication 460 460
+Chair 0 0
+Research 0 0
+ResearchGroup 10 10
+
+TOTAL: 1657
+TOTAL SO FAR: 1657
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1309 1309
+takesCourse 1878 1878
+teacherOf 128 128
+undergraduateDegreeFrom 187 187
+mastersDegreeFrom 41 41
+doctoralDegreeFrom 41 41
+advisor 255 255
+memberOf 678 678
+publicationAuthor 825 825
+headOf 1 1
+teachingAssistantOf 29 29
+researchInterest 34 34
+emailAddress 719 719
+telephone 719 719
+subOrganizationOf 11 11
+worksFor 41 41
+
+TOTAL: 6896
+TOTAL SO FAR: 6896
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_1.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 213 484
+Department 1 2
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 20
+AssociateProfessor 10 24
+AssistantProfessor 8 18
+Lecturer 6 13
+Student 0 0
+UndergraduateStudent 411 943
+GraduateStudent 110 256
+TeachingAssistant 27 56
+ResearchAssistant 35 74
+Course 48 109
+GraduateCourse 46 113
+Publication 383 843
+Chair 0 0
+Research 0 0
+ResearchGroup 19 29
+
+TOTAL: 1327
+TOTAL SO FAR: 2984
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1033 2342
+takesCourse 1434 3312
+teacherOf 94 222
+undergraduateDegreeFrom 144 331
+mastersDegreeFrom 34 75
+doctoralDegreeFrom 34 75
+advisor 202 457
+memberOf 521 1199
+publicationAuthor 648 1473
+headOf 1 2
+teachingAssistantOf 27 56
+researchInterest 28 62
+emailAddress 555 1274
+telephone 555 1274
+subOrganizationOf 20 31
+worksFor 34 75
+
+TOTAL: 5364
+TOTAL SO FAR: 12260
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_2.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 210 694
+Department 1 3
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 27
+AssociateProfessor 12 36
+AssistantProfessor 8 26
+Lecturer 7 20
+Student 0 0
+UndergraduateStudent 376 1319
+GraduateStudent 107 363
+TeachingAssistant 23 79
+ResearchAssistant 34 108
+Course 49 158
+GraduateCourse 47 160
+Publication 381 1224
+Chair 0 0
+Research 0 0
+ResearchGroup 13 42
+
+TOTAL: 1275
+TOTAL SO FAR: 4259
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 995 3337
+takesCourse 1332 4644
+teacherOf 96 318
+undergraduateDegreeFrom 141 472
+mastersDegreeFrom 34 109
+doctoralDegreeFrom 34 109
+advisor 186 643
+memberOf 483 1682
+publicationAuthor 651 2124
+headOf 1 3
+teachingAssistantOf 23 79
+researchInterest 27 89
+emailAddress 517 1791
+telephone 517 1791
+subOrganizationOf 14 45
+worksFor 34 109
+
+TOTAL: 5085
+TOTAL SO FAR: 17345
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_3.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 232 926
+Department 1 4
+Faculty 0 0
+Professor 0 0
+FullProfessor 9 36
+AssociateProfessor 12 48
+AssistantProfessor 10 36
+Lecturer 6 26
+Student 0 0
+UndergraduateStudent 340 1659
+GraduateStudent 120 483
+TeachingAssistant 25 104
+ResearchAssistant 37 145
+Course 55 213
+GraduateCourse 58 218
+Publication 430 1654
+Chair 0 0
+Research 0 0
+ResearchGroup 18 60
+
+TOTAL: 1353
+TOTAL SO FAR: 5612
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1041 4378
+takesCourse 1262 5906
+teacherOf 113 431
+undergraduateDegreeFrom 157 629
+mastersDegreeFrom 37 146
+doctoralDegreeFrom 37 146
+advisor 196 839
+memberOf 460 2142
+publicationAuthor 742 2866
+headOf 1 4
+teachingAssistantOf 25 104
+researchInterest 31 120
+emailAddress 497 2288
+telephone 497 2288
+subOrganizationOf 19 64
+worksFor 37 146
+
+TOTAL: 5152
+TOTAL SO FAR: 22497
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_4.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 239 1165
+Department 1 5
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 43
+AssociateProfessor 10 58
+AssistantProfessor 10 46
+Lecturer 7 33
+Student 0 0
+UndergraduateStudent 408 2067
+GraduateStudent 136 619
+TeachingAssistant 29 133
+ResearchAssistant 44 189
+Course 51 264
+GraduateCourse 51 269
+Publication 348 2002
+Chair 0 0
+Research 0 0
+ResearchGroup 20 80
+
+TOTAL: 1361
+TOTAL SO FAR: 6973
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1029 5407
+takesCourse 1487 7393
+teacherOf 102 533
+undergraduateDegreeFrom 170 799
+mastersDegreeFrom 34 180
+doctoralDegreeFrom 34 180
+advisor 207 1046
+memberOf 544 2686
+publicationAuthor 667 3533
+headOf 1 5
+teachingAssistantOf 29 133
+researchInterest 27 147
+emailAddress 578 2866
+telephone 578 2866
+subOrganizationOf 21 85
+worksFor 34 180
+
+TOTAL: 5542
+TOTAL SO FAR: 28039
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_5.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 216 1381
+Department 1 6
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 53
+AssociateProfessor 11 69
+AssistantProfessor 8 54
+Lecturer 6 39
+Student 0 0
+UndergraduateStudent 444 2511
+GraduateStudent 110 729
+TeachingAssistant 26 159
+ResearchAssistant 31 220
+Course 57 321
+GraduateCourse 50 319
+Publication 410 2412
+Chair 0 0
+Research 0 0
+ResearchGroup 14 94
+
+TOTAL: 1394
+TOTAL SO FAR: 8367
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1107 6514
+takesCourse 1561 8954
+teacherOf 107 640
+undergraduateDegreeFrom 145 944
+mastersDegreeFrom 35 215
+doctoralDegreeFrom 35 215
+advisor 195 1241
+memberOf 554 3240
+publicationAuthor 694 4227
+headOf 1 6
+teachingAssistantOf 26 159
+researchInterest 29 176
+emailAddress 589 3455
+telephone 589 3455
+subOrganizationOf 15 100
+worksFor 35 215
+
+TOTAL: 5717
+TOTAL SO FAR: 33756
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_6.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 209 1590
+Department 1 7
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 63
+AssociateProfessor 10 79
+AssistantProfessor 8 62
+Lecturer 6 45
+Student 0 0
+UndergraduateStudent 299 2810
+GraduateStudent 106 835
+TeachingAssistant 26 185
+ResearchAssistant 26 246
+Course 56 377
+GraduateCourse 48 367
+Publication 381 2793
+Chair 0 0
+Research 0 0
+ResearchGroup 16 110
+
+TOTAL: 1202
+TOTAL SO FAR: 9569
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 925 7439
+takesCourse 1149 10103
+teacherOf 104 744
+undergraduateDegreeFrom 140 1084
+mastersDegreeFrom 34 249
+doctoralDegreeFrom 34 249
+advisor 161 1402
+memberOf 405 3645
+publicationAuthor 657 4884
+headOf 1 7
+teachingAssistantOf 26 185
+researchInterest 28 204
+emailAddress 439 3894
+telephone 439 3894
+subOrganizationOf 17 117
+worksFor 34 249
+
+TOTAL: 4593
+TOTAL SO FAR: 38349
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_7.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 239 1829
+Department 1 8
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 70
+AssociateProfessor 14 93
+AssistantProfessor 10 72
+Lecturer 6 51
+Student 0 0
+UndergraduateStudent 454 3264
+GraduateStudent 127 962
+TeachingAssistant 25 210
+ResearchAssistant 32 278
+Course 63 440
+GraduateCourse 58 425
+Publication 417 3210
+Chair 0 0
+Research 0 0
+ResearchGroup 20 130
+
+TOTAL: 1473
+TOTAL SO FAR: 11042
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1157 8596
+takesCourse 1594 11697
+teacherOf 121 865
+undergraduateDegreeFrom 164 1248
+mastersDegreeFrom 37 286
+doctoralDegreeFrom 37 286
+advisor 230 1632
+memberOf 581 4226
+publicationAuthor 738 5622
+headOf 1 8
+teachingAssistantOf 25 210
+researchInterest 31 235
+emailAddress 618 4512
+telephone 618 4512
+subOrganizationOf 21 138
+worksFor 37 286
+
+TOTAL: 6010
+TOTAL SO FAR: 44359
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_8.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 255 2084
+Department 1 9
+Faculty 0 0
+Professor 0 0
+FullProfessor 9 79
+AssociateProfessor 11 104
+AssistantProfessor 11 83
+Lecturer 6 57
+Student 0 0
+UndergraduateStudent 436 3700
+GraduateStudent 143 1105
+TeachingAssistant 34 244
+ResearchAssistant 47 325
+Course 62 502
+GraduateCourse 51 476
+Publication 422 3632
+Chair 0 0
+Research 0 0
+ResearchGroup 18 148
+
+TOTAL: 1506
+TOTAL SO FAR: 12548
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1152 9748
+takesCourse 1565 13262
+teacherOf 113 978
+undergraduateDegreeFrom 180 1428
+mastersDegreeFrom 37 323
+doctoralDegreeFrom 37 323
+advisor 234 1866
+memberOf 579 4805
+publicationAuthor 787 6409
+headOf 1 9
+teachingAssistantOf 34 244
+researchInterest 31 266
+emailAddress 616 5128
+telephone 616 5128
+subOrganizationOf 19 157
+worksFor 37 323
+
+TOTAL: 6038
+TOTAL SO FAR: 50397
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_9.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 218 2302
+Department 1 10
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 86
+AssociateProfessor 10 114
+AssistantProfessor 11 94
+Lecturer 7 64
+Student 0 0
+UndergraduateStudent 322 4022
+GraduateStudent 112 1217
+TeachingAssistant 24 268
+ResearchAssistant 32 357
+Course 48 550
+GraduateCourse 58 534
+Publication 355 3987
+Chair 0 0
+Research 0 0
+ResearchGroup 12 160
+
+TOTAL: 1217
+TOTAL SO FAR: 13765
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 931 10679
+takesCourse 1211 14473
+teacherOf 106 1084
+undergraduateDegreeFrom 147 1575
+mastersDegreeFrom 35 358
+doctoralDegreeFrom 35 358
+advisor 194 2060
+memberOf 434 5239
+publicationAuthor 611 7020
+headOf 1 10
+teachingAssistantOf 24 268
+researchInterest 28 294
+emailAddress 469 5597
+telephone 469 5597
+subOrganizationOf 13 170
+worksFor 35 358
+
+TOTAL: 4743
+TOTAL SO FAR: 55140
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_10.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 247 2549
+Department 1 11
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 93
+AssociateProfessor 11 125
+AssistantProfessor 11 105
+Lecturer 7 71
+Student 0 0
+UndergraduateStudent 411 4433
+GraduateStudent 138 1355
+TeachingAssistant 31 299
+ResearchAssistant 46 403
+Course 57 607
+GraduateCourse 48 582
+Publication 400 4387
+Chair 0 0
+Research 0 0
+ResearchGroup 15 175
+
+TOTAL: 1430
+TOTAL SO FAR: 15195
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1091 11770
+takesCourse 1484 15957
+teacherOf 105 1189
+undergraduateDegreeFrom 174 1749
+mastersDegreeFrom 36 394
+doctoralDegreeFrom 36 394
+advisor 225 2285
+memberOf 549 5788
+publicationAuthor 736 7756
+headOf 1 11
+teachingAssistantOf 31 299
+researchInterest 29 323
+emailAddress 585 6182
+telephone 585 6182
+subOrganizationOf 16 186
+worksFor 36 394
+
+TOTAL: 5719
+TOTAL SO FAR: 60859
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_11.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 266 2815
+Department 1 12
+Faculty 0 0
+Professor 0 0
+FullProfessor 8 101
+AssociateProfessor 14 139
+AssistantProfessor 11 116
+Lecturer 6 77
+Student 0 0
+UndergraduateStudent 382 4815
+GraduateStudent 148 1503
+TeachingAssistant 29 328
+ResearchAssistant 45 448
+Course 59 666
+GraduateCourse 60 642
+Publication 443 4830
+Chair 0 0
+Research 0 0
+ResearchGroup 13 188
+
+TOTAL: 1485
+TOTAL SO FAR: 16680
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1132 12902
+takesCourse 1446 17403
+teacherOf 119 1308
+undergraduateDegreeFrom 187 1936
+mastersDegreeFrom 39 433
+doctoralDegreeFrom 39 433
+advisor 229 2514
+memberOf 530 6318
+publicationAuthor 773 8529
+headOf 1 12
+teachingAssistantOf 29 328
+researchInterest 33 356
+emailAddress 569 6751
+telephone 569 6751
+subOrganizationOf 14 200
+worksFor 39 433
+
+TOTAL: 5748
+TOTAL SO FAR: 66607
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_12.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 226 3041
+Department 1 13
+Faculty 0 0
+Professor 0 0
+FullProfessor 9 110
+AssociateProfessor 11 150
+AssistantProfessor 11 127
+Lecturer 5 82
+Student 0 0
+UndergraduateStudent 359 5174
+GraduateStudent 117 1620
+TeachingAssistant 27 355
+ResearchAssistant 34 482
+Course 56 722
+GraduateCourse 53 695
+Publication 397 5227
+Chair 0 0
+Research 0 0
+ResearchGroup 11 199
+
+TOTAL: 1317
+TOTAL SO FAR: 17997
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1019 13921
+takesCourse 1330 18733
+teacherOf 109 1417
+undergraduateDegreeFrom 153 2089
+mastersDegreeFrom 36 469
+doctoralDegreeFrom 36 469
+advisor 184 2698
+memberOf 476 6794
+publicationAuthor 664 9193
+headOf 1 13
+teachingAssistantOf 27 355
+researchInterest 31 387
+emailAddress 512 7263
+telephone 512 7263
+subOrganizationOf 12 212
+worksFor 36 469
+
+TOTAL: 5138
+TOTAL SO FAR: 71745
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_13.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 258 3299
+Department 1 14
+Faculty 0 0
+Professor 0 0
+FullProfessor 8 118
+AssociateProfessor 14 164
+AssistantProfessor 11 138
+Lecturer 5 87
+Student 0 0
+UndergraduateStudent 477 5651
+GraduateStudent 143 1763
+TeachingAssistant 30 385
+ResearchAssistant 35 517
+Course 55 777
+GraduateCourse 58 753
+Publication 407 5634
+Chair 0 0
+Research 0 0
+ResearchGroup 13 212
+
+TOTAL: 1515
+TOTAL SO FAR: 19512
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1179 15100
+takesCourse 1735 20468
+teacherOf 113 1530
+undergraduateDegreeFrom 181 2270
+mastersDegreeFrom 38 507
+doctoralDegreeFrom 38 507
+advisor 238 2936
+memberOf 620 7414
+publicationAuthor 775 9968
+headOf 1 14
+teachingAssistantOf 30 385
+researchInterest 33 420
+emailAddress 658 7921
+telephone 658 7921
+subOrganizationOf 14 226
+worksFor 38 507
+
+TOTAL: 6349
+TOTAL SO FAR: 78094
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University0_14.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=0
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 211 3510
+Department 1 15
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 125
+AssociateProfessor 12 176
+AssistantProfessor 8 146
+Lecturer 6 93
+Student 0 0
+UndergraduateStudent 265 5916
+GraduateStudent 111 1874
+TeachingAssistant 22 407
+ResearchAssistant 30 547
+Course 51 828
+GraduateCourse 46 799
+Publication 365 5999
+Chair 0 0
+Research 0 0
+ResearchGroup 12 224
+
+TOTAL: 1147
+TOTAL SO FAR: 20659
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 872 15972
+takesCourse 1021 21489
+teacherOf 97 1627
+undergraduateDegreeFrom 144 2414
+mastersDegreeFrom 33 540
+doctoralDegreeFrom 33 540
+advisor 165 3101
+memberOf 376 7790
+publicationAuthor 666 10634
+headOf 1 15
+teachingAssistantOf 22 407
+researchInterest 27 447
+emailAddress 409 8330
+telephone 409 8330
+subOrganizationOf 13 239
+worksFor 33 540
+
+TOTAL: 4321
+TOTAL SO FAR: 82415
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_0.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 226 3736
+Department 1 16
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 132
+AssociateProfessor 12 188
+AssistantProfessor 9 155
+Lecturer 7 100
+Student 0 0
+UndergraduateStudent 283 6199
+GraduateStudent 119 1993
+TeachingAssistant 24 431
+ResearchAssistant 30 577
+Course 50 878
+GraduateCourse 54 853
+Publication 397 6396
+Chair 0 0
+Research 0 0
+ResearchGroup 14 238
+
+TOTAL: 1233
+TOTAL SO FAR: 21892
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 940 16912
+takesCourse 1080 22569
+teacherOf 104 1731
+undergraduateDegreeFrom 154 2568
+mastersDegreeFrom 35 575
+doctoralDegreeFrom 35 575
+advisor 168 3269
+memberOf 402 8192
+publicationAuthor 722 11356
+headOf 1 16
+teachingAssistantOf 24 431
+researchInterest 28 475
+emailAddress 437 8767
+telephone 437 8767
+subOrganizationOf 15 254
+worksFor 35 575
+
+TOTAL: 4617
+TOTAL SO FAR: 87032
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_1.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 227 3963
+Department 1 17
+Faculty 0 0
+Professor 0 0
+FullProfessor 8 140
+AssociateProfessor 14 202
+AssistantProfessor 10 165
+Lecturer 5 105
+Student 0 0
+UndergraduateStudent 471 6670
+GraduateStudent 115 2108
+TeachingAssistant 27 458
+ResearchAssistant 28 605
+Course 55 933
+GraduateCourse 54 907
+Publication 420 6816
+Chair 0 0
+Research 0 0
+ResearchGroup 11 249
+
+TOTAL: 1446
+TOTAL SO FAR: 23338
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1153 18065
+takesCourse 1648 24217
+teacherOf 109 1840
+undergraduateDegreeFrom 152 2720
+mastersDegreeFrom 37 612
+doctoralDegreeFrom 37 612
+advisor 209 3478
+memberOf 586 8778
+publicationAuthor 700 12056
+headOf 1 17
+teachingAssistantOf 27 458
+researchInterest 32 507
+emailAddress 623 9390
+telephone 623 9390
+subOrganizationOf 12 266
+worksFor 37 612
+
+TOTAL: 5986
+TOTAL SO FAR: 93018
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_2.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 217 4180
+Department 1 18
+Faculty 0 0
+Professor 0 0
+FullProfessor 9 149
+AssociateProfessor 12 214
+AssistantProfessor 8 173
+Lecturer 7 112
+Student 0 0
+UndergraduateStudent 413 7083
+GraduateStudent 108 2216
+TeachingAssistant 24 482
+ResearchAssistant 27 632
+Course 53 986
+GraduateCourse 57 964
+Publication 408 7224
+Chair 0 0
+Research 0 0
+ResearchGroup 16 265
+
+TOTAL: 1360
+TOTAL SO FAR: 24698
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1076 19141
+takesCourse 1445 25662
+teacherOf 110 1950
+undergraduateDegreeFrom 144 2864
+mastersDegreeFrom 36 648
+doctoralDegreeFrom 36 648
+advisor 190 3668
+memberOf 521 9299
+publicationAuthor 665 12721
+headOf 1 18
+teachingAssistantOf 24 482
+researchInterest 29 536
+emailAddress 557 9947
+telephone 557 9947
+subOrganizationOf 17 283
+worksFor 36 648
+
+TOTAL: 5444
+TOTAL SO FAR: 98462
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_3.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 257 4437
+Department 1 19
+Faculty 0 0
+Professor 0 0
+FullProfessor 9 158
+AssociateProfessor 14 228
+AssistantProfessor 11 184
+Lecturer 7 119
+Student 0 0
+UndergraduateStudent 492 7575
+GraduateStudent 133 2349
+TeachingAssistant 27 509
+ResearchAssistant 39 671
+Course 58 1044
+GraduateCourse 59 1023
+Publication 464 7688
+Chair 0 0
+Research 0 0
+ResearchGroup 15 280
+
+TOTAL: 1586
+TOTAL SO FAR: 26284
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1248 20389
+takesCourse 1775 27437
+teacherOf 117 2067
+undergraduateDegreeFrom 174 3038
+mastersDegreeFrom 41 689
+doctoralDegreeFrom 41 689
+advisor 220 3888
+memberOf 625 9924
+publicationAuthor 788 13509
+headOf 1 19
+teachingAssistantOf 27 509
+researchInterest 34 570
+emailAddress 666 10613
+telephone 666 10613
+subOrganizationOf 16 299
+worksFor 41 689
+
+TOTAL: 6480
+TOTAL SO FAR: 104942
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_4.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 243 4680
+Department 1 20
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 165
+AssociateProfessor 14 242
+AssistantProfessor 10 194
+Lecturer 7 126
+Student 0 0
+UndergraduateStudent 304 7879
+GraduateStudent 128 2477
+TeachingAssistant 28 537
+ResearchAssistant 39 710
+Course 60 1104
+GraduateCourse 51 1074
+Publication 402 8090
+Chair 0 0
+Research 0 0
+ResearchGroup 10 290
+
+TOTAL: 1304
+TOTAL SO FAR: 27588
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 984 21373
+takesCourse 1197 28634
+teacherOf 111 2178
+undergraduateDegreeFrom 166 3204
+mastersDegreeFrom 38 727
+doctoralDegreeFrom 38 727
+advisor 190 4078
+memberOf 432 10356
+publicationAuthor 733 14242
+headOf 1 20
+teachingAssistantOf 28 537
+researchInterest 31 601
+emailAddress 470 11083
+telephone 470 11083
+subOrganizationOf 11 310
+worksFor 38 727
+
+TOTAL: 4938
+TOTAL SO FAR: 109880
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_5.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 257 4937
+Department 1 21
+Faculty 0 0
+Professor 0 0
+FullProfessor 9 174
+AssociateProfessor 12 254
+AssistantProfessor 10 204
+Lecturer 7 133
+Student 0 0
+UndergraduateStudent 516 8395
+GraduateStudent 142 2619
+TeachingAssistant 31 568
+ResearchAssistant 35 745
+Course 60 1164
+GraduateCourse 58 1132
+Publication 411 8501
+Chair 0 0
+Research 0 0
+ResearchGroup 19 309
+
+TOTAL: 1568
+TOTAL SO FAR: 29156
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1226 22599
+takesCourse 1850 30484
+teacherOf 118 2296
+undergraduateDegreeFrom 180 3384
+mastersDegreeFrom 38 765
+doctoralDegreeFrom 38 765
+advisor 227 4305
+memberOf 658 11014
+publicationAuthor 796 15038
+headOf 1 21
+teachingAssistantOf 31 568
+researchInterest 31 632
+emailAddress 696 11779
+telephone 696 11779
+subOrganizationOf 20 330
+worksFor 38 765
+
+TOTAL: 6644
+TOTAL SO FAR: 116524
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_6.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 254 5191
+Department 1 22
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 184
+AssociateProfessor 11 265
+AssistantProfessor 11 215
+Lecturer 7 140
+Student 0 0
+UndergraduateStudent 438 8833
+GraduateStudent 136 2755
+TeachingAssistant 28 596
+ResearchAssistant 41 786
+Course 63 1227
+GraduateCourse 58 1190
+Publication 429 8930
+Chair 0 0
+Research 0 0
+ResearchGroup 19 328
+
+TOTAL: 1506
+TOTAL SO FAR: 30662
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1164 23763
+takesCourse 1556 32040
+teacherOf 121 2417
+undergraduateDegreeFrom 175 3559
+mastersDegreeFrom 39 804
+doctoralDegreeFrom 39 804
+advisor 229 4534
+memberOf 574 11588
+publicationAuthor 772 15810
+headOf 1 22
+teachingAssistantOf 28 596
+researchInterest 32 664
+emailAddress 613 12392
+telephone 613 12392
+subOrganizationOf 20 350
+worksFor 39 804
+
+TOTAL: 6015
+TOTAL SO FAR: 122539
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_7.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 277 5468
+Department 1 23
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 194
+AssociateProfessor 12 277
+AssistantProfessor 11 226
+Lecturer 7 147
+Student 0 0
+UndergraduateStudent 427 9260
+GraduateStudent 156 2911
+TeachingAssistant 39 635
+ResearchAssistant 45 831
+Course 63 1290
+GraduateCourse 58 1248
+Publication 442 9372
+Chair 0 0
+Research 0 0
+ResearchGroup 10 338
+
+TOTAL: 1558
+TOTAL SO FAR: 32220
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1187 24950
+takesCourse 1591 33631
+teacherOf 121 2538
+undergraduateDegreeFrom 196 3755
+mastersDegreeFrom 40 844
+doctoralDegreeFrom 40 844
+advisor 242 4776
+memberOf 583 12171
+publicationAuthor 809 16619
+headOf 1 23
+teachingAssistantOf 39 635
+researchInterest 33 697
+emailAddress 623 13015
+telephone 623 13015
+subOrganizationOf 11 361
+worksFor 40 844
+
+TOTAL: 6179
+TOTAL SO FAR: 128718
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_8.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 219 5687
+Department 1 24
+Faculty 0 0
+Professor 0 0
+FullProfessor 8 202
+AssociateProfessor 10 287
+AssistantProfessor 10 236
+Lecturer 7 154
+Student 0 0
+UndergraduateStudent 304 9564
+GraduateStudent 113 3024
+TeachingAssistant 23 658
+ResearchAssistant 32 863
+Course 47 1337
+GraduateCourse 56 1304
+Publication 371 9743
+Chair 0 0
+Research 0 0
+ResearchGroup 12 350
+
+TOTAL: 1213
+TOTAL SO FAR: 33433
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 927 25877
+takesCourse 1129 34760
+teacherOf 103 2641
+undergraduateDegreeFrom 148 3903
+mastersDegreeFrom 35 879
+doctoralDegreeFrom 35 879
+advisor 181 4957
+memberOf 417 12588
+publicationAuthor 630 17249
+headOf 1 24
+teachingAssistantOf 23 658
+researchInterest 28 725
+emailAddress 452 13467
+telephone 452 13467
+subOrganizationOf 13 374
+worksFor 35 879
+
+TOTAL: 4609
+TOTAL SO FAR: 133327
+
+--------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_9.owl
+--------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 251 5938
+Department 1 25
+Faculty 0 0
+Professor 0 0
+FullProfessor 9 211
+AssociateProfessor 12 299
+AssistantProfessor 9 245
+Lecturer 6 160
+Student 0 0
+UndergraduateStudent 457 10021
+GraduateStudent 142 3166
+TeachingAssistant 31 689
+ResearchAssistant 39 902
+Course 47 1384
+GraduateCourse 56 1360
+Publication 417 10160
+Chair 0 0
+Research 0 0
+ResearchGroup 12 362
+
+TOTAL: 1489
+TOTAL SO FAR: 34922
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1156 27033
+takesCourse 1655 36415
+teacherOf 103 2744
+undergraduateDegreeFrom 178 4081
+mastersDegreeFrom 36 915
+doctoralDegreeFrom 36 915
+advisor 235 5192
+memberOf 599 13187
+publicationAuthor 783 18032
+headOf 1 25
+teachingAssistantOf 31 689
+researchInterest 30 755
+emailAddress 635 14102
+telephone 635 14102
+subOrganizationOf 13 387
+worksFor 36 915
+
+TOTAL: 6162
+TOTAL SO FAR: 139489
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_10.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 257 6195
+Department 1 26
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 221
+AssociateProfessor 12 311
+AssistantProfessor 11 256
+Lecturer 5 165
+Student 0 0
+UndergraduateStudent 315 10336
+GraduateStudent 142 3308
+TeachingAssistant 33 722
+ResearchAssistant 38 940
+Course 59 1443
+GraduateCourse 57 1417
+Publication 443 10603
+Chair 0 0
+Research 0 0
+ResearchGroup 17 379
+
+TOTAL: 1400
+TOTAL SO FAR: 36322
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1055 28088
+takesCourse 1200 37615
+teacherOf 116 2860
+undergraduateDegreeFrom 180 4261
+mastersDegreeFrom 38 953
+doctoralDegreeFrom 38 953
+advisor 207 5399
+memberOf 457 13644
+publicationAuthor 770 18802
+headOf 1 26
+teachingAssistantOf 33 722
+researchInterest 33 788
+emailAddress 495 14597
+telephone 495 14597
+subOrganizationOf 18 405
+worksFor 38 953
+
+TOTAL: 5174
+TOTAL SO FAR: 144663
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_11.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 197 6392
+Department 1 27
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 228
+AssociateProfessor 10 321
+AssistantProfessor 8 264
+Lecturer 5 170
+Student 0 0
+UndergraduateStudent 249 10585
+GraduateStudent 106 3414
+TeachingAssistant 24 746
+ResearchAssistant 31 971
+Course 47 1490
+GraduateCourse 44 1461
+Publication 326 10929
+Chair 0 0
+Research 0 0
+ResearchGroup 17 396
+
+TOTAL: 1072
+TOTAL SO FAR: 37394
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 803 28891
+takesCourse 966 38581
+teacherOf 91 2951
+undergraduateDegreeFrom 136 4397
+mastersDegreeFrom 30 983
+doctoralDegreeFrom 30 983
+advisor 158 5557
+memberOf 355 13999
+publicationAuthor 634 19436
+headOf 1 27
+teachingAssistantOf 24 746
+researchInterest 25 813
+emailAddress 385 14982
+telephone 385 14982
+subOrganizationOf 18 423
+worksFor 30 983
+
+TOTAL: 4071
+TOTAL SO FAR: 148734
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_12.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 260 6652
+Department 1 28
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 238
+AssociateProfessor 13 334
+AssistantProfessor 9 273
+Lecturer 7 177
+Student 0 0
+UndergraduateStudent 448 11033
+GraduateStudent 142 3556
+TeachingAssistant 30 776
+ResearchAssistant 41 1012
+Course 63 1553
+GraduateCourse 52 1513
+Publication 461 11390
+Chair 0 0
+Research 0 0
+ResearchGroup 14 410
+
+TOTAL: 1551
+TOTAL SO FAR: 38945
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1206 30097
+takesCourse 1627 40208
+teacherOf 115 3066
+undergraduateDegreeFrom 181 4578
+mastersDegreeFrom 39 1022
+doctoralDegreeFrom 39 1022
+advisor 232 5789
+memberOf 590 14589
+publicationAuthor 800 20236
+headOf 1 28
+teachingAssistantOf 30 776
+researchInterest 32 845
+emailAddress 629 15611
+telephone 629 15611
+subOrganizationOf 15 438
+worksFor 39 1022
+
+TOTAL: 6204
+TOTAL SO FAR: 154938
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_13.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 252 6904
+Department 1 29
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 248
+AssociateProfessor 13 347
+AssistantProfessor 9 282
+Lecturer 5 182
+Student 0 0
+UndergraduateStudent 505 11538
+GraduateStudent 140 3696
+TeachingAssistant 33 809
+ResearchAssistant 43 1055
+Course 48 1601
+GraduateCourse 56 1569
+Publication 410 11800
+Chair 0 0
+Research 0 0
+ResearchGroup 20 430
+
+TOTAL: 1545
+TOTAL SO FAR: 40490
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1197 31294
+takesCourse 1802 42010
+teacherOf 104 3170
+undergraduateDegreeFrom 177 4755
+mastersDegreeFrom 37 1059
+doctoralDegreeFrom 37 1059
+advisor 251 6040
+memberOf 645 15234
+publicationAuthor 733 20969
+headOf 1 29
+teachingAssistantOf 33 809
+researchInterest 32 877
+emailAddress 682 16293
+telephone 682 16293
+subOrganizationOf 21 459
+worksFor 37 1059
+
+TOTAL: 6471
+TOTAL SO FAR: 161409
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_14.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 199 7103
+Department 1 30
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 255
+AssociateProfessor 10 357
+AssistantProfessor 10 292
+Lecturer 5 187
+Student 0 0
+UndergraduateStudent 438 11976
+GraduateStudent 102 3798
+TeachingAssistant 24 833
+ResearchAssistant 26 1081
+Course 49 1650
+GraduateCourse 46 1615
+Publication 365 12165
+Chair 0 0
+Research 0 0
+ResearchGroup 18 448
+
+TOTAL: 1300
+TOTAL SO FAR: 41790
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1033 32327
+takesCourse 1527 43537
+teacherOf 95 3265
+undergraduateDegreeFrom 134 4889
+mastersDegreeFrom 32 1091
+doctoralDegreeFrom 32 1091
+advisor 193 6233
+memberOf 540 15774
+publicationAuthor 623 21592
+headOf 1 30
+teachingAssistantOf 24 833
+researchInterest 27 904
+emailAddress 572 16865
+telephone 572 16865
+subOrganizationOf 19 478
+worksFor 32 1091
+
+TOTAL: 5456
+TOTAL SO FAR: 166865
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_15.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 241 7344
+Department 1 31
+Faculty 0 0
+Professor 0 0
+FullProfessor 7 262
+AssociateProfessor 14 371
+AssistantProfessor 10 302
+Lecturer 5 192
+Student 0 0
+UndergraduateStudent 444 12420
+GraduateStudent 132 3930
+TeachingAssistant 33 866
+ResearchAssistant 33 1114
+Course 59 1709
+GraduateCourse 53 1668
+Publication 447 12612
+Chair 0 0
+Research 0 0
+ResearchGroup 18 466
+
+TOTAL: 1497
+TOTAL SO FAR: 43287
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1172 33499
+takesCourse 1591 45128
+teacherOf 112 3377
+undergraduateDegreeFrom 168 5057
+mastersDegreeFrom 36 1127
+doctoralDegreeFrom 36 1127
+advisor 213 6446
+memberOf 576 16350
+publicationAuthor 806 22398
+headOf 1 31
+teachingAssistantOf 33 866
+researchInterest 31 935
+emailAddress 612 17477
+telephone 612 17477
+subOrganizationOf 19 497
+worksFor 36 1127
+
+TOTAL: 6054
+TOTAL SO FAR: 172919
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_16.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 274 7618
+Department 1 32
+Faculty 0 0
+Professor 0 0
+FullProfessor 10 272
+AssociateProfessor 12 383
+AssistantProfessor 11 313
+Lecturer 6 198
+Student 0 0
+UndergraduateStudent 466 12886
+GraduateStudent 156 4086
+TeachingAssistant 33 899
+ResearchAssistant 47 1161
+Course 62 1771
+GraduateCourse 58 1726
+Publication 434 13046
+Chair 0 0
+Research 0 0
+ResearchGroup 18 484
+
+TOTAL: 1588
+TOTAL SO FAR: 44875
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1216 34715
+takesCourse 1692 46820
+teacherOf 120 3497
+undergraduateDegreeFrom 195 5252
+mastersDegreeFrom 39 1166
+doctoralDegreeFrom 39 1166
+advisor 248 6694
+memberOf 622 16972
+publicationAuthor 813 23211
+headOf 1 32
+teachingAssistantOf 33 899
+researchInterest 33 968
+emailAddress 661 18138
+telephone 661 18138
+subOrganizationOf 19 516
+worksFor 39 1166
+
+TOTAL: 6431
+TOTAL SO FAR: 179350
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_17.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 236 7854
+Department 1 33
+Faculty 0 0
+Professor 0 0
+FullProfessor 8 280
+AssociateProfessor 13 396
+AssistantProfessor 11 324
+Lecturer 7 205
+Student 0 0
+UndergraduateStudent 372 13258
+GraduateStudent 118 4204
+TeachingAssistant 25 924
+ResearchAssistant 31 1192
+Course 62 1833
+GraduateCourse 58 1784
+Publication 421 13467
+Chair 0 0
+Research 0 0
+ResearchGroup 19 503
+
+TOTAL: 1382
+TOTAL SO FAR: 46257
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1071 35786
+takesCourse 1361 48181
+teacherOf 120 3617
+undergraduateDegreeFrom 157 5409
+mastersDegreeFrom 39 1205
+doctoralDegreeFrom 39 1205
+advisor 179 6873
+memberOf 490 17462
+publicationAuthor 718 23929
+headOf 1 33
+teachingAssistantOf 25 924
+researchInterest 32 1000
+emailAddress 529 18667
+telephone 529 18667
+subOrganizationOf 20 536
+worksFor 39 1205
+
+TOTAL: 5349
+TOTAL SO FAR: 184699
+
+---------------------------------------------------------------------------
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\University1_18.owl
+---------------------------------------------------------------------------
+External Seed=0 Interal Seed=1
+
+CLASS INSTANCE# TOTAL-SO-FAR
+----------------------------
+University 227 8081
+Department 1 34
+Faculty 0 0
+Professor 0 0
+FullProfessor 9 289
+AssociateProfessor 14 410
+AssistantProfessor 9 333
+Lecturer 5 210
+Student 0 0
+UndergraduateStudent 301 13559
+GraduateStudent 115 4319
+TeachingAssistant 23 947
+ResearchAssistant 35 1227
+Course 56 1889
+GraduateCourse 55 1839
+Publication 467 13934
+Chair 0 0
+Research 0 0
+ResearchGroup 15 518
+
+TOTAL: 1332
+TOTAL SO FAR: 47589
+
+PROPERTY INSTANCE# TOTAL-SO-FAR
+-------------------------------
+name 1032 36818
+takesCourse 1124 49305
+teacherOf 111 3728
+undergraduateDegreeFrom 152 5561
+mastersDegreeFrom 37 1242
+doctoralDegreeFrom 37 1242
+advisor 171 7044
+memberOf 416 17878
+publicationAuthor 759 24688
+headOf 1 34
+teachingAssistantOf 23 947
+researchInterest 32 1032
+emailAddress 453 19120
+telephone 453 19120
+subOrganizationOf 16 552
+worksFor 37 1242
+
+TOTAL: 4854
+TOTAL SO FAR: 189553
+
