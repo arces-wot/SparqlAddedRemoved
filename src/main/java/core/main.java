@@ -27,9 +27,10 @@ import model.SparqlObj;
 public class main {
 
     private static String graph="<http://lumb/for.sepa.test/workspace/defaultgraph>";
+    private static String ontology = "http://lumb/for.sepa.test/ontology";	 
     private static boolean POPOLATE =false;
-    private static boolean RUN = false;
-    private static boolean CLEAN = true;
+    private static boolean RUN = true;
+    private static boolean CLEAN = false;
     
 	public static void main (String[] args) {
 
@@ -37,7 +38,7 @@ public class main {
 			 popolateStore();
 		 }
 		 if(RUN){
-			//---------WIP
+				System.out.println(RequestFacotry.getIntance().getRequestByName(RequestName.QUERY1.toString()).execute().toString());
 		 }		 		 
 		 if(CLEAN){
 			 cleanStore();
@@ -67,7 +68,6 @@ public class main {
 			  
 		    int univNum = 2, startIndex = 0, seed = 0;
 		    boolean daml = false;
-		    String ontology = "http://lumb/for.sepa.test/ontology";	 
 		    new Generator().start(univNum, startIndex, seed, daml, ontology,graph);
 	}
 	
