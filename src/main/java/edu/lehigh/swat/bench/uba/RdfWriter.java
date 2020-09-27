@@ -21,6 +21,8 @@ package edu.lehigh.swat.bench.uba;
 
 import java.io.*;
 
+import support.LumbToSparql;
+
 public abstract class RdfWriter implements Writer {
   /** abbreviation of univ-bench ontology namesapce */
   static final String T_ONTO_NS = "ub";
@@ -44,7 +46,7 @@ public abstract class RdfWriter implements Writer {
   static final String T_SPACE = " ";
 
   /** output stream */
-  PrintStream out = null;
+  LumbToSparql out = null;
   /** the generator */
   Generator generator;
 
@@ -69,9 +71,9 @@ public abstract class RdfWriter implements Writer {
   /**
    * Implementation of Writer:startFile.
    */
-  public void startFile(OutputStream stream) {
+  public void startFile(LumbToSparql converter) {
 	  String s;
-      out = new PrintStream(stream);
+      out = converter;
     //  s = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
      // out.println(s);
       s = "<" + T_RDF_PREFIX + "RDF";
@@ -83,6 +85,7 @@ public abstract class RdfWriter implements Writer {
    */
   public void endFile() {
     String s;
+    out.println();
     s = "</" + T_RDF_PREFIX + "RDF>";
     out.println(s);
     out.close();

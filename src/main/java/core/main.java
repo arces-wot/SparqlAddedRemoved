@@ -4,12 +4,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.glassfish.grizzly.http.io.OutputBuffer;
 
+import connector.CleanerRDFStore;
 import connector.IRequestFactory;
 import connector.ISparqlRequest;
 import connector.RequestFacotry;
@@ -23,35 +25,24 @@ import model.EndPoint;
 import model.SparqlObj;
 
 public class main {
-	
+
+    private static String graph="<http://lumb/for.sepa.test/workspace/defaultgraph>";
+    private static boolean POPOLATE =false;
+    private static boolean RUN = false;
+    private static boolean CLEAN = true;
+    
 	public static void main (String[] args) {
 
-		 
-		//options:
-	//   -univ number of universities to generate; 1 by default
-	//   -index starting index of the universities; 0 by default
-	//   -seed seed used for random data generation; 0 by default
-	//   -daml generate DAML+OIL data; OWL data by default
-	//   -onto url of the univ-bench ontology
-		  
-	    int univNum = 2, startIndex = 0, seed = 0;
-	    boolean daml = false;
-	    String ontology = "http://lumb/for.sepa.test";
-
-	    HashMap<String,OutputStream> streams=new  HashMap<String,OutputStream>();
-	   
-	    new Generator().start(univNum, startIndex, seed, daml, ontology,streams);
-		System.out.print("streams.keySet().size(): "+ streams.keySet().size());
+		 if(POPOLATE){
+			 popolateStore();
+		 }
+		 if(RUN){
+			//---------WIP
+		 }		 		 
+		 if(CLEAN){
+			 cleanStore();
+		 }
 		
-		Model model = ModelFactory.createDefaultModel() ;
-		//System.out.println(new String(((ByteArrayOutputStream )streams.values().iterator().next()).toByteArray()).substring(0,1000));
-		InputStream in = new ByteArrayInputStream(((ByteArrayOutputStream )streams.values().iterator().next()).toByteArray());
-		model.read(in,"RDF/XML");
-		
-		ByteArrayOutputStream temp = new ByteArrayOutputStream();
-		model.write(temp, "N-TRIPLE");
-
-		System.out.print( new String(temp.toByteArray()));
 	
 	}
 	
@@ -66,4 +57,27 @@ public class main {
 		}
 	}
 
+	private static void popolateStore() {
+		//options:
+		//   -univ number of universities to generate; 1 by default
+		//   -index starting index of the universities; 0 by default
+		//   -seed seed used for random data generation; 0 by default
+		//   -daml generate DAML+OIL data; OWL data by default
+		//   -onto url of the univ-bench ontology
+			  
+		    int univNum = 2, startIndex = 0, seed = 0;
+		    boolean daml = false;
+		    String ontology = "http://lumb/for.sepa.test/ontology";	 
+		    new Generator().start(univNum, startIndex, seed, daml, ontology,graph);
+	}
+	
+	private static void cleanStore() {
+		ArrayList<String> graphs = new ArrayList<String>();
+		graphs.add(graph);
+		System.out.println("Clean success: "+CleanerRDFStore.clean(graphs));
+		
+		/*
+		 * TO check run ---> SELECT ?s ?p ?o FROM <http://lumb/for.sepa.test/workspace/defaultgraph> WHERE { ?s ?p ?o }
+		 */
+	}
 }

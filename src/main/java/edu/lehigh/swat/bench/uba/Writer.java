@@ -22,6 +22,8 @@ package edu.lehigh.swat.bench.uba;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import support.LumbToSparql;
+
 public interface Writer {
   /**
    * Called when starting data generation.
@@ -37,7 +39,7 @@ public interface Writer {
    * Starts file writing.
    * @param fileName File name.
    */
-  public void startFile(OutputStream stream);
+  public void startFile(LumbToSparql converter);
  
   /**
    * Finishes the current file.

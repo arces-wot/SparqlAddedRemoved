@@ -20,6 +20,9 @@
 package edu.lehigh.swat.bench.uba;
 
 import java.util.*;
+
+import support.LumbToSparql;
+
 import java.io.*;
 
 public class Generator {
@@ -400,7 +403,7 @@ public class Generator {
    * @param ontology Ontology url.
    */
   public void start(int univNum, int startIndex, int seed, boolean daml,
-                    String ontology,  HashMap<String,OutputStream> streams) {
+                    String ontology,String graph) {
 
 
 	  this.ontology = ontology;
@@ -415,7 +418,7 @@ public class Generator {
     baseSeed_ = seed;
     instances_[CS_C_UNIV].num = univNum;
     instances_[CS_C_UNIV].count = startIndex;
-    _generate(streams);
+    _generate(graph);
     System.out.println("See log.txt for more details.");
   }
 
@@ -524,7 +527,7 @@ public class Generator {
   }
 
   /** Begins data generation according to the specification */
-  private void _generate(HashMap<String,OutputStream> streams) {
+  private void _generate(String graph) {
 	
 	    
     System.out.println("Started...");
@@ -534,8 +537,7 @@ public class Generator {
       writer_.start();
       for (int i = 0; i < instances_[CS_C_UNIV].num; i++) {
     	 OutputStream stream = new ByteArrayOutputStream();
-    	 streams.put(i + "_"+startIndex_,stream);
-        _generateUniv(i + startIndex_,stream);
+        _generateUniv(i + startIndex_,graph);
       }
       writer_.end();
       log_.close();
@@ -550,7 +552,10 @@ public class Generator {
    * Creates a university.
    * @param index Index of the university.
    */
-  private void _generateUniv(int index,OutputStream stream) {
+  private void _generateUniv(int index,String graph) {
+	
+
+	  
     //this transformation guarantees no different pairs of (index, baseSeed) generate the same data
     seed_ = baseSeed_ * (Integer.MAX_VALUE + 1) + index;
     random_.setSeed(seed_);
@@ -560,7 +565,10 @@ public class Generator {
     instances_[CS_C_DEPT].count = 0;
     //generate departments
     for (int i = 0; i < instances_[CS_C_DEPT].num; i++) {
-      _generateDept(index, i,stream);
+		//---------------------------------------------------EDIT
+			LumbToSparql converter = new LumbToSparql(graph);
+		//---------------------------------------------------EDIT
+			_generateDept(index, i,converter);
     }
   }
 
@@ -570,11 +578,11 @@ public class Generator {
    * @param index Index of the department.
    * NOTE: Use univIndex instead of instances[CS_C_UNIV].count till generateASection(CS_C_UNIV, ) is invoked.
    */
-  private void _generateDept(int univIndex, int index,OutputStream stream) {
+  private void _generateDept(int univIndex, int index,LumbToSparql converter) {
     String fileName = System.getProperty("user.dir") + "\\" +
         _getName(CS_C_UNIV, univIndex) + INDEX_DELIMITER + index + _getFileSuffix();
    
-    writer_.startFile(stream);
+    writer_.startFile(converter);
 
     //reset
     _setInstanceInfo();
