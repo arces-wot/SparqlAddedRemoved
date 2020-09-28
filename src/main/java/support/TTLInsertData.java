@@ -48,16 +48,13 @@ public class TTLInsertData {
 		this.triples = triples;
 	}
 	
-	public void doInsertData(){
+	public boolean doInsertData(){
+		boolean notError = true;
 		String[] lines=this.triples.split("\n");
 		if(lines.length<=maxLines){
 			System.out.println("-->"+lines.length );
 			insertDataSplit(this.triples);
-		}else{
-			int splitSplitLinesCount = 0;
-			int actualPartLineCount=0;
-			String actualSplit ="";
-			String actualPart ="";
+		}else{			
 			int nPartSize = (int) Math.ceil((double)lines.length/(double)maxLines);
 			int seed =maxLines;
 			int oldSeed=0;
@@ -75,11 +72,14 @@ public class TTLInsertData {
 				oldSeed=seed+1;
 				seed+=maxLines;
 				if(seed>lines.length) {
-					insertDataSplit(stringify(lines, oldSeed, lines.length));
+					if(!insertDataSplit(stringify(lines, oldSeed, lines.length))){
+						notError=false;
+					}
 					break;
 				}
 			}
 		}
+		return notError;
 	}
 	
 	private String stringify(String[] lines, int start,int stop) {
@@ -91,7 +91,7 @@ public class TTLInsertData {
 		return ris;
 	}
 	
-	private void insertDataSplit(String t) {
+	private boolean insertDataSplit(String t) {
 		String head = "";
 		for (String string : prefixs) {
 			head+=string+"\n";
@@ -102,6 +102,7 @@ public class TTLInsertData {
 		EndPoint endPointHost= new EndPoint("http","localhost",8000,"/update");
 		Response res = new SparqlRequest(new SparqlObj(sparql),endPointHost).execute();
 		System.out.println("InsertData success: "+!res.isError());
+		return !res.isError();
 	}
 	
 	

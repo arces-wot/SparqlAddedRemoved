@@ -21,6 +21,7 @@ public class LumbToSparql {
 	private String bigString = "";
 	private long size = 0;
 	private String graph;
+	private boolean isError;
 	
 	public LumbToSparql() {
 		super();
@@ -53,6 +54,11 @@ public class LumbToSparql {
 	}
 		
 	
+	
+	public boolean isError() {
+		return isError;
+	}
+
 	public long getSize() {
 		return size;
 	}
@@ -91,7 +97,7 @@ public class LumbToSparql {
 		bigString="";
 		
 		//sparql inser data
-		insertData.doInsertData();
+		isError=!insertData.doInsertData();
 		
 	}
 	

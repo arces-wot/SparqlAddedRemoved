@@ -402,9 +402,8 @@ public class Generator {
    * @param daml Generates DAML+OIL data if true, OWL data otherwise.
    * @param ontology Ontology url.
    */
-  public void start(int univNum, int startIndex, int seed, boolean daml,
+  public boolean start(int univNum, int startIndex, int seed, boolean daml,
                     String ontology,String graph) {
-
 
 	  this.ontology = ontology;
 
@@ -418,8 +417,9 @@ public class Generator {
     baseSeed_ = seed;
     instances_[CS_C_UNIV].num = univNum;
     instances_[CS_C_UNIV].count = startIndex;
-    _generate(graph);
+
     System.out.println("See log.txt for more details.");
+    return _generate(graph);
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -527,35 +527,37 @@ public class Generator {
   }
 
   /** Begins data generation according to the specification */
-  private void _generate(String graph) {
-	
-	    
+  private boolean _generate(String graph) {	
+	boolean notError = true;
     System.out.println("Started...");
     try {
       log_ = new PrintStream(new FileOutputStream(System.getProperty("user.dir") +
                                                  "\\" + LOG_FILE));
-      writer_.start();
+      writer_.start();      
       for (int i = 0; i < instances_[CS_C_UNIV].num; i++) {
-    	 OutputStream stream = new ByteArrayOutputStream();
-        _generateUniv(i + startIndex_,graph);
+	    if(!_generateUniv(i + startIndex_,graph)) {
+	    	notError=false;
+	    }
       }
       writer_.end();
       log_.close();
     }
     catch (IOException e) {
-      System.out.println("Failed to create log file!");
+    	notError=false;
+    	System.out.println("Failed to create log file!");
     }
     System.out.println("Completed!");
+    return notError;
   }
 
   /**
    * Creates a university.
    * @param index Index of the university.
    */
-  private void _generateUniv(int index,String graph) {
+  private boolean _generateUniv(int index,String graph) {
 	
-
-	  
+	
+	boolean notError = true;
     //this transformation guarantees no different pairs of (index, baseSeed) generate the same data
     seed_ = baseSeed_ * (Integer.MAX_VALUE + 1) + index;
     random_.setSeed(seed_);
@@ -569,7 +571,11 @@ public class Generator {
 			LumbToSparql converter = new LumbToSparql(graph);
 		//---------------------------------------------------EDIT
 			_generateDept(index, i,converter);
+			if(converter.isError()){
+				notError=false;
+			}
     }
+    return notError;
   }
 
   /**

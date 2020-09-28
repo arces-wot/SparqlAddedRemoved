@@ -26,21 +26,17 @@ public class EndpointTest {
 	@Test // (timeout = 5000)
 	public void test() {
 		
-		System.out.println("#)  EndpointTest SIMPLE_INSERT"); 
 	    ISparqlRequest req=factory.getRequestByName(RequestName.SIMPLE_INSERT.toString());
-	    assertFalse(req.execute().isError());
+	    assertFalse("#)  EndpointTest SIMPLE_INSERT",req.execute().isError());
 
-		System.out.println("#)  EndpointTest SIMPLE_QUERY"); 
 		req=factory.getRequestByName(RequestName.SIMPLE_QUERY.toString());
-		assertFalse(Inspector.isVoid(((QueryResponse)req.execute()).getBindingsResults()));
+		assertFalse("#)  EndpointTest SIMPLE_QUERY",Inspector.isVoid(((QueryResponse)req.execute()).getBindingsResults()));
 		
-		System.out.println("#)  EndpointTest SIMPLE_DELETE"); 
 		req=factory.getRequestByName(RequestName.SIMPLE_DELETE.toString());
-		assertFalse(req.execute().isError());
+		assertFalse("#)  EndpointTest SIMPLE_DELETE",req.execute().isError());
 		
-		System.out.println("#)  EndpointTest SIMPLE_QUERY (for confirm delete)");
 		req=factory.getRequestByName(RequestName.SIMPLE_QUERY.toString());
-		assertTrue(Inspector.isVoid(((QueryResponse)req.execute()).getBindingsResults()));
+		assertTrue("#)  EndpointTest SIMPLE_QUERY (for confirm delete)",Inspector.isVoid(((QueryResponse)req.execute()).getBindingsResults()));
 		
 	}
 	
