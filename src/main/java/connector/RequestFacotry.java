@@ -16,6 +16,7 @@ public class RequestFacotry implements IRequestFactory{
 		  SIMPLE_INSERT,
 		  SIMPLE_QUERY,
 		  SIMPLE_DELETE,
+		  //------------------LUMB query
 		  QUERY1,
 		  QUERY2,
 		  QUERY3,
@@ -30,7 +31,11 @@ public class RequestFacotry implements IRequestFactory{
 		  QUERY12,
 		  QUERY13,
 		  QUERY14,
+		  //-------------------------
+		  UPDATE_FOR_Q2,
+		  ROLLBACK_FOR_Q2
 	}
+	
 	private static String _host="localhost";
 	private static int _port=8000;
 	private static String _protocol="http";
@@ -76,6 +81,8 @@ public class RequestFacotry implements IRequestFactory{
 		requestMap.put(RequestName.QUERY12.toString(), createQuery12());
 		requestMap.put(RequestName.QUERY13.toString(), createQuery13());
 		requestMap.put(RequestName.QUERY14.toString(), createQuery14());
+		requestMap.put(RequestName.UPDATE_FOR_Q2.toString(), createUpdateForQ2()());
+		requestMap.put(RequestName.ROLLBACK_FOR_Q2.toString(), createRoolBackForQ2()());
 		
 	}
 	
@@ -290,7 +297,7 @@ public class RequestFacotry implements IRequestFactory{
 				"			SELECT ?X ?Y\r\n" + 
 				"FROM  "+_graph+"	\r\n" + 
 				"			WHERE \r\n" + 
-				"			{?X rdf:type ub:Student .\r\n" + 
+				"			{?X rdf:type ub:Student .\r\n" + 	
 				"			  ?Y rdf:type ub:Course .\r\n" + 
 				"			  ?X ub:takesCourse ?Y .\r\n" + 
 				"			  <http://www.Department0.University0.edu/AssociateProfessor0>   \r\n" + 
@@ -505,4 +512,81 @@ public class RequestFacotry implements IRequestFactory{
 		return new SparqlRequest(sparql,endPointHost);
 	}
 	
+	private SparqlRequest createUpdateForQ2() {
+		/*
+			PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+			PREFIX ub: <http://lumb/for.sepa.test/ontology#>
+			INSERT 
+			{ GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph>{
+			 <http://www.Department2.University0.edu/GraduateStudent0>
+			 ub:undergraduateDegreeFrom 
+			?Y
+			} }
+			WHERE {GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph>{
+			<http://www.Department2.University0.edu/GraduateStudent0> rdf:type ub:GraduateStudent .
+			?Y rdf:type ub:University .
+			?Z rdf:type ub:Department .
+			<http://www.Department2.University0.edu/GraduateStudent0> ub:memberOf ?Z .
+			?Z ub:subOrganizationOf ?Y .
+			}}
+		*/
+		SparqlObj sparql= new SparqlObj(
+				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+				"PREFIX ub: "+_ontology+"\r\n" + 
+				"			INSERT \r\n" + 
+				"			{ GRAPH "+_graph+"{\r\n" + 
+				"			 <http://www.Department2.University0.edu/GraduateStudent0>\r\n" + 
+				"			 ub:undergraduateDegreeFrom \r\n" + 
+				"			?Y\r\n" + 
+				"			} }\r\n" + 
+				"			WHERE {GRAPH "+_graph+"{\r\n" + 
+				"			<http://www.Department2.University0.edu/GraduateStudent0> rdf:type ub:GraduateStudent .\r\n" + 
+				"			?Y rdf:type ub:University .\r\n" + 
+				"			?Z rdf:type ub:Department .\r\n" + 
+				"			<http://www.Department2.University0.edu/GraduateStudent0> ub:memberOf ?Z .\r\n" + 
+				"			?Z ub:subOrganizationOf ?Y .\r\n" + 
+				"			}}"
+				);
+		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
+		return new SparqlRequest(sparql,endPointHost);
+	}
+	private SparqlRequest createRoolBackForQ2() {
+		/*
+			PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+			PREFIX ub: <http://lumb/for.sepa.test/ontology#>
+			DELETE
+			{ GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph>{
+			 <http://www.Department2.University0.edu/GraduateStudent0>
+			 ub:undergraduateDegreeFrom 
+			?Y
+			} }
+			WHERE {GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph>{
+			<http://www.Department2.University0.edu/GraduateStudent0> rdf:type ub:GraduateStudent .
+			?Y rdf:type ub:University .
+			?Z rdf:type ub:Department .
+			<http://www.Department2.University0.edu/GraduateStudent0> ub:memberOf ?Z .
+			?Z ub:subOrganizationOf ?Y .
+			}}
+
+		*/
+		SparqlObj sparql= new SparqlObj(
+				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+				"PREFIX ub: "+_ontology+"\r\n" + 
+				"DELETE\r\n" + 
+				"{ GRAPH "+_graph+"{\r\n" + 
+				" <http://www.Department2.University0.edu/GraduateStudent0>\r\n" + 
+				" ub:undergraduateDegreeFrom \r\n" + 
+				"?Y\r\n" + 
+				"} }\r\n" + 
+				"WHERE {GRAPH "+_graph+"{\r\n" + 
+				"<http://www.Department2.University0.edu/GraduateStudent0> rdf:type ub:GraduateStudent .\r\n" + 
+				"?Y rdf:type ub:University .\r\n" + 
+				"?Z rdf:type ub:Department .\r\n" + 
+				"<http://www.Department2.University0.edu/GraduateStudent0> ub:memberOf ?Z .\r\n" + 
+				"?Z ub:subOrganizationOf ?Y .\r\n" + 
+				"}}\r\n" 
+				);
+		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
+		return new SparqlRequest(sparql,endPointHost);
+	}
 }

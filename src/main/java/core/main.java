@@ -28,8 +28,8 @@ public class main {
 
     private static String graph="<http://lumb/for.sepa.test/workspace/defaultgraph>";
     private static String ontology = "http://lumb/for.sepa.test/ontology";	 
-    private static boolean POPOLATE =false;
-    private static boolean RUN = true;
+    private static boolean POPOLATE =true;
+    private static boolean RUN = false;
     private static boolean CLEAN = false;
     
 	public static void main (String[] args) {
