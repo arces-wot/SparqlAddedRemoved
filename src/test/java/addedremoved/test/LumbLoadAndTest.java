@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import connector.IRequestFactory;
 import connector.ISparqlRequest;
-import connector.RequestFacotry;
-import connector.RequestFacotry.RequestName;
+import connector.RequestFactory;
+import connector.RequestFactory.RequestName;
 import core.Inspector;
 import edu.lehigh.swat.bench.uba.Generator;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
@@ -23,7 +23,7 @@ public class LumbLoadAndTest {
 	@BeforeClass
 	public static void init() {
 		//instanzio la fattoria di richieste
-		factory=RequestFacotry.getIntance();
+		factory=RequestFactory.getInstance();
 	}
 
 	
@@ -40,7 +40,7 @@ public class LumbLoadAndTest {
 			  
 	    int univNum = 2, startIndex = 0, seed = 0;
 	    boolean daml = false;
-	   // assertTrue("#)  Generate and insert lumb.",new Generator().start(univNum, startIndex, seed, daml, ontology,graph));
+	    assertTrue("#)  Generate and insert lumb.",new Generator().start(univNum, startIndex, seed, daml, ontology,graph));
 
 	
 	}

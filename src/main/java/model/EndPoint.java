@@ -10,15 +10,20 @@ public class EndPoint {
 	private String scheme ;
 	
 	
-	
+	public EndPoint(String scheme,String host, int port, String path, String authorization) {
+		super();
+		this.host = host;
+		this.port = port;
+		this.path = path;
+		this.authorization = authorization;
+		this.scheme = scheme;
+	}
 
-	
 	public EndPoint(String scheme,String host,int port, String path) {
 		super();
 		this.host = host;
 		this.port = port;
 		this.path = path;
-		//this.authorization = authorization;
 		this.scheme = scheme;
 	}
 	
@@ -51,6 +56,10 @@ public class EndPoint {
 	}
 	public void setAuthorization(String authorization) {
 		this.authorization = authorization;
+	}
+	
+	public EndPoint clone() {
+		return new EndPoint(scheme,host,port, path,authorization);
 	}
 	
 }

@@ -1,28 +1,17 @@
 package core;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.glassfish.grizzly.http.io.OutputBuffer;
-
+import addedremoved.AddedRemovedGenerator;
 import connector.CleanerRDFStore;
-import connector.IRequestFactory;
-import connector.ISparqlRequest;
-import connector.RequestFacotry;
-import connector.RequestFacotry.RequestName;
+import connector.RequestFactory;
+import connector.SparqlRequest;
+import connector.RequestFactory.RequestName;
 import edu.lehigh.swat.bench.uba.Generator;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
 import it.unibo.arces.wot.sepa.commons.response.UpdateResponse;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
-import model.EndPoint;
-import model.SparqlObj;
+import model.UpdateConstruct;
 
 public class main {
 
@@ -37,9 +26,29 @@ public class main {
 		 if(POPOLATE){
 			 popolateStore();
 		 }
+		 
 		 if(RUN){
-				System.out.println(RequestFacotry.getIntance().getRequestByName(RequestName.QUERY1.toString()).execute().toString());
-		 }		 		 
+
+				SparqlRequest update_for_Q2=(SparqlRequest)RequestFactory.getInstance().getRequestByName(RequestName.UPDATE_FOR_Q2.toString());
+				UpdateConstruct ar = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q2);
+				if(ar.needDelete()) {
+					try {
+						System.out.println(AddedRemovedGenerator.generateDeleteUpdate(update_for_Q2,ar).getSparql().getSparql());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				if(ar.needInsert()) {
+					try {
+						System.out.println(AddedRemovedGenerator.generateInsertUpdate(update_for_Q2,ar).getSparql().getSparql());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+		 }		 
+		 
 		 if(CLEAN){
 			 cleanStore();
 		 }

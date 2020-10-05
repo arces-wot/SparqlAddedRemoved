@@ -1,6 +1,5 @@
 package addedremoved;
 
-import java.util.Set;
 
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
@@ -13,21 +12,86 @@ import com.google.gson.JsonObject;
 import connector.SparqlRequest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPASecurityException;
-import it.unibo.arces.wot.sepa.commons.request.QueryRequest;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
-import it.unibo.arces.wot.sepa.timing.Timings;
-import model.AddedRemoved;
 import model.EndPoint;
 import model.SparqlObj;
+import model.UpdateConstruct;
 
 public class AddedRemovedGenerator {
 	
 	
-			private static void generateInsertDeleteUpdates(SparqlObj sparql, EndPoint ep) {
+			public static SparqlRequest generateInsertUpdate(SparqlRequest originalUpdate,UpdateConstruct c) throws Exception {
+
+				if(c.getAddedGraph()==null) {
+					throw new Exception("Miss graph for generate Insert update.");
+				}
+				
+				SparqlObj sparql= originalUpdate.getSparql();
+				
+				String insert = "INSERT DATA  {\n";
+				
+				insert+=" GRAPH "+ c.getAddedGraph() + " {\n";
+				
+				for (Bindings triple : c.getAdded().getBindings()) {					
+				
+					try {
+						//System.out.println("triple-->"+tripleToString(triple)); //ok
+						insert+=tripleToString(triple)+"\n";
+					} catch (SEPABindingsException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				insert+=" } } ";
+				
+				sparql.setSparql(insert);
+				
+			
+				return new SparqlRequest(sparql,originalUpdate.getEndPointHost());
+			
+			}	
+			
+			public static SparqlRequest generateDeleteUpdate(SparqlRequest originalUpdate,UpdateConstruct c) throws Exception {
+				
+		
+				if(c.getRemovedGraph()==null) {
+					throw new Exception("Miss graph for generate Delete update.");
+				}
+				
+				SparqlObj sparql= originalUpdate.getSparql();
+				
+				String delete = "DELETE {\n";
+				
+				delete+=" GRAPH "+ c.getRemovedGraph()+ " {\n";
+				
+				for (Bindings triple : c.getAdded().getBindings()) {					
+				
+					try {
+						//System.out.println("triple-->"+tripleToString(triple)); //ok
+						delete+=tripleToString(triple)+"\n";
+					} catch (SEPABindingsException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				
+				delete+=" } } ";
+				
+				sparql.setSparql(delete);
+				
+			
+				return new SparqlRequest(sparql,originalUpdate.getEndPointHost());
+			
+			}
+			
+			public static UpdateConstruct getAddedRemovedFrom(SparqlRequest req) {
 				try {
-					AddedRemoved ar =GetAddedRemovedTriples(sparql,ep);
+					EndPoint endPointforQuery= req.getEndPointHost();
+					endPointforQuery.setPath("/query");
+					return GetAddedRemovedTriples(req.getSparql(),endPointforQuery);
 					
 				} catch (SEPASecurityException e) {
 					// TODO Auto-generated catch block
@@ -36,6 +100,7 @@ public class AddedRemovedGenerator {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				return null;
 			
 			}
 			
@@ -80,27 +145,28 @@ public class AddedRemovedGenerator {
 
 	
 			
-			private static AddedRemoved GetAddedRemovedTriples(SparqlObj sparql, EndPoint ep ) throws SEPASecurityException, SEPABindingsException {
-				long start = Timings.getTime();
+			private static UpdateConstruct GetAddedRemovedTriples(SparqlObj sparql, EndPoint ep ) throws SEPASecurityException, SEPABindingsException {
+				//long start = Timings.getTime();
 				SPARQLAnalyzer sa = new SPARQLAnalyzer(sparql.getSparql());
 				UpdateConstruct constructs = sa.getConstruct();
 
-				
+				//System.out.println("--------->"+constructs.getAddedGraph());//ok
 				BindingsResults added =  new BindingsResults(new JsonObject());
 				BindingsResults removed =  new BindingsResults(new JsonObject());
 
 				String dc = constructs.getDeleteConstruct();
-				
+				//System.out.println("DC-->"+dc);
 				if (dc.length() > 0) {				
 					SparqlObj getRremovedSparql = sparql;
-					getRremovedSparql.setSparql(dc);
+					getRremovedSparql.setSparql(constructGraphFilter(dc));
 					removed = ((QueryResponse) new SparqlRequest(getRremovedSparql,ep).execute()).getBindingsResults();
 				}
 
-				String ac = constructs.getInsertConstruct();		
+				String ac = constructs.getInsertConstruct();
+				//System.out.println("AC-->"+ac);
 				if (ac.length() > 0) {
 					SparqlObj getAddedSparql = sparql;
-					getAddedSparql.setSparql(ac);
+					getAddedSparql.setSparql(constructGraphFilter(ac));
 					added  = ((QueryResponse) new SparqlRequest(getAddedSparql,ep).execute()).getBindingsResults();
 					
 				}
@@ -118,8 +184,39 @@ public class AddedRemovedGenerator {
 						removed.getBindings().remove(bindings);
 					}
 				}
-				long stop = System.currentTimeMillis();
-				
-				return new AddedRemoved(added,removed);
+				//long stop = System.currentTimeMillis();
+				constructs.setAdded(added);	
+				constructs.setRemoved(removed);
+				return constructs;
 			}
+			
+			private static String constructGraphFilter(String sparql) {
+			
+				    String lower= sparql.toLowerCase();
+				    String splits[] = lower.split("\\{");
+				   // System.out.println("splits.length "+splits.length);
+					if(splits.length>2 && splits[0].contains("construct") && splits[1].contains("graph")) {				
+						int end1 = lower.indexOf("graph");
+						String filtered = sparql.substring(0,end1);
+						//System.out.print("0-"+end1+ ":   "+filtered); //ok
+						int start2=splits[0].length()+splits[1].length()+2;
+						int end2 = start2+splits[2].indexOf("}");
+
+						//System.out.print(start2+"-"+end2+ ":   "+sparql.substring(start2,end2));
+						//System.out.print(end2+"-"+sparql.length()+ ":   "+sparql.substring(end2,sparql.length()));//ok
+						filtered+=sparql.substring(start2,end2)+sparql.substring(end2+1,sparql.length());
+						//System.out.println("filtered:\n"+filtered);
+						return filtered;
+					}
+					return sparql;
+			}
+			
+			
+			public static String tripleToString(Bindings triple) throws SEPABindingsException {
+				String s =triple.isURI("s")? "<"+triple.getValue("s")+">": "\""+triple.getValue("s")+"\"";
+				String p =triple.isURI("p")? "<"+triple.getValue("p")+">": "\""+triple.getValue("p")+"\"";
+				String o =triple.isURI("o")? "<"+triple.getValue("o")+">": "\""+triple.getValue("o")+"\"";
+				return s+ " "+ p + " " + o+ " .";
+			} 
 }
+

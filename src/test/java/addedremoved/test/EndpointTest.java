@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import connector.IRequestFactory;
 import connector.ISparqlRequest;
-import connector.RequestFacotry;
-import connector.RequestFacotry.RequestName;
+import connector.RequestFactory;
+import connector.RequestFactory.RequestName;
 import core.Inspector;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 
@@ -19,7 +19,7 @@ public class EndpointTest {
 	@BeforeClass
 	public static void init() {
 		//instanzio la fattoria di richieste
-		factory=RequestFacotry.getIntance();
+		factory=RequestFactory.getInstance();
 	}
 
 	

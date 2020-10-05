@@ -44,5 +44,7 @@ public class SparqlObj {
 		this.named_graph_uri = named_graph_uri;
 	}
 	
-	
+	public SparqlObj clone() {
+		return new SparqlObj( sparql,  default_graph_uri,  named_graph_uri);
+	}
 }

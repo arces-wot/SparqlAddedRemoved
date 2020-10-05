@@ -11,7 +11,7 @@ import model.SparqlObj;
  */
 
 
-public class RequestFacotry implements IRequestFactory{
+public class RequestFactory implements IRequestFactory{
 	public enum RequestName {
 		  SIMPLE_INSERT,
 		  SIMPLE_QUERY,
@@ -33,7 +33,9 @@ public class RequestFacotry implements IRequestFactory{
 		  QUERY14,
 		  //-------------------------
 		  UPDATE_FOR_Q2,
-		  ROLLBACK_FOR_Q2
+		  ROLLBACK_FOR_Q2,
+		  UPDATE_FOR_Q3,
+		  ROLLBACK_FOR_Q3,
 	}
 	
 	private static String _host="localhost";
@@ -42,26 +44,26 @@ public class RequestFacotry implements IRequestFactory{
 	private static String _ontology ="<http://lumb/for.sepa.test/ontology#>";
 	private static String _graph ="<http://lumb/for.sepa.test/workspace/defaultgraph>";
 	
-	private static RequestFacotry instance=null;
+	private static RequestFactory instance=null;
 	
-	public static RequestFacotry Instance(String protocol,String host, int port) {
+	public static RequestFactory Instance(String protocol,String host, int port) {
 		_host=host;
 		_port=port;
 		_protocol=protocol;
-		instance=new RequestFacotry();
+		instance=new RequestFactory();
 		return instance;
 	}
 	
-	public static RequestFacotry getIntance() {
+	public static RequestFactory getInstance() {
 		if(instance==null) {
-			instance=new RequestFacotry();
+			instance=new RequestFactory();
 		}
 		return instance;
 	}
 	//--------------------------------------------------
 	
 	private HashMap<String, ISparqlRequest> requestMap = new HashMap<String, ISparqlRequest>();
-	private RequestFacotry() {
+	private RequestFactory() {
 		
 		
 		requestMap.put(RequestName.SIMPLE_INSERT.toString(), createSimpleInsert());
@@ -81,8 +83,9 @@ public class RequestFacotry implements IRequestFactory{
 		requestMap.put(RequestName.QUERY12.toString(), createQuery12());
 		requestMap.put(RequestName.QUERY13.toString(), createQuery13());
 		requestMap.put(RequestName.QUERY14.toString(), createQuery14());
-		requestMap.put(RequestName.UPDATE_FOR_Q2.toString(), createUpdateForQ2()());
-		requestMap.put(RequestName.ROLLBACK_FOR_Q2.toString(), createRoolBackForQ2()());
+		requestMap.put(RequestName.UPDATE_FOR_Q2.toString(), createUpdateForQ2());
+		requestMap.put(RequestName.ROLLBACK_FOR_Q2.toString(), createRoolBackForQ2());
+		requestMap.put(RequestName.UPDATE_FOR_Q3.toString(), createUpdateForQ3());
 		
 	}
 	
@@ -93,7 +96,13 @@ public class RequestFacotry implements IRequestFactory{
 	public ISparqlRequest getRequestByName(String name) {
 		return requestMap.get(name);
 	}
-	
+	public ISparqlRequest buildRequestByName(String name,String arg) throws Exception {
+		if(name==RequestName.ROLLBACK_FOR_Q3.toString()) {
+
+			return createRoolBackForQ3(arg);
+		}
+		throw new Exception("Request name not found.");
+	}
 	private SparqlRequest createSimpleInsert() {
 		SparqlObj sparql= new SparqlObj("INSERT DATA  {  GRAPH <urn:sparql:tests:insert:data> { <#book1> <#price> 42 } }") ;
 		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
@@ -550,6 +559,7 @@ public class RequestFacotry implements IRequestFactory{
 		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
 		return new SparqlRequest(sparql,endPointHost);
 	}
+	
 	private SparqlRequest createRoolBackForQ2() {
 		/*
 			PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -585,6 +595,97 @@ public class RequestFacotry implements IRequestFactory{
 				"<http://www.Department2.University0.edu/GraduateStudent0> ub:memberOf ?Z .\r\n" + 
 				"?Z ub:subOrganizationOf ?Y .\r\n" + 
 				"}}\r\n" 
+				);
+		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
+		return new SparqlRequest(sparql,endPointHost);
+	}
+
+	private SparqlRequest createUpdateForQ3() {
+		/*
+		PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		PREFIX ub: <http://lumb/for.sepa.test/ontology#>
+		WITH <http://lumb/for.sepa.test/workspace/defaultgraph>
+		DELETE {
+		 ?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>
+		}
+		INSERT { 
+		
+		<http://www.department0.university0.edu/AssistantProfessor0/PubTest1>  rdf:type ub:Publication .
+		<http://www.department0.university0.edu/AssistantProfessor0/PubTest2>  rdf:type ub:Publication .
+		
+		<http://www.department0.university0.edu/AssistantProfessor0/PubTest1> ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>.
+		<http://www.department0.university0.edu/AssistantProfessor0/PubTest2> ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>.
+		
+		}
+		WHERE
+		{
+		?X rdf:type ub:Publication .
+		?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>
+		}
+		*/
+		SparqlObj sparql= new SparqlObj(
+				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+				"PREFIX ub: <http://lumb/for.sepa.test/ontology#>\r\n" + 
+				"WITH <http://lumb/for.sepa.test/workspace/defaultgraph>\r\n" + 
+				"DELETE {\r\n" + 
+				" ?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>\r\n" + 
+				"}\r\n" + 
+				"INSERT { \r\n" + 
+				"\r\n" + 
+				"<http://www.department0.university0.edu/AssistantProfessor0/PubTest1>  rdf:type ub:Publication .\r\n" + 
+				"<http://www.department0.university0.edu/AssistantProfessor0/PubTest2>  rdf:type ub:Publication .\r\n" + 
+				"\r\n" + 
+				"<http://www.department0.university0.edu/AssistantProfessor0/PubTest1> ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>.\r\n" + 
+				"<http://www.department0.university0.edu/AssistantProfessor0/PubTest2> ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>.\r\n" + 
+				"\r\n" + 
+				"\r\n" + 
+				"}\r\n" + 
+				"WHERE\r\n" + 
+				"{\r\n" + 
+				"?X rdf:type ub:Publication .\r\n" + 
+				"?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>\r\n" + 
+				"}\r\n" + 
+				""
+				);
+		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
+		return new SparqlRequest(sparql,endPointHost);
+	}
+	
+	private SparqlRequest createRoolBackForQ3(String arg) {
+		/*
+		PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		PREFIX ub: <http://lumb/for.sepa.test/ontology#>
+		WITH <http://lumb/for.sepa.test/workspace/defaultgraph>
+		DELETE {
+		?X rdf:type ub:Publication .
+		?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>
+		}
+		INSERT { 
+						… 
+		}
+		WHERE
+		{
+		?X rdf:type ub:Publication .
+		?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>
+		}
+
+		*/
+		SparqlObj sparql= new SparqlObj(
+				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+				"		PREFIX ub: <http://lumb/for.sepa.test/ontology#>\r\n" + 
+				"		WITH <http://lumb/for.sepa.test/workspace/defaultgraph>\r\n" + 
+				"		DELETE {\r\n" + 
+				"		?X rdf:type ub:Publication .\r\n" + 
+				"		?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>\r\n" + 
+				"		}\r\n" + 
+				"		INSERT { \r\n" + 
+							arg+ 
+				"		}\r\n" + 
+				"		WHERE\r\n" + 
+				"		{\r\n" + 
+				"		?X rdf:type ub:Publication .\r\n" + 
+				"		?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>\r\n" + 
+				"		}" 
 				);
 		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
 		return new SparqlRequest(sparql,endPointHost);

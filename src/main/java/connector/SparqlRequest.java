@@ -52,6 +52,10 @@ public class SparqlRequest implements ISparqlRequest{
 	}
 
 
+	public SparqlRequest clone() {
+		return new SparqlRequest(sparql.clone(),endPointHost.clone());
+	}
+	
 	public Response execute() {	
 		if(endPointHost.getPath()=="/update") {
 			
