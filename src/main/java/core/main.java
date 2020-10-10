@@ -1,24 +1,31 @@
 package core;
+
 import java.util.ArrayList;
+
+import org.apache.jena.base.Sys;
 
 import addedremoved.AddedRemovedGenerator;
 import connector.CleanerRDFStore;
+import connector.IRequestFactory;
 import connector.RequestFactory;
 import connector.SparqlRequest;
 import connector.RequestFactory.RequestName;
 import edu.lehigh.swat.bench.uba.Generator;
+import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
 import it.unibo.arces.wot.sepa.commons.response.UpdateResponse;
+import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
+import model.TestMetric;
 import model.UpdateConstruct;
 
 public class main {
 
     private static String graph="<http://lumb/for.sepa.test/workspace/defaultgraph>";
     private static String ontology = "http://lumb/for.sepa.test/ontology";	 
-    private static boolean POPOLATE =true;
-    private static boolean RUN = false;
+    private static boolean POPOLATE =false;
+    private static boolean RUN = true;
     private static boolean CLEAN = false;
     
 	public static void main (String[] args) {
@@ -28,25 +35,39 @@ public class main {
 		 }
 		 
 		 if(RUN){
+			 	IRequestFactory factory =RequestFactory.getInstance();
+			 	SparqlRequest update_for_Q3=(SparqlRequest)factory.getRequestByName(RequestName.UPDATE_FOR_Q3.toString());
+				SparqlRequest query_Q3=(SparqlRequest)factory.getRequestByName(RequestName.QUERY3.toString());
+				SparqlRequest deleteUpdate=null;	
+				SparqlRequest insertUpdate=null;
+				
+				//----------------------------------Phase 1
+				TestMetric Phase1 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");		
+				
+				Phase1.start();
+				UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q3.clone());
+				if(constructs.needDelete()) {
+					try {
+						deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update_for_Q3.clone(),constructs);
+					
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				if(constructs.needInsert()) {
+					try {
+						insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update_for_Q3.clone(),constructs);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				Phase1.stop();
+				
 
-				SparqlRequest update_for_Q2=(SparqlRequest)RequestFactory.getInstance().getRequestByName(RequestName.UPDATE_FOR_Q2.toString());
-				UpdateConstruct ar = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q2);
-				if(ar.needDelete()) {
-					try {
-						System.out.println(AddedRemovedGenerator.generateDeleteUpdate(update_for_Q2,ar).getSparql().getSparql());
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				if(ar.needInsert()) {
-					try {
-						System.out.println(AddedRemovedGenerator.generateInsertUpdate(update_for_Q2,ar).getSparql().getSparql());
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+				System.out.println("--------------------------deleteUpdate--------------------------\n"+deleteUpdate.getSparql().getSparqlString());
+				System.out.println("--------------------------deleteUpdate--------------------------\n"+insertUpdate.getSparql().getSparqlString());
 		 }		 
 		 
 		 if(CLEAN){

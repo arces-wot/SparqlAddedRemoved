@@ -240,8 +240,8 @@ public class SPARQLAnalyzer {
 
 	public UpdateConstruct getConstruct() {
 		UpdateRequest updates = UpdateFactory.create(sparqlText);
-		String graph= GraphAnalyzer.getGraph(sparqlText);
-		System.out.println("getConstruct.graph: "+ graph);
+		String graph= GraphAnalyzer.getGraphURIs(sparqlText).iterator().next();
+		//System.out.println("Graph: "+graph);
 		for (Update up : updates) {			
 			ToConstructUpdateVisitor updateVisitor = new ToConstructUpdateVisitor();
 			up.visit(updateVisitor);

@@ -25,7 +25,7 @@ public class SparqlObj {
 	
 	
 
-	public String getSparql() {
+	public String getSparqlString() {
 		return sparql;
 	}
 	public void setSparql(String sparql) {
