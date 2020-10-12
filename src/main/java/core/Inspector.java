@@ -16,6 +16,11 @@ public class Inspector {
 					return false;
 				}
 			}
+			for (Bindings bind : res2.getBindings()) {
+				if(!res1.contains(bind)) {
+					return false;
+				}
+			}
 			return true;
 		}else {
 			return false;

@@ -56,8 +56,42 @@ public class AddedRemovedGenerator {
 			
 			}	
 			
-			
+
 			public static SparqlRequest generateDeleteUpdate(SparqlRequest originalUpdate,UpdateConstruct c) throws Exception {
+				
+				
+				if(c.getRemovedGraph()==null) {
+					throw new Exception("Miss graph for generate Delete update.");
+				}
+				
+				SparqlObj sparql= originalUpdate.getSparql();
+				
+				String delete = "DELETE DATA { GRAPH  "+ c.getRemovedGraph()+ " \n{\n";
+				
+				for (Bindings triple : c.getRemoved().getBindings()) {					
+				
+					try {
+						//System.out.println("triple-->"+tripleToString(triple)); //ok
+						String temp = tripleToString(triple);
+						if(temp!=null) {
+							delete+=temp+"\n";
+						}
+					} catch (SEPABindingsException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				
+				delete+=" } }";
+				sparql.setSparql(delete);
+				
+			
+				return new SparqlRequest(sparql,originalUpdate.getEndPointHost());
+			
+			}
+			
+			public static SparqlRequest generateDeleteUpdate_deprecate2(SparqlRequest originalUpdate,UpdateConstruct c) throws Exception {
 				
 				
 				if(c.getRemovedGraph()==null) {
@@ -201,7 +235,7 @@ public class AddedRemovedGenerator {
 				}
 
 				String ac = constructs.getInsertConstruct();
-				//System.out.println("AC-->"+ac+"\n\n");
+				System.out.println("AC-->"+ac+"\n\n");
 				if (ac.length() > 0) {
 					SparqlObj getAddedSparql =sparql ;// sparql.clone();
 					getAddedSparql.setSparql(constructGraphFilter(ac));
@@ -249,6 +283,20 @@ public class AddedRemovedGenerator {
 					return sparql;
 			}
 			
+			public static String nuplaToString(Bindings triple) throws SEPABindingsException {
+				if(triple.getVariables().size()<1){
+					return null;
+				}
+				String tripl = "";
+				for (String var : triple.getVariables()) {
+					tripl+=triple.isURI(var)? "<"+triple.getValue(var)+">": "\""+triple.getValue(var)+"\"" ;
+					tripl+= " ";
+				}				
+				tripl+=" .";
+				System.out.println(tripl);
+				return tripl;
+				
+			} 
 			
 			public static String tripleToString(Bindings triple) throws SEPABindingsException {
 				if(triple.getVariables().contains("s") && triple.getVariables().contains("p")  && triple.getVariables().contains("o") ) {

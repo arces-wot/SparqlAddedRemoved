@@ -5,6 +5,7 @@ import java.util.Set;
 
 import model.EndPoint;
 import model.SparqlObj;
+import support.Environment;
 /*
  * The query QUERY° with ° from 1 to 14
  * refer to http://swat.cse.lehigh.edu/projects/lubm/queries-sparql.txt
@@ -36,21 +37,17 @@ public class RequestFactory implements IRequestFactory{
 		  ROLLBACK_FOR_Q2,
 		  UPDATE_FOR_Q3,
 		  ROLLBACK_FOR_Q3,
+		  UPDATE_FOR_Q4,
+		  ROLLBACK_FOR_Q4,
 	}
 	
-	private static String _host="localhost";
-	private static int _port=8000;
-	private static String _protocol="http";
-	private static String _ontology ="<http://lumb/for.sepa.test/ontology#>";
-	private static String _graph ="<http://lumb/for.sepa.test/workspace/defaultgraph>";
+	
 	
 	private static RequestFactory instance=null;
 	
 	public static RequestFactory Instance(String protocol,String host, int port) {
-		_host=host;
-		_port=port;
-		_protocol=protocol;
-		instance=new RequestFactory();
+	
+		instance=new RequestFactory( protocol, host, port);
 		return instance;
 	}
 	
@@ -61,8 +58,21 @@ public class RequestFactory implements IRequestFactory{
 		return instance;
 	}
 	//--------------------------------------------------
-	
+	private String _host=Environment.host;
+	private int _port=Environment.port;
+	private String _protocol=Environment.protocol;
+	private String _ontology=Environment.closeOntology;
+	private String _graph=Environment.graph;
 	private HashMap<String, ISparqlRequest> requestMap = new HashMap<String, ISparqlRequest>();
+	
+	
+	private RequestFactory(String protocol,String host, int port) {
+		this();
+		this._host=host;
+		this._port=port;
+		this._protocol=protocol;
+	}
+	
 	private RequestFactory() {
 		
 		
@@ -86,6 +96,9 @@ public class RequestFactory implements IRequestFactory{
 		requestMap.put(RequestName.UPDATE_FOR_Q2.toString(), createUpdateForQ2());
 		requestMap.put(RequestName.ROLLBACK_FOR_Q2.toString(), createRoolBackForQ2());
 		requestMap.put(RequestName.UPDATE_FOR_Q3.toString(), createUpdateForQ3());
+		//requestMap.put(RequestName.ROLLBACK_FOR_Q3.toString(), createRol()); //need args (see method 'buildRequestByName')
+		requestMap.put(RequestName.ROLLBACK_FOR_Q4.toString(), createRoolBackForQ4());
+		requestMap.put(RequestName.UPDATE_FOR_Q4.toString(), createUpdateForQ4());
 		
 	}
 	
@@ -98,7 +111,6 @@ public class RequestFactory implements IRequestFactory{
 	}
 	public ISparqlRequest buildRequestByName(String name,String arg) throws Exception {
 		if(name==RequestName.ROLLBACK_FOR_Q3.toString()) {
-
 			return createRoolBackForQ3(arg);
 		}
 		throw new Exception("Request name not found.");
@@ -136,7 +148,7 @@ public class RequestFactory implements IRequestFactory{
 		*/
 		SparqlObj sparql= new SparqlObj(
 				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
-				"PREFIX ub: "+ _ontology +"\r\n" + 
+				"PREFIX ub: "+ this._ontology +"\r\n" + 
 				"SELECT ?X	\r\n" + 
 				"FROM  "+_graph+"	\r\n" + 
 				"WHERE\r\n" + 
@@ -150,6 +162,7 @@ public class RequestFactory implements IRequestFactory{
 	
 	private SparqlRequest createQuery2() {
 		/*
+		 * ############################################ORIGINAL
 			# Query2
 			# This query increases in complexity: 3 classes and 3 properties are involved. Additionally, 
 			# there is a triangular pattern of relationships between the objects involved.
@@ -220,14 +233,30 @@ public class RequestFactory implements IRequestFactory{
 			  ?X ub:name ?Y1 .
 			  ?X ub:emailAddress ?Y2 .
 			  ?X ub:telephone ?Y3}
+			  
+			  ###########################################MODDED, implicit reasoning
+			  	  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+			  	  PREFIX rdfs: <https://www.w3.org/2000/01/rdf-schema#>
+			PREFIX ub: <http://swat.cse.lehigh.edu/onto/univ-bench.owl#>
+			SELECT ?X, ?Y1, ?Y2, ?Y3
+			WHERE
+			{?Z rdfs:subClassOf ub:Professor .
+			  ?X rdf:type ?Z .
+			  ?X ub:worksFor <http://www.Department0.University0.edu> .
+			  ?X ub:name ?Y1 .
+			  ?X ub:emailAddress ?Y2 .
+			  ?X ub:telephone ?Y3}
 		*/
 		SparqlObj sparql= new SparqlObj(
 				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\n" + 
 				"PREFIX ub: "+ _ontology +"\r\n" + 
 				"			SELECT ?X ?Y1 ?Y2 ?Y3\r\n" + 
 				"FROM  "+_graph+"	\r\n" + 
+				"FROM "+_ontology+"\n"+
 				"			WHERE\r\n" + 
-				"			{?X rdf:type ub:Professor .\r\n" + 
+				"			{?Z rdfs:subClassOf ub:Professor .\r\n"
+				+ "?X rdf:type ?Z .\r\n" + 
 				"			  ?X ub:worksFor <http://www.Department0.University0.edu> .\r\n" + 
 				"			  ?X ub:name ?Y1 .\r\n" + 
 				"			  ?X ub:emailAddress ?Y2 .\r\n" + 
@@ -625,8 +654,8 @@ public class RequestFactory implements IRequestFactory{
 		*/
 		SparqlObj sparql= new SparqlObj(
 				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
-				"PREFIX ub: <http://lumb/for.sepa.test/ontology#>\r\n" + 
-				"WITH <http://lumb/for.sepa.test/workspace/defaultgraph>\r\n" + 
+				"PREFIX ub: "+_ontology+"\r\n" + 
+				"WITH "+_graph+"\r\n" + 
 				"DELETE {\r\n" + 
 				" ?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>\r\n" + 
 				"}\r\n" + 
@@ -686,6 +715,52 @@ public class RequestFactory implements IRequestFactory{
 				"		?X rdf:type ub:Publication .\r\n" + 
 				"		?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>\r\n" + 
 				"		}" 
+				);
+		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
+		return new SparqlRequest(sparql,endPointHost);
+	}
+	
+	private SparqlRequest createUpdateForQ4() {
+		SparqlObj sparql= new SparqlObj(
+				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\n" + 
+				"PREFIX ub: "+_ontology+"\r\n" + 
+				"INSERT DATA {GRAPH  "+_graph+"{\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> rdf:type  ub:AssociateProfessor .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> ub:worksFor <http://www.Department0.University0.edu> .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> ub:name \"ProfessorX1\" .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> ub:emailAddress \"ProfessorX1@unibo.it\" .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> ub:telephone \"051 111 1111\" . \r\n" + 
+				"	\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> rdf:type  ub:FullProfessor .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> ub:worksFor <http://www.Department0.University0.edu> .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> ub:name  \"ProfessorX2\" .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> ub:emailAddress  \"ProfessorX2@unibo.it\" .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> ub:telephone  \"051 222 2222\".\r\n" + 
+				"}}"
+				);
+		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
+		return new SparqlRequest(sparql,endPointHost);
+	}
+	
+	private SparqlRequest createRoolBackForQ4() {
+		SparqlObj sparql= new SparqlObj(
+				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\n" + 
+				"PREFIX ub: "+_ontology+"\r\n" + 
+				"DELETE DATA {GRAPH "+_graph+" {\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> rdf:type  ub:AssociateProfessor .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> ub:worksFor <http://www.Department0.University0.edu> .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> ub:name \"ProfessorX1\" .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> ub:emailAddress \"ProfessorX1@unibo.it\" .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor1> ub:telephone \"051 111 1111\" . \r\n" + 
+				"	\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> rdf:type  ub:FullProfessor .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> ub:worksFor <http://www.Department0.University0.edu> .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> ub:name  \"ProfessorX2\" .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> ub:emailAddress  \"ProfessorX2@unibo.it\" .\r\n" + 
+				"	<http://www.Department0.University0.edu/TestProfessor2> ub:telephone  \"051 222 2222\".\r\n" + 
+				"}}" 
 				);
 		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
 		return new SparqlRequest(sparql,endPointHost);
