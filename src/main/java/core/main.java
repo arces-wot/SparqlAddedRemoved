@@ -26,7 +26,7 @@ public class main {
 
     private static String graph=Environment.graph;
     private static String ontology = Environment.ontology;	     
-    private static boolean ONTOLOGY =false;
+    private static boolean ONTOLOGY =true;
     private static boolean POPOLATE =true;
     private static boolean RUN = false;
     private static boolean CLEAN = false;

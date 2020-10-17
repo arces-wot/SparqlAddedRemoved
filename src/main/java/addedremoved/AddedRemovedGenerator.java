@@ -229,9 +229,9 @@ public class AddedRemovedGenerator {
 				String dc = constructs.getDeleteConstruct();
 				//System.out.println("DC-->"+dc+"\n\n");
 				if (dc.length() > 0) {				
-					SparqlObj getRremovedSparql =sparql; // sparql.clone();
-					getRremovedSparql.setSparql(constructGraphFilter(dc));
-					removed = ((QueryResponse) new SparqlRequest(getRremovedSparql,ep).execute()).getBindingsResults();
+					SparqlObj getRemovedSparql =sparql; // sparql.clone();
+					getRemovedSparql.setSparql(constructGraphFilter(dc));
+					removed = ((QueryResponse) new SparqlRequest(getRemovedSparql,ep).execute()).getBindingsResults();
 				}
 
 				String ac = constructs.getInsertConstruct();

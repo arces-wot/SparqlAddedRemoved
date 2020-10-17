@@ -40,7 +40,7 @@ public class AddedRemovedTest {
 	
 	@Test // (timeout = 5000)
 	public void test_Q2() {
-
+		Inspector inspector = new Inspector();
 		SparqlRequest update_for_Q2=(SparqlRequest)factory.getRequestByName(RequestName.UPDATE_FOR_Q2.toString());
 		SparqlRequest query_Q2=(SparqlRequest)factory.getRequestByName(RequestName.QUERY2.toString());
 		SparqlRequest roolback_for_Q2=(SparqlRequest)factory.getRequestByName(RequestName.ROLLBACK_FOR_Q2.toString());
@@ -72,7 +72,8 @@ public class AddedRemovedTest {
 		Phase1.stop();
 		phases.add(Phase1);
 	    assertFalse("#)  Phase1",constructs==null || (deleteUpdate==null && insertUpdate==null) );
-	    
+	    inspector.setAskForDelete(constructs.getRemoved());
+	    inspector.setAskForInsert(constructs.getAdded());
 		//----------------------------------Phase 2	    
 		TestMetric Phase2 = new TestMetric("Execution query");
 		
@@ -81,7 +82,7 @@ public class AddedRemovedTest {
 		Phase2.stop();
 		phases.add(Phase2);
 		assertFalse("#)  Phase2",pre_ris_query.isError());
-		
+		inspector.setQuery(((QueryResponse)pre_ris_query).getBindingsResults());
 		//----------------------------------Phase 3	    
 		TestMetric Phase3 = new TestMetric("Execution normal update");
 		Phase3.start();
@@ -98,7 +99,8 @@ public class AddedRemovedTest {
 		Phase4.stop();
 		phases.add(Phase4);
 		assertFalse("#)  Phase4",ris_Query.isError());
-		
+
+		inspector.setQueryAfterNormalUpdate(ris_Query.getBindingsResults());
 
 		//----------------------------------Phase 5	    
 		TestMetric Phase5 = new TestMetric("Execution RoolBack Update");
@@ -145,7 +147,8 @@ public class AddedRemovedTest {
 		phases.add(Phase7);
 		assertFalse("#)  Phase7",ris_Query_2.isError());
 		
-		
+
+		inspector.setQueryAfterInsertDell(ris_Query_2.getBindingsResults());
 
 		
 		//----------------------------------Phase 8	    
@@ -155,11 +158,10 @@ public class AddedRemovedTest {
 		ris_Roolback =roolback_for_Q2.execute();
 		Phase8.stop();
 		phases.add(Phase8);
-		assertFalse("#)  Phase8",ris_Query.isError());
+		assertFalse("#)  Phase8",ris_Roolback.isError());
 		
 		//----------------------------------Phase 9	
-		assertTrue("#)  Phase9 Querys resutl (need be equasl)",Inspector.areEq(ris_Query_2.getBindingsResults(),ris_Query.getBindingsResults()));
-				
+		//assertTrue("#)  Phase9 Querys resutl (need be equasl)",Inspector.areEq(ris_Query_2.getBindingsResults(),ris_Query.getBindingsResults()));
 		
 		printTestResult(
 				"TEST 1",
@@ -172,11 +174,24 @@ public class AddedRemovedTest {
 				ris_Query_2
 				);
 		
+	    assertTrue("#)  Phase9 The query triples after normal update are the same of the query triples after insert-delete",
+	    		inspector.isUpdateSameOfInsertDelete() );
+	    
+	    //not valid for this TEST ( update not on direct triples interested by query)
+	    
+//	    assertTrue("#)  Phase9 The triples of delete (filtered by ASK) are ok.",
+//	    		inspector.isDeleteTriplesOk());
+//	    assertTrue("#)  Phase9 The triples of insert (filtered by ASK) are ok.",
+//	    		inspector.isInsertTriplesOk());
+	    
+		
+		
 	}
 
 	@Test // (timeout = 5000)
 	public void test_Q3() {
 
+		Inspector inspector = new Inspector();
 		SparqlRequest update_for_Q3=(SparqlRequest)factory.getRequestByName(RequestName.UPDATE_FOR_Q3.toString());
 		SparqlRequest query_Q3=(SparqlRequest)factory.getRequestByName(RequestName.QUERY3.toString());
 		SparqlRequest deleteUpdate=null;	
@@ -208,7 +223,8 @@ public class AddedRemovedTest {
 		Phase1.stop();
 		phases.add(Phase1);
 	    assertFalse("#)  Phase1",constructs==null || (deleteUpdate==null && insertUpdate==null) );
-	    
+	    inspector.setAskForDelete(constructs.getRemoved());
+	    inspector.setAskForInsert(constructs.getAdded());
 		//----------------------------------Phase 2	    
 		TestMetric Phase2 = new TestMetric("Execution query");
 		
@@ -217,7 +233,7 @@ public class AddedRemovedTest {
 		Phase2.stop();
 		phases.add(Phase2);
 		assertFalse("#)  Phase2",pre_ris_query.isError());
-		
+		inspector.setQuery(((QueryResponse)pre_ris_query).getBindingsResults());
 		//----------------------------------build roolback
 		
 		String oldTriples ="";
@@ -248,7 +264,7 @@ public class AddedRemovedTest {
 		Phase3.stop();
 		phases.add(Phase3);
 		assertFalse("#)  Phase3",ris_update.isError());
-		
+
 		//----------------------------------Phase 4	    
 		TestMetric Phase4 = new TestMetric("Execution Query N°2 1/2");
 		
@@ -257,7 +273,8 @@ public class AddedRemovedTest {
 		Phase4.stop();
 		phases.add(Phase4);		
 		assertFalse("#)  Phase4",ris_Query.isError());
-		
+
+		inspector.setQueryAfterNormalUpdate(ris_Query.getBindingsResults());
 
 		//----------------------------------Phase 5	    
 		TestMetric Phase5 = new TestMetric("Execution RoolBack Update");
@@ -306,7 +323,8 @@ public class AddedRemovedTest {
 		Phase7.stop();
 		phases.add(Phase7);	
 		assertFalse("#)  Phase7",ris_Query_2.isError());
-		
+
+		inspector.setQueryAfterInsertDell(ris_Query_2.getBindingsResults());
 		//----------------------------------Phase 8	    
 		TestMetric Phase8 = new TestMetric("Re-Execution RoolBack Update");
 			
@@ -317,7 +335,7 @@ public class AddedRemovedTest {
 		assertFalse("#)  Phase8",ris_Query.isError());
 		
 		//----------------------------------Phase 9	
-		assertTrue("#)  Phase9 Querys resutl (need be equasl)",Inspector.areEq(ris_Query_2.getBindingsResults(),ris_Query.getBindingsResults()));
+		//assertTrue("#)  Phase9 Querys resutl (need be equasl)",Inspector.areEq(ris_Query_2.getBindingsResults(),ris_Query.getBindingsResults()));
 		
 		printTestResult(
 				"TEST 2",
@@ -330,6 +348,14 @@ public class AddedRemovedTest {
 				ris_Query_2
 				);
 		
+	    assertTrue("#)  Phase9 The query triples after normal update are the same of the query triples after insert-delete",
+	    		inspector.isUpdateSameOfInsertDelete() );
+	    
+	    
+	    assertTrue("#)  Phase9 The triples of delete (filtered by ASK) are ok.",
+	    		inspector.isDeleteTriplesOk());
+	    assertTrue("#)  Phase9 The triples of insert (filtered by ASK) are ok.",
+	    		inspector.isInsertTriplesOk());
 		
 	}
 	
@@ -505,6 +531,7 @@ public class AddedRemovedTest {
 		
 		//----------------------------------Phase 9	
 		assertTrue("#)  Phase9 Querys resutl (need be equasl)",Inspector.areEq(ris_Query_2.getBindingsResults(),ris_Query.getBindingsResults()));
+		
 		
 		printTestResult(
 				"TEST 3",
