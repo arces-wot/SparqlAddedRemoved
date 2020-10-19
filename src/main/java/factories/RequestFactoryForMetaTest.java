@@ -83,7 +83,7 @@ public class RequestFactoryForMetaTest implements IRequestFactory{
 		String sparqlStr = ""+
 				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 				"PREFIX ub: "+_ontology+"\r\n" + 
-				"DELETE DATA  {  GRAPH "+_graph+" { ?s ub:memberOf <unibo.it> } }";
+				"DELETE WHERE { GRAPH "+_graph+" { ?s ub:memberOf <http://www.unibo.it> } }";
 		
 		SparqlObj sparql= new SparqlObj(sparqlStr) ;
 		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
@@ -94,9 +94,10 @@ public class RequestFactoryForMetaTest implements IRequestFactory{
 		String sparqlStr = ""
 				+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 				"			PREFIX ub: "+_ontology+"\r\n" + 
-				"			SELECT ?s ub:memberOf <unibo.it> "
+				"			SELECT ?s ?p ?o"
 				+ "			FROM "+_graph+" WHERE {\r\n" + 
-				"			?s ub:memberOf <unibo.it> .\r\n" + 
+				"			?s ?p ?o .\r\n" + 
+				"			?s ub:memberOf <http://www.unibo.it> .\r\n"+
 				"			}";			
 		SparqlObj sparql= new SparqlObj(sparqlStr) ;
 		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/query");
@@ -105,7 +106,7 @@ public class RequestFactoryForMetaTest implements IRequestFactory{
 	
 	private TripleBase createTripleBaseMT1() {
 
-		return  new TripleBase("<Student__X__>","ub:memberOf","<unibo.it>");
+		return  new TripleBase("<http://www.unibo.it/Student__X__>","ub:memberOf","<http://www.unibo.it>");
 	}
 	
 	//------------------------------------------accessor

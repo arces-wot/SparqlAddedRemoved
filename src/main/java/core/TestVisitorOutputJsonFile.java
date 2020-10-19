@@ -23,6 +23,8 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 	private FileWriter fileIO; 
 	private int testID =0;
 	private int subTestID=0;
+	private boolean firstTestVisit = true;
+	private boolean firstSubTestVisit = true;
 	
 	public TestVisitorOutputJsonFile(String filePath) throws IOException {
 		super();
@@ -33,14 +35,26 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 	}
 	
 	public void start(int n, int replication) {
-		writeLineOnFile("'"+testID + "':{"); //OPEN 1
+		String str = "'"+testID + "':{";
+		if(firstTestVisit) {
+			firstTestVisit=false;
+		}else {
+			str=","+str;
+		}
+		writeLineOnFile(str); //OPEN 1
 		writeLineOnFile("'"+TRIPLE_NUMBER + "':"+n+",");
 		writeLineOnFile("'"+REPLICATION + "':"+replication+",");
 		writeLineOnFile("'"+TESTS + "':{");//OPEN 2
 	}
 
 	public void visit(TestResult res) {
-		writeLineOnFile("'"+subTestID + "':"+res.toJson().toString()+",");
+		String str = "'"+subTestID + "':"+res.toJson().toString();
+		if(firstSubTestVisit) {
+			firstSubTestVisit = false;
+		}else {
+			str=","+str;
+		}
+		writeLineOnFile(str);
 	}
 
 	public void visit(ArrayList<TestMetric> res) {
@@ -52,7 +66,11 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 			metricJson.addProperty("name", res.get(x).getName());
 			metricJson.addProperty("iterator", x);
 			metricJson.addProperty("value",  res.get(x).getInterval());
-			writeLineOnFile("'"+x+"':"+metricJson.toString());
+			if(x==0) {
+				writeLineOnFile("'"+x+"':"+metricJson.toString());
+			}else {
+				writeLineOnFile(",'"+x+"':"+metricJson.toString());
+			}
 		}
 		writeLineOnFile("}");
 	}
@@ -60,6 +78,7 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 	
 	public void end() {
 		writeLineOnFile("}");//OPEN 1
+		firstSubTestVisit = true;
 	}
 
 

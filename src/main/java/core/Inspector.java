@@ -35,7 +35,7 @@ public class Inspector {
 	
 	public static BindingsResults getOuterJoinA(BindingsResults A,BindingsResults B) {
 		//triple che sono in A ma non sono in B
-		BindingsResults ris= new BindingsResults(A);
+		BindingsResults ris= new BindingsResults(new BindingsResults(A.toJson()));
 		for(Bindings bindings : B.getBindings()){
 			ris.remove(bindings);
 		}
@@ -66,13 +66,9 @@ public class Inspector {
 		
 		//-------------------------------------First check
 		ris.setUpdateSameOfInsertDelete(this.isUpdateSameOfInsertDelete());
-		
-		//-------------------------------------Second check
-		if(excAskTest){
-			ris.setAskDeleteOk(this.isDeleteTriplesOk());
-			ris.setAskInsertOk(this.isInsertTriplesOk());
-		}
-		
+
+
+		//-------------------------------------samples
 		ris.setAfterInsDelQueryTriple_example(getFirstOf(queryAfterInsertDell));
 		ris.setAfterInsDelQueryTriples_count(queryAfterInsertDell!=null ? queryAfterInsertDell.size(): 0);
 		ris.setAfterUpdateQueryTriple_example(getFirstOf(queryAfterNormalUpdate));
@@ -83,6 +79,12 @@ public class Inspector {
 		ris.setAskRemovedTriples_count(askForDelete!=null ? askForDelete.size(): 0);
 		ris.setPreQueryTriple_example(getFirstOf(query));
 		ris.setPreQueryTriples_count(query!=null ? query.size(): 0);
+		
+		//-------------------------------------Second check
+		if(excAskTest){
+			ris.setAskDeleteOk(this.isDeleteTriplesOk());
+			ris.setAskInsertOk(this.isInsertTriplesOk());
+		}
 		
 		return ris;
 	}
@@ -98,37 +100,11 @@ public class Inspector {
 	}
 	
 	public boolean isDeleteTriplesOk() {
-		System.out.println("--------------------------------isDeleteTriplesOk[query]----------------------");
-		for(Bindings bindings : query.getBindings()){
-			System.out.println(bindings.toJson().toString());
-		}
-		System.out.println("--------------------------------isDeleteTriplesOk[queryAfterNormalUpdate]----------------");
-		for(Bindings bindings : queryAfterNormalUpdate.getBindings()){
-			System.out.println(bindings.toJson().toString());
-		}
 		BindingsResults removed=getOuterJoinA(query,queryAfterNormalUpdate);
-		System.out.println("--------------------------------isDeleteTriplesOk[removed]----------------------");
-		for(Bindings bindings : removed.getBindings()){
-			System.out.println(bindings.toJson().toString());
-		}
-		System.out.println("--------------------------------isDeleteTriplesOk[askForDelete]----------------");
-		for(Bindings bindings : askForDelete.getBindings()){
-			System.out.println(bindings.toJson().toString());
-		}
-		System.out.println("----------------------------------isDeleteTriplesOk------------------------------FINE");
 		return areEq(askForDelete,removed);
 	}
 	public boolean isInsertTriplesOk() {
-		BindingsResults added=getOuterJoinA(queryAfterNormalUpdate,query);
-		System.out.println("--------------------------------isInsertTriplesOk[added]----------------------");
-		for(Bindings bindings : added.getBindings()){
-			System.out.println(bindings.toJson().toString());
-		}
-		System.out.println("--------------------------------isInsertTriplesOk[askForInsert]----------------");
-		for(Bindings bindings : askForInsert.getBindings()){
-			System.out.println(bindings.toJson().toString());
-		}
-		System.out.println("----------------------------------isInsertTriplesOk------------------------------FINE");
+		BindingsResults added=getOuterJoinA(queryAfterNormalUpdate,query);	
 		return areEq(askForInsert,added);
 	}
 

@@ -19,15 +19,15 @@ public class MetaTest implements ITest {
 	private boolean needPreparation=false;
 	private ITestVisitor monitor;
 	
-	public MetaTest(SparqlRequest query,SparqlRequest update,SparqlRequest rollback,TripleBase tripleBase) {		
+	public MetaTest(SparqlRequest query,SparqlRequest update,SparqlRequest rollback,TripleBase tripleBase,boolean askTestOn) {		
 		reiteration=1;
 		pot=0;//2^0=1 --> 1 only test with 1 only triple
 		this.tripleBase=tripleBase;
-		test= new SingleTest(query, update, rollback);
+		test= new SingleTest(query, update, rollback,askTestOn);
 	}
 	
-	public MetaTest(SparqlRequest query,SparqlRequest update,SparqlRequest rollback,TripleBase tripleBase,int reiteration, int pot) {
-		this(query,update,rollback,tripleBase);
+	public MetaTest(SparqlRequest query,SparqlRequest update,SparqlRequest rollback,TripleBase tripleBase,boolean askTestOn,int reiteration, int pot) {
+		this(query,update,rollback,tripleBase,askTestOn);
 		this.reiteration=reiteration;
 		this.pot=pot;		
 	}

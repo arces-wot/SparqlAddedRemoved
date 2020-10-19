@@ -34,7 +34,7 @@ public class TestBuilder {
 				triplesNumber
 		));
 		
-		SingleTest ris = new SingleTest(meta.getTest().getQuery(),update,rollback);		
+		SingleTest ris = new SingleTest(meta.getTest().getQuery(),update,rollback,meta.getTest().isExcAskTest());		
 		
 		if(meta.isNeedPreparation()){
 			SparqlRequest prepareInsert = meta.getTest().getPreparationInsert().clone();

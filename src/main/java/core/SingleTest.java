@@ -96,7 +96,8 @@ public class SingleTest implements ITest {
 			
 			//------------------------------------------------------------Phase 3
 			//-----------QUERY
-			TestMetric phase3 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");		
+		    System.out.println("-->"+ query.getSparql().getSparqlString());
+			TestMetric phase3 = new TestMetric("Pre-Query");		
 			phase3.start();
 			Response pre_ris_query = query.execute();
 			phase3.stop(pre_ris_query.isError());

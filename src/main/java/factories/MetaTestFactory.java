@@ -42,7 +42,8 @@ public class MetaTestFactory implements IMetaTestFactory {
 				(SparqlRequest)instance.getRequestByName("MT1_Query"),
 				(SparqlRequest)instance.getRequestByName("MT1_Update"),
 				(SparqlRequest)instance.getRequestByName("MT1_Rollback"),
-				instance.getTripleBaseByName("MT1")
+				instance.getTripleBaseByName("MT1"),
+				true
 		);
 		try {
 			test.setPreparation(
