@@ -1,6 +1,8 @@
-package connector;
+package factories;
 
 import java.util.Set;
+
+import connector.ISparqlRequest;
 
 public interface IRequestFactory {
 

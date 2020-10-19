@@ -12,33 +12,33 @@ import support.TestBuilder;
 public class MetaTest implements ITest {
 
 	private SingleTest test;
-	private TripleBase update_roolbackT;
+	private TripleBase tripleBase;
 	private int preparationPercentage;
 	private int reiteration;//reiteration of the same test
 	private int pot; //power of two, number of test and number of test triple as: 2^x with x in[0;pot]
 	private boolean needPreparation=false;
 	private ITestVisitor monitor;
-	public MetaTest(ITestVisitor monitor,SparqlRequest query,SparqlRequest update,SparqlRequest roolback,TripleBase update_roolbackTriple) {
-		this.monitor=monitor;
+	
+	public MetaTest(SparqlRequest query,SparqlRequest update,SparqlRequest rollback,TripleBase tripleBase) {		
 		reiteration=1;
 		pot=0;//2^0=1 --> 1 only test with 1 only triple
-		this.update_roolbackT=update_roolbackTriple;
-		test= new SingleTest(query, update, roolback);
+		this.tripleBase=tripleBase;
+		test= new SingleTest(query, update, rollback);
 	}
 	
-	public MetaTest(ITestVisitor monitor,SparqlRequest query,SparqlRequest update,SparqlRequest roolback,TripleBase update_roolbackTriple,int reiteration, int pot) {
-		this(monitor,query,update,roolback,update_roolbackTriple);
+	public MetaTest(SparqlRequest query,SparqlRequest update,SparqlRequest rollback,TripleBase tripleBase,int reiteration, int pot) {
+		this(query,update,rollback,tripleBase);
 		this.reiteration=reiteration;
 		this.pot=pot;		
 	}
 	
-	public void setPreparation(SparqlRequest preparation,SparqlRequest preparationRoolback,int preparationPercentage) throws Exception {
+	public void setPreparation(SparqlRequest preparation,SparqlRequest preparationRollback,int preparationPercentage) throws Exception {
 		if(preparationPercentage<0 || preparationPercentage>100) {
 			throw new Exception("The percentage must be in range of 0-100, it is: "+preparationPercentage );
 		}
 		this.needPreparation=true;
 		this.preparationPercentage=preparationPercentage;
-		test.setPreparation(preparation, preparationRoolback);
+		test.setPreparation(preparation, preparationRollback);
 	}
 
 	public TestResult execute() {
@@ -72,15 +72,26 @@ public class MetaTest implements ITest {
 		return new TestResult(singleTestsTime);
 	}
 
+
+	//----------------------------------GETTERS and SETTERS
+	public void setMonitor(ITestVisitor m) {
+		this.monitor=m;
+	}
 	
-	//----------------------------------ONLY GETTERS
-	
+	public void setReiteration(int reiteration) {
+		this.reiteration = reiteration;
+	}
+
+	public void setPot(int pot) {
+		this.pot = pot;
+	}
+
 	public SingleTest getTest() {
 		return test;
 	}
 
-	public TripleBase getUpdate_roolbackTriples() {
-		return update_roolbackT;
+	public TripleBase getTriples() {
+		return tripleBase;
 	}
 
 	public int getPreparationPercentage() {

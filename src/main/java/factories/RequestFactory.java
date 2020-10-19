@@ -1,13 +1,15 @@
-package connector;
+package factories;
 
 import java.util.HashMap;
 import java.util.Set;
 
+import connector.ISparqlRequest;
+import connector.SparqlRequest;
 import model.EndPoint;
 import model.SparqlObj;
 import support.Environment;
 /*
- * The query QUERY° with ° from 1 to 14
+ * The query QUERYï¿½ with ï¿½ from 1 to 14
  * refer to http://swat.cse.lehigh.edu/projects/lubm/queries-sparql.txt
  */
 
@@ -94,10 +96,10 @@ public class RequestFactory implements IRequestFactory{
 		requestMap.put(RequestName.QUERY13.toString(), createQuery13());
 		requestMap.put(RequestName.QUERY14.toString(), createQuery14());
 		requestMap.put(RequestName.UPDATE_FOR_Q2.toString(), createUpdateForQ2());
-		requestMap.put(RequestName.ROLLBACK_FOR_Q2.toString(), createRoolBackForQ2());
+		requestMap.put(RequestName.ROLLBACK_FOR_Q2.toString(), createRollBackForQ2());
 		requestMap.put(RequestName.UPDATE_FOR_Q3.toString(), createUpdateForQ3());
 		//requestMap.put(RequestName.ROLLBACK_FOR_Q3.toString(), createRol()); //need args (see method 'buildRequestByName')
-		requestMap.put(RequestName.ROLLBACK_FOR_Q4.toString(), createRoolBackForQ4());
+		requestMap.put(RequestName.ROLLBACK_FOR_Q4.toString(), createRollBackForQ4());
 		requestMap.put(RequestName.UPDATE_FOR_Q4.toString(), createUpdateForQ4());
 		
 	}
@@ -111,7 +113,7 @@ public class RequestFactory implements IRequestFactory{
 	}
 	public ISparqlRequest buildRequestByName(String name,String arg) throws Exception {
 		if(name==RequestName.ROLLBACK_FOR_Q3.toString()) {
-			return createRoolBackForQ3(arg);
+			return createRollBackForQ3(arg);
 		}
 		throw new Exception("Request name not found.");
 	}
@@ -589,7 +591,7 @@ public class RequestFactory implements IRequestFactory{
 		return new SparqlRequest(sparql,endPointHost);
 	}
 	
-	private SparqlRequest createRoolBackForQ2() {
+	private SparqlRequest createRollBackForQ2() {
 		/*
 			PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 			PREFIX ub: <http://lumb/for.sepa.test/ontology#>
@@ -680,7 +682,7 @@ public class RequestFactory implements IRequestFactory{
 		return new SparqlRequest(sparql,endPointHost);
 	}
 	
-	private SparqlRequest createRoolBackForQ3(String arg) {
+	private SparqlRequest createRollBackForQ3(String arg) {
 		/*
 		PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 		PREFIX ub: <http://lumb/for.sepa.test/ontology#>
@@ -690,7 +692,7 @@ public class RequestFactory implements IRequestFactory{
 		?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>
 		}
 		INSERT { 
-						… 
+						ï¿½ 
 		}
 		WHERE
 		{
@@ -743,7 +745,7 @@ public class RequestFactory implements IRequestFactory{
 		return new SparqlRequest(sparql,endPointHost);
 	}
 	
-	private SparqlRequest createRoolBackForQ4() {
+	private SparqlRequest createRollBackForQ4() {
 		SparqlObj sparql= new SparqlObj(
 				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\n" + 

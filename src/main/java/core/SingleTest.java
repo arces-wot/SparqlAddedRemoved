@@ -16,8 +16,8 @@ public class SingleTest implements ITest {
 		private SparqlRequest preparationInsert=null;
 		private SparqlRequest query=null;
 		private SparqlRequest update=null;
-		private SparqlRequest roolback=null;
-		private SparqlRequest roolbackPreparation=null;
+		private SparqlRequest rollback=null;
+		private SparqlRequest rollbackPreparation=null;
 	
 		private boolean excAskTest;
 		/*
@@ -28,16 +28,16 @@ public class SingleTest implements ITest {
 
 		
 
-		public SingleTest(SparqlRequest query, SparqlRequest update, SparqlRequest roolback) {
+		public SingleTest(SparqlRequest query, SparqlRequest update, SparqlRequest rollback) {
 			super();
 			this.query = query;
 			this.update = update;
-			this.roolback = roolback;
+			this.rollback = rollback;
 			this.excAskTest=false;
 		}
 
-		public SingleTest(SparqlRequest query, SparqlRequest update, SparqlRequest roolback,boolean excAskTest) {
-			this(query,update,roolback);
+		public SingleTest(SparqlRequest query, SparqlRequest update, SparqlRequest rollback,boolean excAskTest) {
+			this(query,update,rollback);
 			this.excAskTest=excAskTest;
 		}
 		
@@ -48,6 +48,7 @@ public class SingleTest implements ITest {
 			Inspector inspector = new Inspector();
 			//------------------------------------------------------------Phase 1
 			//-----------Prepare
+			//System.out.println("-->"+preparationInsert.getSparql().getSparqlString());
 			TestMetric phase1 = new TestMetric("Preparation");	
 			if(preparationInsert!=null) {
 				phase1.start();
@@ -121,10 +122,10 @@ public class SingleTest implements ITest {
 		
 			//------------------------------------------------------------Phase 6
 			//-----------ROOLBACK
-			TestMetric phase6 = new TestMetric("Execution RoolBack Update");
+			TestMetric phase6 = new TestMetric("Execution RollBack Update");
 			phase6.start();
-			Response ris_Roolback =roolback.execute();
-			phase6.stop(ris_Roolback.isError());
+			Response ris_Rollback =rollback.execute();
+			phase6.stop(ris_Rollback.isError());
 			phases.add(phase6);			
 
 			//------------------------------------------------------------Phase 7
@@ -161,12 +162,22 @@ public class SingleTest implements ITest {
 			
 			//------------------------------------------------------------Phase 9
 			//-----------ROOLBACK
-			TestMetric phase9 = new TestMetric("Re-Execution RoolBack");			
+			TestMetric phase9 = new TestMetric("Re-Execution RollBack");			
 			phase9.start();
-			ris_Roolback =roolback.execute();
-			phase9.stop(ris_Roolback.isError());
+			ris_Rollback =rollback.execute();
+			phase9.stop(ris_Rollback.isError());
 			phases.add(phase9);
 			
+			//------------------------------------------------------------Phase 10
+			//-----------ROOLBACK PREPARATION			
+			TestMetric phase10 = new TestMetric("RollBack preparation");	
+			if(preparationInsert!=null && rollbackPreparation!=null) {
+				phase10.start();
+				ris_Rollback =rollbackPreparation.execute();
+				phase10.stop(ris_Rollback.isError());
+				phases.add(phase10);
+			}
+		
 			
 			
 			//------------------------------------Bulding result
@@ -196,20 +207,20 @@ public class SingleTest implements ITest {
 			this.update = update;
 		}
 
-		public SparqlRequest getRoolback() {
-			return roolback;
+		public SparqlRequest getRollback() {
+			return rollback;
 		}
 
-		public void setRoolback(SparqlRequest roolback) {
-			this.roolback = roolback;
+		public void setRollback(SparqlRequest rollback) {
+			this.rollback = rollback;
 		}
 
-		public SparqlRequest getRoolbackPreparation() {
-			return roolbackPreparation;
+		public SparqlRequest getRollbackPreparation() {
+			return rollbackPreparation;
 		}
 
-		public void setPreparation(SparqlRequest preparationInsert,SparqlRequest roolbackPreparation) {
-			this.roolbackPreparation = roolbackPreparation;
+		public void setPreparation(SparqlRequest preparationInsert,SparqlRequest rollbackPreparation) {
+			this.rollbackPreparation = rollbackPreparation;
 			this.preparationInsert = preparationInsert;
 		}
 

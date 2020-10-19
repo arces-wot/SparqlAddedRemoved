@@ -6,11 +6,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import connector.IRequestFactory;
 import connector.ISparqlRequest;
-import connector.RequestFactory;
-import connector.RequestFactory.RequestName;
 import core.Inspector;
+import factories.IRequestFactory;
+import factories.RequestFactory;
+import factories.RequestFactory.RequestName;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 
 public class EndpointTest {

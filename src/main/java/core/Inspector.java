@@ -48,7 +48,7 @@ public class Inspector {
 	private BindingsResults askForInsert;	//added
 	private BindingsResults query; //result of the test query (before any updates)
 	private BindingsResults queryAfterNormalUpdate;
-//	private BindingsResults queryAfterFirstRoolBack;
+//	private BindingsResults queryAfterFirstRollBack;
 	private BindingsResults queryAfterInsertDell;
 	
 	
@@ -166,12 +166,12 @@ public class Inspector {
 		this.queryAfterNormalUpdate = queryAfterNormalUpdate;
 	}
 
-//	public BindingsResults getQueryAfterFirstRoolBack() {
-//		return queryAfterFirstRoolBack;
+//	public BindingsResults getQueryAfterFirstRollBack() {
+//		return queryAfterFirstRollBack;
 //	}
 //
-//	public void setQueryAfterFirstRoolBack(BindingsResults queryAfterFirstRoolBack) {
-//		this.queryAfterFirstRoolBack = queryAfterFirstRoolBack;
+//	public void setQueryAfterFirstRollBack(BindingsResults queryAfterFirstRollBack) {
+//		this.queryAfterFirstRollBack = queryAfterFirstRollBack;
 //	}
 
 	public BindingsResults getQueryAfterInsertDell() {

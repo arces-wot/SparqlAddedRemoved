@@ -24,7 +24,7 @@ import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import model.TestMetric;
 import model.UpdateConstruct;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AddedRemovedTest {
+public class AddedRemovedTest2 {
 
 	private static IRequestFactory factory = null;
 	@BeforeClass

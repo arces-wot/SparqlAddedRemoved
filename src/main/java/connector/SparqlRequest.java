@@ -32,9 +32,9 @@ public class SparqlRequest implements ISparqlRequest{
 	public void setSparql(SparqlObj sparql) {
 		this.sparql = sparql;
 	}
-
-	public void setSparql(String sparql) {
-		this.sparql.setSparql(sparql);
+	
+	public void setSparqlStr(String sparqlstr) {
+		this.sparql.setSparql(sparqlstr);
 	}
 	
 	public EndPoint getEndPointHost() {

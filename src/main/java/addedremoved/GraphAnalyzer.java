@@ -26,9 +26,9 @@ import org.apache.jena.update.Update;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateRequest;
 
-import connector.RequestFactory;
 import connector.SparqlRequest;
-import connector.RequestFactory.RequestName;
+import factories.RequestFactory;
+import factories.RequestFactory.RequestName;
 import model.UpdateConstruct;
 
 public class GraphAnalyzer {

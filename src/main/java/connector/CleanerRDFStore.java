@@ -3,7 +3,8 @@ package connector;
 
 import java.util.ArrayList;
 
-import connector.RequestFactory.RequestName;
+import factories.RequestFactory;
+import factories.RequestFactory.RequestName;
 import model.EndPoint;
 import model.SparqlObj;
 
