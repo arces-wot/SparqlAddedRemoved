@@ -26,15 +26,19 @@ public class main {
 
     private static String graph=Environment.graph;
     private static String ontology = Environment.ontology;	     
-    private static boolean ONTOLOGY =true;
+    private static boolean ONTOLOGY =false;
     private static boolean POPOLATE =true;
     private static boolean RUN = false;
-    private static boolean CLEAN = false;
+    private static boolean CLEAN = true;//non rimuove l'ontologia
     
 	public static void main (String[] args) {
 
 		 if(ONTOLOGY){
 			 loadOntology();
+		 }
+		 
+		 if(CLEAN){
+			 cleanStore();
 		 }
 		 
 		 if(POPOLATE){
@@ -48,9 +52,7 @@ public class main {
 			 	System.out.println(((QueryResponse)q.execute()).getBindingsResults().toJson().toString());
 		 }		 
 		 
-		 if(CLEAN){
-			 cleanStore();
-		 }
+		
 		
 	
 	}

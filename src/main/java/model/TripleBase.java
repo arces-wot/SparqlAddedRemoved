@@ -33,7 +33,9 @@ public class TripleBase {
 		this.inc++;
 		return base_s.replace(this.bind, next)+ " "+  base_p.replace(this.bind, next) + " "+  base_o.replace(this.bind, next); 
 	}
-	
+	public void reset() {
+		this.inc=0;
+	}
 	//--------------------------------------SETTERS GETTERS
 	public String getBase_s() {
 		return base_s;

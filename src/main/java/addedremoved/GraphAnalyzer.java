@@ -55,54 +55,6 @@ public class GraphAnalyzer {
 		UpdateConstruct constructs = sa.getConstruct();
 	}
 	
-	 
-		public static void main (String[] args) {
-
-			String test1 ="PREFIX ub: <http://lumb/for.sepa.test/ontology#>\r\n" + 
-					"			INSERT \r\n" + 
-					"			{ GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph>{\r\n" + 
-					"			 <http://www.Department2.University0.edu/GraduateStudent0>\r\n" + 
-					"			 ub:undergraduateDegreeFrom \r\n" + 
-					"			?Y\r\n" + 
-					"			} }\r\n" + 
-					"			WHERE {GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph>{\r\n" + 
-					"			<http://www.Department2.University0.edu/GraduateStudent0> rdf:type ub:GraduateStudent .\r\n" + 
-					"			?Y rdf:type ub:University .\r\n" + 
-					"			?Z rdf:type ub:Department .\r\n" + 
-					"			<http://www.Department2.University0.edu/GraduateStudent0> ub:memberOf ?Z .\r\n" + 
-					"			?Z ub:subOrganizationOf ?Y .\r\n" + 
-					"			}}";
-			
-			String test2 ="PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
-					"PREFIX ub: <http://lumb/for.sepa.test/ontology#>\r\n" + 
-					"WITH <http://lumb/for.sepa.test/workspace/defaultgraph>\r\n" + 
-					"DELETE {\r\n" + 
-					" ?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>\r\n" + 
-					"}\r\n" + 
-					"INSERT { \r\n" + 
-					"\r\n" + 
-					"<http://www.department0.university0.edu/AssistantProfessor0/PubTest1>  rdf:type ub:Publication .\r\n" + 
-					"<http://www.department0.university0.edu/AssistantProfessor0/PubTest2>  rdf:type ub:Publication .\r\n" + 
-					"\r\n" + 
-					"<http://www.department0.university0.edu/AssistantProfessor0/PubTest1> ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>.\r\n" + 
-					"<http://www.department0.university0.edu/AssistantProfessor0/PubTest2> ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>.\r\n" + 
-					"\r\n" + 
-					"\r\n" + 
-					"}\r\n" + 
-					"WHERE\r\n" + 
-					"{\r\n" + 
-					"?X rdf:type ub:Publication .\r\n" + 
-					"?X ub:publicationAuthor <http://www.Department0.University0.edu/AssistantProfessor0>\r\n" + 
-					"}\r\n" + 
-					"";
-			
-		//	System.out.println(getGraph(test2));
-			String sparql = ((SparqlRequest)RequestFactory.getInstance().getRequestByName(RequestName.UPDATE_FOR_Q3.toString())).getSparql().getSparqlString();
-			System.out.println(getGraphURIs(sparql).iterator().next());
-			testGraphOf(sparql);
-		
-		}
-		
 		
 //codice ottenuto dal Sepa engine, it.unibo.arces.wot.sepa.engine.scheduling; InternalUpdateRequest
 		public static Set<String> getGraphURIs(String sparql) throws QueryParseException {		

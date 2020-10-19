@@ -1,6 +1,8 @@
 package addedremoved;
 
 
+import java.util.ArrayList;
+
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
@@ -17,6 +19,7 @@ import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
 import model.EndPoint;
 import model.SparqlObj;
+import model.TestMetric;
 import model.UpdateConstruct;
 
 public class AddedRemovedGenerator {
@@ -159,11 +162,11 @@ public class AddedRemovedGenerator {
 			
 			}
 			
-			public static UpdateConstruct getAddedRemovedFrom(SparqlRequest req) {
+			public static UpdateConstruct getAddedRemovedFrom(SparqlRequest req,ArrayList<TestMetric> m) {
 				try {
 					EndPoint endPointforQuery= req.getEndPointHost();
 					endPointforQuery.setPath("/query");
-					return GetAddedRemovedTriples(req.getSparql(),endPointforQuery);
+					return GetAddedRemovedTriples(req.getSparql(),endPointforQuery, m);
 					
 				} catch (SEPASecurityException e) {
 					// TODO Auto-generated catch block
@@ -217,7 +220,9 @@ public class AddedRemovedGenerator {
 
 	
 			
-			private static UpdateConstruct GetAddedRemovedTriples(SparqlObj sparql, EndPoint ep ) throws SEPASecurityException, SEPABindingsException {
+			private static UpdateConstruct GetAddedRemovedTriples(SparqlObj sparql, EndPoint ep, ArrayList<TestMetric> m) throws SEPASecurityException, SEPABindingsException {
+				TestMetric tm1 = new TestMetric("Constructs");	
+				tm1.start();
 				//long start = Timings.getTime();
 				SPARQLAnalyzer sa = new SPARQLAnalyzer(sparql.getSparqlString());
 				UpdateConstruct constructs = sa.getConstruct();
@@ -242,7 +247,9 @@ public class AddedRemovedGenerator {
 					added  = ((QueryResponse) new SparqlRequest(getAddedSparql,ep).execute()).getBindingsResults();
 					
 				}
-
+				tm1.stop();
+				TestMetric tm2 = new TestMetric("ASKs");
+				tm2.start();
 				for(Bindings bindings : added.getBindings()){
 					boolean isPresent = isBindingPresent( bindings,sparql,ep);
 					if(isPresent){
@@ -256,6 +263,9 @@ public class AddedRemovedGenerator {
 						removed.getBindings().remove(bindings);
 					}
 				}
+				tm2.stop();
+				m.add(tm1);
+				m.add(tm2);
 				//long stop = System.currentTimeMillis();
 				constructs.setAdded(added);	
 				constructs.setRemoved(removed);

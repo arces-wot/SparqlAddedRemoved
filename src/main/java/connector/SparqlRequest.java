@@ -33,6 +33,9 @@ public class SparqlRequest implements ISparqlRequest{
 		this.sparql = sparql;
 	}
 
+	public void setSparql(String sparql) {
+		this.sparql.setSparql(sparql);
+	}
 	
 	public EndPoint getEndPointHost() {
 		return endPointHost;
@@ -55,6 +58,8 @@ public class SparqlRequest implements ISparqlRequest{
 	public SparqlRequest clone() {
 		return new SparqlRequest(sparql.clone(),endPointHost.clone());
 	}
+	
+
 	
 	public Response execute() {	
 		if(endPointHost.getPath()=="/update") {

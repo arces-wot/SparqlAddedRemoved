@@ -2,10 +2,11 @@ package model;
 
 public class TestMetric {
 
-	private long start;
-	private long end;
+	private long start=-1;
+	private long end=-1;
 	private String name;
-	
+	private boolean error = false;
+	private boolean exc = false;
 		
 	public TestMetric(String name) {
 		super();
@@ -13,7 +14,13 @@ public class TestMetric {
 	}
 	
 	public void start() {
+		exc = true;
 		start= System.currentTimeMillis();
+	}
+	
+	public void stop(boolean err) {
+		error=err;
+		end= System.currentTimeMillis();
 	}
 	
 	public void stop() {
@@ -37,10 +44,41 @@ public class TestMetric {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}		
+	
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
+	public boolean isExc() {
+		return exc;
+	}
+
+	public void setExc(boolean exc) {
+		this.exc = exc;
+	}
+
+	public long getInterval() {
+		if(end<0 || start <0) {
+			return -1;
+		}
+		return end-start;
 	}
 	
 	public void print() {
-		System.out.println(name+ ": "+ (end-start)+ "ms");
+		if(this.exc) {
+			if(!this.error ) {
+				System.out.println(name+ ": "+ getInterval() + "ms");
+			}else {
+				System.out.println(name+ ": FAILED");
+			}
+		}else {
+			System.out.println(name+ ": not done");
+		}
 	}
 	
 	

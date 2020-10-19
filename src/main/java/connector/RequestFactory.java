@@ -701,7 +701,7 @@ public class RequestFactory implements IRequestFactory{
 		*/
 		SparqlObj sparql= new SparqlObj(
 				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
-				"		PREFIX ub: <http://lumb/for.sepa.test/ontology#>\r\n" + 
+				"		PREFIX ub: "+_ontology+"\r\n" + 
 				"		WITH <http://lumb/for.sepa.test/workspace/defaultgraph>\r\n" + 
 				"		DELETE {\r\n" + 
 				"		?X rdf:type ub:Publication .\r\n" + 

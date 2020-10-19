@@ -23,18 +23,14 @@ import it.unibo.arces.wot.sepa.commons.response.Response;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import model.TestMetric;
 import model.UpdateConstruct;
-import support.Metrics;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AddedRemovedTest {
 
 	private static IRequestFactory factory = null;
-	private static Metrics metrics = null;
 	@BeforeClass
 	public static void init() {
 		//instanzio la fattoria di richieste
 		factory=RequestFactory.getInstance();
-		//e il raccoglitore delle metriche
-		metrics=Metrics.getInstance();
 	}
 
 	
@@ -52,7 +48,7 @@ public class AddedRemovedTest {
 		TestMetric Phase1 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");		
 		
 		Phase1.start();
-		UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q2.clone());
+		UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q2.clone(),phases);
 		if(constructs.needDelete()) {
 			try {
 				deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update_for_Q2.clone(),constructs);
@@ -202,7 +198,7 @@ public class AddedRemovedTest {
 		TestMetric Phase1 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");		
 		
 		Phase1.start();
-		UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q3.clone());
+		UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q3.clone(),phases);
 		if(constructs.needDelete()) {
 			try {
 				deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update_for_Q3.clone(),constructs);
@@ -278,7 +274,7 @@ public class AddedRemovedTest {
 
 		//----------------------------------Phase 5	    
 		TestMetric Phase5 = new TestMetric("Execution RoolBack Update");
-		System.out.println("roolback->"+roolback_for_Q3.getSparql().getSparqlString());
+		//System.out.println("roolback->"+roolback_for_Q3.getSparql().getSparqlString());
 		Phase5.start();
 		Response ris_Roolback =roolback_for_Q3.execute();
 		Phase5.stop();
@@ -332,8 +328,8 @@ public class AddedRemovedTest {
 		ris_Roolback =roolback_for_Q3.execute();
 		Phase8.stop();
 		phases.add(Phase8);	
-		assertFalse("#)  Phase8",ris_Query.isError());
-		
+		assertFalse("#)  Phase8",ris_Roolback.isError());
+		System.out.println("ROOLBACK-> \n\n" + roolback_for_Q3.getSparql().getSparqlString());
 		//----------------------------------Phase 9	
 		//assertTrue("#)  Phase9 Querys resutl (need be equasl)",Inspector.areEq(ris_Query_2.getBindingsResults(),ris_Query.getBindingsResults()));
 		
@@ -351,11 +347,15 @@ public class AddedRemovedTest {
 	    assertTrue("#)  Phase9 The query triples after normal update are the same of the query triples after insert-delete",
 	    		inspector.isUpdateSameOfInsertDelete() );
 	    
-	    
-	    assertTrue("#)  Phase9 The triples of delete (filtered by ASK) are ok.",
-	    		inspector.isDeleteTriplesOk());
-	    assertTrue("#)  Phase9 The triples of insert (filtered by ASK) are ok.",
-	    		inspector.isInsertTriplesOk());
+	    //non si possono esseffutare i check sulle ask, dato che
+	    //ne la 1° condizione ne la  2° sono rispettate
+	    //(1° condizione: le triple modificate dalla update devono essere tutte di interesse della query)
+	    //(2° le triple devono essere nel medesimo formato, sia per la update che per la query)
+//	    
+//	    assertTrue("#)  Phase9 The triples of delete (filtered by ASK) are ok.",
+//	    		inspector.isDeleteTriplesOk());
+//	    assertTrue("#)  Phase9 The triples of insert (filtered by ASK) are ok.",
+//	    		inspector.isInsertTriplesOk());
 		
 	}
 	
@@ -421,7 +421,7 @@ public class AddedRemovedTest {
 		TestMetric Phase1 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");		
 		
 		Phase1.start();
-		UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q4.clone());
+		UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q4.clone(),phases);
 		if(constructs.needDelete()) {
 			try {
 				deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update_for_Q4.clone(),constructs);

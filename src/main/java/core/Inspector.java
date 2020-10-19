@@ -1,9 +1,13 @@
 package core;
 
+import java.util.ArrayList;
+
 import com.google.gson.JsonObject;
 
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
+import model.TestMetric;
+import model.TestResult;
 
 public class Inspector {
 
@@ -29,29 +33,16 @@ public class Inspector {
 		}
 	}
 	
-	public static BindingsResults getBRemovedFromA(BindingsResults B,BindingsResults A) {
-		BindingsResults ris= new BindingsResults(new JsonObject());
+	public static BindingsResults getOuterJoinA(BindingsResults A,BindingsResults B) {
+		//triple che sono in A ma non sono in B
+		BindingsResults ris= new BindingsResults(A);
 		for(Bindings bindings : B.getBindings()){
-			if(!A.contains(bindings)) {
-				//se A non contiene il bindings in B significa che è stato rimosso da B (tramite l'update)
-				ris.add(bindings);
-			}
+			ris.remove(bindings);
 		}
+		System.out.println("getOuterJoinA size: "+ris.size());
 		return ris;
 	}
-	public static BindingsResults getBAddedFromA(BindingsResults B,BindingsResults A) {
-		BindingsResults ris=new BindingsResults(new JsonObject());
-		for(Bindings bindings : A.getBindings()){
-			System.out.println("------OK");
-			if(!B.contains(bindings)) {
-
-				System.out.println("------MIAO");
-				//se B non contiene il bindings in A significa che è stato aggiunto a B (tramite l'update)
-				ris.add(bindings);
-			}
-		}
-		return ris;
-	}
+	
 	
 	private BindingsResults askForDelete; 	//removed
 	private BindingsResults askForInsert;	//added
@@ -66,34 +57,82 @@ public class Inspector {
 	}
 	
 	public boolean isUpdateSameOfInsertDelete() {
-		internalPrint();
 		return areEq(queryAfterNormalUpdate,queryAfterInsertDell);
 		
 	}
 	
+	public TestResult getResult(ArrayList<TestMetric> phases, boolean excAskTest) {
+		TestResult ris = new TestResult(phases);
+		
+		//-------------------------------------First check
+		ris.setUpdateSameOfInsertDelete(this.isUpdateSameOfInsertDelete());
+		
+		//-------------------------------------Second check
+		if(excAskTest){
+			ris.setAskDeleteOk(this.isDeleteTriplesOk());
+			ris.setAskInsertOk(this.isInsertTriplesOk());
+		}
+		
+		ris.setAfterInsDelQueryTriple_example(getFirstOf(queryAfterInsertDell));
+		ris.setAfterInsDelQueryTriples_count(queryAfterInsertDell!=null ? queryAfterInsertDell.size(): 0);
+		ris.setAfterUpdateQueryTriple_example(getFirstOf(queryAfterNormalUpdate));
+		ris.setAfterUpdateQueryTriples_count(queryAfterNormalUpdate!=null ? queryAfterNormalUpdate.size(): 0);
+		ris.setAskAddedTriple_example(getFirstOf(askForInsert));
+		ris.setAskAddedTriples_count(askForInsert!=null ? askForInsert.size(): 0);
+		ris.setAskRemovedTriple_example(getFirstOf(askForDelete));
+		ris.setAskRemovedTriples_count(askForDelete!=null ? askForDelete.size(): 0);
+		ris.setPreQueryTriple_example(getFirstOf(query));
+		ris.setPreQueryTriples_count(query!=null ? query.size(): 0);
+		
+		return ris;
+	}
+	
+	private String getFirstOf(BindingsResults br) {
+		String first = "";
+		if(br!=null && br.getBindings().size()>0) {
+			first=br.getBindings().get(0).toJson().toString();
+		}else{
+			first="No triples";
+		}
+		return first;
+	}
+	
 	public boolean isDeleteTriplesOk() {
-		BindingsResults removed=getBRemovedFromA(query,queryAfterNormalUpdate);
+		System.out.println("--------------------------------isDeleteTriplesOk[query]----------------------");
+		for(Bindings bindings : query.getBindings()){
+			System.out.println(bindings.toJson().toString());
+		}
+		System.out.println("--------------------------------isDeleteTriplesOk[queryAfterNormalUpdate]----------------");
+		for(Bindings bindings : queryAfterNormalUpdate.getBindings()){
+			System.out.println(bindings.toJson().toString());
+		}
+		BindingsResults removed=getOuterJoinA(query,queryAfterNormalUpdate);
+		System.out.println("--------------------------------isDeleteTriplesOk[removed]----------------------");
+		for(Bindings bindings : removed.getBindings()){
+			System.out.println(bindings.toJson().toString());
+		}
+		System.out.println("--------------------------------isDeleteTriplesOk[askForDelete]----------------");
+		for(Bindings bindings : askForDelete.getBindings()){
+			System.out.println(bindings.toJson().toString());
+		}
+		System.out.println("----------------------------------isDeleteTriplesOk------------------------------FINE");
 		return areEq(askForDelete,removed);
 	}
 	public boolean isInsertTriplesOk() {
-		BindingsResults added=getBAddedFromA(query,queryAfterNormalUpdate);
+		BindingsResults added=getOuterJoinA(queryAfterNormalUpdate,query);
+		System.out.println("--------------------------------isInsertTriplesOk[added]----------------------");
+		for(Bindings bindings : added.getBindings()){
+			System.out.println(bindings.toJson().toString());
+		}
+		System.out.println("--------------------------------isInsertTriplesOk[askForInsert]----------------");
+		for(Bindings bindings : askForInsert.getBindings()){
+			System.out.println(bindings.toJson().toString());
+		}
+		System.out.println("----------------------------------isInsertTriplesOk------------------------------FINE");
 		return areEq(askForInsert,added);
 	}
 
-	private void internalPrint() {
-		System.out.println("----------------------------------printComparationInsertTriplesOk-----INIZIO");
-		
-		System.out.println("--------------------------------getBAddedFromA(query,queryAfterNormalUpdate)------------------------------------");
-		for(Bindings bindings : getBAddedFromA(query,queryAfterNormalUpdate).getBindings()){
-			System.out.println(bindings.toJson().toString());
-		}
-		System.out.println("----------------------getBRemovedFromA(query,queryAfterNormalUpdate)-----------------------------");
-		for(Bindings bindings : getBRemovedFromA(query,queryAfterNormalUpdate).getBindings()){
-			System.out.println(bindings.toJson().toString());
-		}
-		System.out.println("----------------------------------printComparationInsertTriplesOk-----FINE");
-		
-	} 
+
 	
 	public BindingsResults getAskForDelete() {
 		return askForDelete;
