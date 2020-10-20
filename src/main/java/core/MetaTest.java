@@ -67,8 +67,9 @@ public class MetaTest implements ITest {
 			singleTestsTime.add(general);
 			monitor.visit(metricAvarage.finalizeAndGetAvarage());
 			actualPot++;
+			monitor.end();
 		}	
-		monitor.end();
+	
 		return new TestResult(singleTestsTime);
 	}
 

@@ -58,7 +58,24 @@ public class MetaTestFactory implements IMetaTestFactory {
 	}
 	
 	private MetaTest generateOnlyDeleteMetaTest() {
-		return null; //WIP
+		RequestFactoryForMetaTest instance = RequestFactoryForMetaTest.getInstance();
+		MetaTest test = new MetaTest(
+				(SparqlRequest)instance.getRequestByName("MT2_Query"),
+				(SparqlRequest)instance.getRequestByName("MT2_Update"),
+				(SparqlRequest)instance.getRequestByName("MT2_Rollback"),
+				instance.getTripleBaseByName("MT2"),
+				true
+		);
+		try {
+			test.setPreparation(
+					(SparqlRequest)instance.getRequestByName("MT2_prepare_insert"),
+					(SparqlRequest)instance.getRequestByName("MT2_prepare_rollback"),
+					10);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return test; 
 	}
 	
 	private MetaTest generateUpdateMetaTest() {

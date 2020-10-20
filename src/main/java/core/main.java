@@ -50,52 +50,68 @@ public class main {
 		 }
 		 
 		 if(RUN){
-				ArrayList<TestMetric> phases = new ArrayList<TestMetric> ();
-				SparqlRequest deleteUpdate=null;
-				SparqlRequest insertUpdate=null;
-				SparqlRequest update=(SparqlRequest)RequestFactoryForMetaTest.getInstance().getRequestByName("MT1_Update");
-				update.setSparqlStr(TestBuilder.insertTripleToSparql(update.getSparql().getSparqlString(),RequestFactoryForMetaTest.getInstance().getTripleBaseByName("MT1"),2));
-			 UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
-				boolean  pahes2Err = false;
-				if(constructs.needDelete()) {
-					try {
-						deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update.clone(),constructs);				
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						pahes2Err=true;
-					}
-				}
-				if(constructs.needInsert()) {
-					try {
-						insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update.clone(),constructs);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						pahes2Err=true;
-					}
-				}
+			 MetaTestRun();
 		 }		 
 		 
 		
 		
 	
 	}
+	private static void constructTester() {
+		ArrayList<TestMetric> phases = new ArrayList<TestMetric> ();
+		SparqlRequest deleteUpdate=null;
+		SparqlRequest insertUpdate=null;
+		SparqlRequest update=(SparqlRequest)RequestFactoryForMetaTest.getInstance().getRequestByName("MT1_Update");
+		update.setSparqlStr(TestBuilder.insertTripleToSparql(update.getSparql().getSparqlString(),RequestFactoryForMetaTest.getInstance().getTripleBaseByName("MT1"),2));
+	 UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
+		boolean  pahes2Err = false;
+		if(constructs.needDelete()) {
+			try {
+				deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update.clone(),constructs);				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				pahes2Err=true;
+			}
+		}
+		if(constructs.needInsert()) {
+			try {
+				insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update.clone(),constructs);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				pahes2Err=true;
+			}
+		}
+	}
 	
 	private static void MetaTestRun() {
-		 MetaTest firstMT = MetaTestFactory.getInstance().getTestByName("InsertOnly");
-		 try {
-			ITestVisitor monitor = new TestVisitorOutputJsonFile("E:\\prova.json");
-	
-			firstMT.setMonitor(monitor);
-			System.out.println("Start");
-			firstMT.execute();
-			System.out.println("FINE");
-			monitor.close();
+		ITestVisitor monitor=null;
+		try {				
+			monitor = new TestVisitorOutputJsonFile("E:\\prova.json");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 
+		MetaTest MT1 = MetaTestFactory.getInstance().getTestByName("InsertOnly");	
+		MT1.setPot(2);
+		MT1.setReiteration(2);
+		MT1.setMonitor(monitor);
+		System.out.println("MT1 Start");
+		MT1.execute();
+		System.out.println("MT1 End");
+	
+		 
+//		MetaTest MT2 = MetaTestFactory.getInstance().getTestByName("DeleteOnly");
+//		MT2.setMonitor(monitor);
+//		MT1.setPot(2);
+//		System.out.println("MT2 Start");
+//		MT2.execute();
+//		System.out.println("MT2 End");
+//		
+		//close 
+		monitor.close();
 	}
 	
 	public static void process(Response res) {

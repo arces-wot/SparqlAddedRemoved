@@ -52,22 +52,51 @@ public class RequestFactoryForMetaTest implements IRequestFactory{
 	
 	private RequestFactoryForMetaTest() {
 		
-		//-----------------------------------MetaTest 1
+		//-----------------------------------MetaTest 1 (ONLY INSERT DATA)
 		requestMap.put("MT1_prepare_insert", createInsertMT1());
 		requestMap.put("MT1_Query", createQueryMT1());
-		requestMap.put("MT1_Update", createInsertMT1());
+		requestMap.put("MT1_Update", createUpdateMT1());
 		requestMap.put("MT1_Rollback", createRollbackMT1());
 		requestMap.put("MT1_prepare_rollback", createRollbackMT1());		
 		tripleBaseMap.put("MT1", createTripleBaseMT1());
 		
-		//-----------------------------------MetaTest 2
-		//WIP
+		//-----------------------------------MetaTest 2 (ONLY DELETE WHERE)
+		requestMap.put("MT2_prepare_insert", createInsertMT2());
+		requestMap.put("MT2_Query", createQueryMT2());
+		requestMap.put("MT2_Update", createUpdateMT2());
+		requestMap.put("MT2_Rollback", createRollbackMT2());
+		requestMap.put("MT2_prepare_rollback", createRollbackMT1());		
+		tripleBaseMap.put("MT2", createTripleBaseMT2());
 
-		//-----------------------------------MetaTest 3
+		//-----------------------------------MetaTest 3 (INSERT DATA + DELETE WHERE)
 		//WIP
 	}
-	
 
+//-------------------------------------------------------------------------------MT2 START
+	
+	private SparqlRequest createInsertMT2() {
+		//is the same of MT1
+		return createInsertMT1();
+	}
+	private TripleBase createTripleBaseMT2() {
+		//is the same of MT1
+		return  createTripleBaseMT1();
+	}
+	private SparqlRequest createQueryMT2() {
+		//is the same of MT1
+		return createQueryMT1();
+	}
+	private SparqlRequest createUpdateMT2() {
+		//inverse of MT1
+		return createRollbackMT1();
+	}
+	
+	private SparqlRequest createRollbackMT2() {
+		//inverse of MT1
+		return createUpdateMT1();
+	}
+//-------------------------------------------------------------------------------MT2 END	
+//-------------------------------------------------------------------------------MT1 START
 	
 	private SparqlRequest createInsertMT1() {
 		String sparqlStr = ""+
@@ -81,7 +110,9 @@ public class RequestFactoryForMetaTest implements IRequestFactory{
 		EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
 		return new SparqlRequest(sparql,endPointHost);
 	}
-	
+	private SparqlRequest createUpdateMT1() {
+		return createInsertMT1();
+	}
 	private SparqlRequest createRollbackMT1() {
 		String sparqlStr = ""+
 				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
@@ -108,10 +139,10 @@ public class RequestFactoryForMetaTest implements IRequestFactory{
 	}
 	
 	private TripleBase createTripleBaseMT1() {
-
 		return  new TripleBase("<http://www.unibo.it/Student__X__>","ub:memberOf","<http://www.unibo.it>");
 	}
-	
+
+//-------------------------------------------------------------------------------MT1 END
 	//------------------------------------------accessor
 	public Set<String> getRequestNames() {
 		return requestMap.keySet();

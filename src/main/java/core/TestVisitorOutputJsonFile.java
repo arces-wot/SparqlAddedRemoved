@@ -36,6 +36,8 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 	
 	public void start(int n, int replication) {
 		String str = "'"+testID + "':{";
+		testID++;
+		subTestID=0;
 		if(firstTestVisit) {
 			firstTestVisit=false;
 		}else {
@@ -49,6 +51,7 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 
 	public void visit(TestResult res) {
 		String str = "'"+subTestID + "':"+res.toJson().toString();
+		subTestID++;
 		if(firstSubTestVisit) {
 			firstSubTestVisit = false;
 		}else {

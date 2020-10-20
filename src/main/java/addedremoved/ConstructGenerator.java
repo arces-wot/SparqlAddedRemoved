@@ -39,18 +39,25 @@ public class ConstructGenerator {
 		add(this.defaulGraph, t);
 	}
 	public String getConstruct() {
-		String sparql = "CONSTRUCT { ?s ?p ?o } WHERE {\n";
+		String sparql = "CONSTRUCT ";
+		String where = " WHERE { \n";
+		boolean firstGraph = true;
+		ElementGroup list = new ElementGroup();
 		for (String graph : allTriple.keySet()) {
-			sparql+="GRAPH <"+ graph + ">\n";
-
-			ElementGroup list = new ElementGroup();
 			for(Triple triple :allTriple.get(graph)) {
 				//sparql+=triple + ".\n";
 				list.addTriplePattern(triple);
 			}	
-			sparql+=list.toString();
-		}		
-		sparql+="}";
+			if(firstGraph) {
+				firstGraph=false;
+				where+="{GRAPH <"+ graph + "> {?s ?p ?o}}\n";
+			}else {
+
+				where+="UNION{GRAPH <"+ graph + "> {?s ?p ?o}}\n";
+			}
+		}
+		sparql+=list.toString() + where +"}";
+		
 		return sparql;
 	}
 	
