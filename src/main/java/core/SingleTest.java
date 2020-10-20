@@ -26,7 +26,8 @@ public class SingleTest implements ITest {
 		 * 2) The query select pattern is not equals to that triples
 		 */
 
-		
+		private int testTripleCount=-1;
+		private int preInseredTestTirpleCount=-1;
 
 		public SingleTest(SparqlRequest query, SparqlRequest update, SparqlRequest rollback) {
 			super();
@@ -183,7 +184,7 @@ public class SingleTest implements ITest {
 			
 			//------------------------------------Bulding result
     		
-			return inspector.getResult(phases, excAskTest);
+			return inspector.getResult(phases, excAskTest,testTripleCount,preInseredTestTirpleCount);
 		}
 	
 		//-----------------------------------------------------------------SETTERS and GETTERS
@@ -192,6 +193,22 @@ public class SingleTest implements ITest {
 			return preparationInsert;
 		}
 		
+		public int getTestTripleCount() {
+			return testTripleCount;
+		}
+
+		public int getPreInseredTestTirpleCount() {
+			return preInseredTestTirpleCount;
+		}
+
+		public void setPreInseredTestTirpleCount(int preInseredTestTirpleCount) {
+			this.preInseredTestTirpleCount = preInseredTestTirpleCount;
+		}
+
+		public void setTestTripleCount(int testTripleCount) {
+			this.testTripleCount = testTripleCount;
+		}
+
 		public SparqlRequest getQuery() {
 			return query;
 		}

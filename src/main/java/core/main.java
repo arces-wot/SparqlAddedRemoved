@@ -14,6 +14,7 @@ import factories.IRequestFactory;
 import factories.MetaTestFactory;
 import factories.RequestFactory;
 import factories.RequestFactory.RequestName;
+import factories.RequestFactoryForMetaTest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
@@ -23,13 +24,14 @@ import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
 import model.TestMetric;
 import model.UpdateConstruct;
 import support.Environment;
+import support.TestBuilder;
 
 public class main {
 
     private static String graph=Environment.graph;
     private static String ontology = Environment.ontology;	     
-    private static boolean ONTOLOGY =false;
-    private static boolean POPOLATE =false;
+    private static boolean ONTOLOGY = false;
+    private static boolean POPOLATE = false;
     private static boolean RUN = true;
     private static boolean CLEAN = false;//non rimuove l'ontologia
     
@@ -48,24 +50,52 @@ public class main {
 		 }
 		 
 		 if(RUN){
-			 MetaTest firstMT = MetaTestFactory.getInstance().getTestByName("InsertOnly");
-			 try {
-				ITestVisitor monitor = new TestVisitorOutputJsonFile("E:\\prova.json");
-		
-				firstMT.setMonitor(monitor);
-				System.out.println("Start");
-				firstMT.execute();
-				System.out.println("FINE");
-				monitor.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				ArrayList<TestMetric> phases = new ArrayList<TestMetric> ();
+				SparqlRequest deleteUpdate=null;
+				SparqlRequest insertUpdate=null;
+				SparqlRequest update=(SparqlRequest)RequestFactoryForMetaTest.getInstance().getRequestByName("MT1_Update");
+				update.setSparqlStr(TestBuilder.insertTripleToSparql(update.getSparql().getSparqlString(),RequestFactoryForMetaTest.getInstance().getTripleBaseByName("MT1"),2));
+			 UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
+				boolean  pahes2Err = false;
+				if(constructs.needDelete()) {
+					try {
+						deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update.clone(),constructs);				
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						pahes2Err=true;
+					}
+				}
+				if(constructs.needInsert()) {
+					try {
+						insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update.clone(),constructs);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						pahes2Err=true;
+					}
+				}
 		 }		 
 		 
 		
 		
 	
+	}
+	
+	private static void MetaTestRun() {
+		 MetaTest firstMT = MetaTestFactory.getInstance().getTestByName("InsertOnly");
+		 try {
+			ITestVisitor monitor = new TestVisitorOutputJsonFile("E:\\prova.json");
+	
+			firstMT.setMonitor(monitor);
+			System.out.println("Start");
+			firstMT.execute();
+			System.out.println("FINE");
+			monitor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void process(Response res) {

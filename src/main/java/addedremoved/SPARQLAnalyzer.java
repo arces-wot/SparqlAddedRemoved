@@ -81,14 +81,32 @@ public class SPARQLAnalyzer {
 
 		@Override
 		public void visit(UpdateDataInsert updateDataInsert) {
-			Query insertQuery = createBaseConstruct(new QuadAcc(updateDataInsert.getQuads()));
-			String insertString = insertQuery.isUnknownType() ? "" : insertQuery.serialize() + "WHERE{}";
+			//---------------------------------------------------------------REWORKED
+			//Esempio di update che passa qui: Update del test MT1
+			//CONSTRUCT costruita tramite jena:
+			/*
+			  CONSTRUCT{ 
+					    GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph> 
+					      { <http://www.unibo.it/Student0> <http://swat.cse.lehigh.edu/onto/univ-bench.owl#memberOf> <http://www.unibo.it> .}
+					    GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph> 
+					      { <http://www.unibo.it/Student1> <http://swat.cse.lehigh.edu/onto/univ-bench.owl#memberOf> <http://www.unibo.it> .}
+					  }WHERE{}
+			 */
+			//CONTRUCT ACCETTATA DA SPARQL 1.1:
+			/*
+			  CONSTRUCT { ?s ?p ?o } WHERE { GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph> {
+					  <http://www.unibo.it/Student0> <http://swat.cse.lehigh.edu/onto/univ-bench.owl#memberOf> <http://www.unibo.it> .
+					  <http://www.unibo.it/Student1> <http://swat.cse.lehigh.edu/onto/univ-bench.owl#memberOf> <http://www.unibo.it> .
+					 } 			 
+			 */
+			ConstructGenerator cg = new ConstructGenerator(updateDataInsert.getQuads());			
+			String insertString = cg.getConstruct();
+			//OLD CODE------------------INIZIO
+			//			Query insertQuery = createBaseConstruct(new QuadAcc(updateDataInsert.getQuads()));
+			//			String insertString = insertQuery.isUnknownType() ? "" : insertQuery.serialize() + "WHERE{}";
+			//OLD CODE------------------FINE
 			result = new UpdateConstruct("", insertString);
-//			if(insertQuery.getGraphURIs().size()>0) {
-//				result.setAddedGraph(insertQuery.getGraphURIs().get(0));
-//				//----------------------------------STESSO GRAFO DI PRIMA O GRAFI DIVERSI??
-//			}
-//			System.out.println("1");
+			//System.out.println("1");
 		}
 
 		@Override
@@ -101,7 +119,7 @@ public class SPARQLAnalyzer {
 //				//----------------------------------STESSO GRAFO DI PRIMA O GRAFI DIVERSI??
 //			}
 //
-//			System.out.println("2");
+			System.out.println("2");
 		}
 
 		@Override
@@ -164,7 +182,7 @@ public class SPARQLAnalyzer {
 //				result.setRemovedGraph(deleteGraph);
 //			}
 //
-//			System.out.println("4");
+			System.out.println("4");
 		}
 
 		@Override
@@ -174,7 +192,7 @@ public class SPARQLAnalyzer {
 			result = new UpdateConstruct(deleteConstruct, "");
 //			result.setRemovedGraph(update.getGraph().getURI());
 //
-//			System.out.println("5");
+			System.out.println("5");
 		}
 
 		@Override
@@ -184,7 +202,7 @@ public class SPARQLAnalyzer {
 			result = new UpdateConstruct(deleteConstruct, "");
 //			result.setRemovedGraph(update.getGraph().getURI());
 //
-//			System.out.println("6");
+			System.out.println("6");
 		}
 
 		@Override
@@ -196,7 +214,7 @@ public class SPARQLAnalyzer {
 			result = new UpdateConstruct(deleteConstruct, insertConstruct);
 //			result.setGraph(update.getDest().getGraph().getURI());
 //
-//			System.out.println("7");
+			System.out.println("7");
 		}
 
 		@Override
@@ -206,7 +224,7 @@ public class SPARQLAnalyzer {
 			result = new UpdateConstruct("", insertConstruct);
 //			result.setAddedGraph(update.getDest().getGraph().getURI());
 //
-//			System.out.println("8");
+			System.out.println("8");
 		}
 
 		// TODO: Move

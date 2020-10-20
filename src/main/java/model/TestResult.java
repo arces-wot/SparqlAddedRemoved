@@ -25,6 +25,9 @@ public class TestResult {
 	private int afterUpdateQueryTriples_count;
 	private int afterInsDelQueryTriples_count;
 	
+	private int testTripleCount;
+	private int preInseredTripleCount;
+	
 	
 	public TestResult(ArrayList<TestMetric> phases) {
 		super();
@@ -36,6 +39,7 @@ public class TestResult {
 	
 	public JsonObject toJson() {
 		JsonObject ris = new JsonObject();
+		ris.addProperty("insDelOk", updateSameOfInsertDelete);
 		ris.addProperty("askCheckDone", askCheckDone);
 		ris.addProperty("askDeleteOk", askDeleteOk);
 		ris.addProperty("askInsertOk", askInsertOk);
@@ -49,13 +53,24 @@ public class TestResult {
 		ris.addProperty("preQueryTriple_example", preQueryTriple_example);
 		ris.addProperty("afterUpdateQueryTriple_example", afterUpdateQueryTriple_example);
 		ris.addProperty("afterInsDelQueryTriple_example", afterInsDelQueryTriple_example);
+		ris.addProperty("testTripleCount", testTripleCount);
+		ris.addProperty("preInseredTripleCount", preInseredTripleCount);
 
 		JsonObject testMetricsJson = new JsonObject();
 		int x = 0;
 		for (TestMetric testMetric : phases) {
 			JsonObject metricJson = new JsonObject();
 			metricJson.addProperty("name", testMetric.getName());
-			metricJson.addProperty("iterator", x);
+			if(testMetric.getName()=="Preparation") {
+				metricJson.addProperty("iterator", 0);
+			}else if(testMetric.getName()=="Constructs" ) {
+				metricJson.addProperty("iterator", 1.1);
+			}else if(testMetric.getName()=="ASKs") {
+				metricJson.addProperty("iterator", 1.2);
+			}else {
+
+				metricJson.addProperty("iterator", x-2);
+			}
 			metricJson.addProperty("value",  testMetric.getInterval());
 			metricJson.addProperty("error",  testMetric.isError());
 			testMetricsJson.add("metric_"+x, metricJson);
@@ -66,9 +81,26 @@ public class TestResult {
 	}
 	
 	//----------------------------------------------------GETTERS AND SETTERS
+	
 	public ArrayList<TestMetric> getPhases() {
 		return phases;
 	}
+	public int getPreInseredTripleCount() {
+		return preInseredTripleCount;
+	}
+
+	public void setPreInseredTripleCount(int preInseredTripleCount) {
+		this.preInseredTripleCount = preInseredTripleCount;
+	}
+
+	public int getTestTripleCount() {
+		return testTripleCount;
+	}
+
+	public void setTestTripleCount(int testTripleCount) {
+		this.testTripleCount = testTripleCount;
+	}
+
 	public void setPhases(ArrayList<TestMetric> phases) {
 		this.phases = phases;
 	}

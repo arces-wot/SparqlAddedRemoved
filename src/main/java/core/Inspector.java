@@ -39,7 +39,7 @@ public class Inspector {
 		for(Bindings bindings : B.getBindings()){
 			ris.remove(bindings);
 		}
-		System.out.println("getOuterJoinA size: "+ris.size());
+		//System.out.println("getOuterJoinA size: "+ris.size());
 		return ris;
 	}
 	
@@ -61,7 +61,7 @@ public class Inspector {
 		
 	}
 	
-	public TestResult getResult(ArrayList<TestMetric> phases, boolean excAskTest) {
+	public TestResult getResult(ArrayList<TestMetric> phases, boolean excAskTest, int triples,int preInsered) {
 		TestResult ris = new TestResult(phases);
 		
 		//-------------------------------------First check
@@ -79,6 +79,8 @@ public class Inspector {
 		ris.setAskRemovedTriples_count(askForDelete!=null ? askForDelete.size(): 0);
 		ris.setPreQueryTriple_example(getFirstOf(query));
 		ris.setPreQueryTriples_count(query!=null ? query.size(): 0);
+		ris.setTestTripleCount(triples);
+		ris.setPreInseredTripleCount(preInsered);
 		
 		//-------------------------------------Second check
 		if(excAskTest){

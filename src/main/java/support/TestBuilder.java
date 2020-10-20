@@ -35,11 +35,12 @@ public class TestBuilder {
 		));
 		
 		SingleTest ris = new SingleTest(meta.getTest().getQuery(),update,rollback,meta.getTest().isExcAskTest());		
-		
+		ris.setTestTripleCount(triplesNumber);
 		if(meta.isNeedPreparation()){
 			SparqlRequest prepareInsert = meta.getTest().getPreparationInsert().clone();
 			SparqlRequest prepareDelete = meta.getTest().getRollbackPreparation().clone();
 			int prapreTripleNumber =triplesNumber*meta.getPreparationPercentage()/100;
+			ris.setPreInseredTestTirpleCount(prapreTripleNumber);
 			if(prapreTripleNumber>0) {
 				prepareInsert.setSparqlStr(insertTripleToSparql(
 						prepareInsert.getSparql().getSparqlString(),
@@ -56,8 +57,9 @@ public class TestBuilder {
 				return ris;
 			}			
 		
+		}else {
+			ris.setPreInseredTestTirpleCount(0);
 		}
-		
 		return ris;
 	
 	}

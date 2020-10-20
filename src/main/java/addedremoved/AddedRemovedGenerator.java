@@ -235,7 +235,7 @@ public class AddedRemovedGenerator {
 				//System.out.println("DC-->"+dc+"\n\n");
 				if (dc.length() > 0) {				
 					SparqlObj getRemovedSparql =sparql; // sparql.clone();
-					getRemovedSparql.setSparql(constructGraphFilter(dc));
+					getRemovedSparql.setSparql(dc);
 					removed = ((QueryResponse) new SparqlRequest(getRemovedSparql,ep).execute()).getBindingsResults();
 				}
 
@@ -243,7 +243,7 @@ public class AddedRemovedGenerator {
 				System.out.println("AC-->"+ac+"\n\n");
 				if (ac.length() > 0) {
 					SparqlObj getAddedSparql =sparql ;// sparql.clone();
-					getAddedSparql.setSparql(constructGraphFilter(ac));
+					getAddedSparql.setSparql(ac);
 					added  = ((QueryResponse) new SparqlRequest(getAddedSparql,ep).execute()).getBindingsResults();
 					
 				}

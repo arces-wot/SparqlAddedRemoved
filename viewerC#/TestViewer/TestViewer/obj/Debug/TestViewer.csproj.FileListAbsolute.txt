@@ -1,0 +1,16 @@
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\bin\Debug\TestViewer.exe.config
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\bin\Debug\TestViewer.exe
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\bin\Debug\TestViewer.pdb
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\bin\Debug\Newtonsoft.Json.dll
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\bin\Debug\Newtonsoft.Json.xml
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.csprojAssemblyReference.cache
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.Form1.resources
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.Properties.Resources.resources
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.view.MetaTestView.resources
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.csproj.GenerateResource.cache
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.csproj.CoreCompileInputs.cache
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.csproj.CopyComplete
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.exe
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.pdb
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.view.TestResultView.resources
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.view.MetricsTable.resources
