@@ -11,8 +11,12 @@ import support.TestBuilder;
 
 public class MetaTest implements ITest {
 
-	private SingleTest test;
-	private TripleBase tripleBase;
+	private MetaSparqlRequest preparationInsert=null;
+	private MetaSparqlRequest query=null;
+	private MetaSparqlRequest update=null;
+	private MetaSparqlRequest rollback=null;
+	private MetaSparqlRequest rollbackPreparation=null;
+	
 	private int preparationPercentage;
 	private int reiteration;//reiteration of the same test
 	private int pot; //power of two, number of test and number of test triple as: 2^x with x in[0;pot]
@@ -20,26 +24,36 @@ public class MetaTest implements ITest {
 	private ITestVisitor monitor;
 	private String metaTestName ="GenericMetaTest";
 	
-	public MetaTest(SparqlRequest query,SparqlRequest update,SparqlRequest rollback,TripleBase tripleBase,boolean askTestOn) {		
+	/*
+	 * excAskTest need to be false if:
+	 * 1) The update insert or delete triples aren't catch at all by the query
+	 * 2) The query select pattern is not equals to that triples
+	 */
+	private boolean excAskTest;
+	
+	
+	public MetaTest(MetaSparqlRequest query,MetaSparqlRequest update,MetaSparqlRequest rollback,boolean askTestOn) {		
 		reiteration=1;
 		pot=0;//2^0=1 --> 1 only test with 1 only triple
-		this.tripleBase=tripleBase;
-		test= new SingleTest(query, update, rollback,askTestOn);
+		this.query=query;
+		this.update=update;
+		this.rollback=rollback;
 	}
 	
-	public MetaTest(SparqlRequest query,SparqlRequest update,SparqlRequest rollback,TripleBase tripleBase,boolean askTestOn,int reiteration, int pot) {
-		this(query,update,rollback,tripleBase,askTestOn);
+	public MetaTest(MetaSparqlRequest query,MetaSparqlRequest update,MetaSparqlRequest rollback,boolean askTestOn,int reiteration, int pot) {
+		this(query,update,rollback,askTestOn);
 		this.reiteration=reiteration;
 		this.pot=pot;		
 	}
 	
-	public void setPreparation(SparqlRequest preparation,SparqlRequest preparationRollback,int preparationPercentage) throws Exception {
+	public void setPreparation(MetaSparqlRequest preparation,MetaSparqlRequest preparationRollback,int preparationPercentage) throws Exception {
 		if(preparationPercentage<0 || preparationPercentage>100) {
 			throw new Exception("The percentage must be in range of 0-100, it is: "+preparationPercentage );
 		}
 		this.needPreparation=true;
 		this.preparationPercentage=preparationPercentage;
-		test.setPreparation(preparation, preparationRollback);
+		this.preparationInsert=preparation;
+		this.rollbackPreparation=preparationRollback;
 	}
 
 	public TestResult execute() {
@@ -78,10 +92,52 @@ public class MetaTest implements ITest {
 	//----------------------------------GETTERS and SETTERS
 	
 	
+	
+	
 	public void setMonitor(ITestVisitor m) {
 		this.monitor=m;
 	}
 	
+	public MetaSparqlRequest getQuery() {
+		return query;
+	}
+
+	public void setQuery(MetaSparqlRequest query) {
+		this.query = query;
+	}
+
+	public MetaSparqlRequest getUpdate() {
+		return update;
+	}
+
+	public void setUpdate(MetaSparqlRequest update) {
+		this.update = update;
+	}
+
+	public MetaSparqlRequest getRollback() {
+		return rollback;
+	}
+
+	public void setRollback(MetaSparqlRequest rollback) {
+		this.rollback = rollback;
+	}
+
+	public boolean isExcAskTest() {
+		return excAskTest;
+	}
+
+	public void setExcAskTest(boolean excAskTest) {
+		this.excAskTest = excAskTest;
+	}
+
+	public MetaSparqlRequest getPreparationInsert() {
+		return preparationInsert;
+	}
+
+	public MetaSparqlRequest getRollbackPreparation() {
+		return rollbackPreparation;
+	}
+
 	public String getMetaTestName() {
 		return metaTestName;
 	}
@@ -98,14 +154,6 @@ public class MetaTest implements ITest {
 		this.pot = pot;
 	}
 
-	public SingleTest getTest() {
-		return test;
-	}
-
-	public TripleBase getTriples() {
-		return tripleBase;
-	}
-
 	public int getPreparationPercentage() {
 		return preparationPercentage;
 	}
@@ -119,7 +167,7 @@ public class MetaTest implements ITest {
 	}
 
 	public boolean isNeedPreparation() {
-		return needPreparation;
+		return needPreparation && preparationInsert!=null && rollbackPreparation!=null;
 	}
 	
 	

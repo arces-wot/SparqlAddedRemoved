@@ -1,6 +1,7 @@
 package addedremoved;
 
 import org.apache.jena.atlas.lib.Sink;
+import org.apache.jena.base.Sys;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
@@ -24,8 +25,10 @@ import model.UpdateConstruct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,11 +80,10 @@ public class SPARQLAnalyzer {
 	}
 
 	class ToConstructUpdateVisitor extends UpdateVisitorBase {
-		private UpdateConstruct result = new UpdateConstruct("", "");
+		private ArrayList<UpdateConstruct> results = new ArrayList<UpdateConstruct>();
 
 		@Override
-		public void visit(UpdateDataInsert updateDataInsert) {
-			//---------------------------------------------------------------REWORKED
+		public void visit(UpdateDataInsert updateDataInsert) {//----------------REWORKED
 			//Esempio di update che passa qui: Update del test MT1
 			//CONSTRUCT costruita tramite jena:
 			/*
@@ -99,13 +101,16 @@ public class SPARQLAnalyzer {
 					  <http://www.unibo.it/Student1> <http://swat.cse.lehigh.edu/onto/univ-bench.owl#memberOf> <http://www.unibo.it> .
 					 } 			 
 			 */
-			ConstructGenerator cg = new ConstructGenerator(updateDataInsert.getQuads());			
-			String insertString = cg.getConstruct(false);
+			
 			//OLD CODE------------------INIZIO
 			//			Query insertQuery = createBaseConstruct(new QuadAcc(updateDataInsert.getQuads()));
 			//			String insertString = insertQuery.isUnknownType() ? "" : insertQuery.serialize() + "WHERE{}";
 			//OLD CODE------------------FINE
-			result = new UpdateConstruct("", insertString);
+			ConstructGenerator cg = new ConstructGenerator(updateDataInsert.getQuads());	
+			HashMap<String,String> insertStrings =cg.getConstructsWithGraphs(false);
+			for (String graph :insertStrings.keySet()) {
+				results.add(new UpdateConstruct("", insertStrings.get(graph),"",graph));
+			}
 			//System.out.println("1");
 		}
 
@@ -113,7 +118,8 @@ public class SPARQLAnalyzer {
 		public void visit(UpdateDataDelete updateDataDelete) {
 			Query deleteQuery = createBaseConstruct(new QuadAcc(updateDataDelete.getQuads()));
 			String deleteString = deleteQuery.isUnknownType() ? "" : deleteQuery.serialize() + "WHERE{}";
-			result = new UpdateConstruct(deleteString, "");
+			results.add(new UpdateConstruct(deleteString, ""));
+		
 //			if(deleteQuery.getGraphURIs().size()>0) {
 //				result.setRemovedGraph(deleteQuery.getGraphURIs().get(0));
 //				//----------------------------------STESSO GRAFO DI PRIMA O GRAFI DIVERSI??
@@ -123,7 +129,7 @@ public class SPARQLAnalyzer {
 		}
 
 		@Override
-		public void visit(UpdateDeleteWhere updateDeleteWhere) {
+		public void visit(UpdateDeleteWhere updateDeleteWhere) {//----------------REWORKED
 			//Esempio di update che passa qui: Update del test MT2
 			//esempio CONSTRUCT JENA: 
 			/*
@@ -143,18 +149,22 @@ public class SPARQLAnalyzer {
 //				result = new UpdateConstruct(updateDeleteQuery.serialize(), "");
 //			}
 
-			ConstructGenerator cg = new ConstructGenerator(updateDeleteWhere.getQuads());			
-			String updateDeleteQuery = cg.getConstruct(true);
-			result = new UpdateConstruct(updateDeleteQuery, "");
-			System.out.println("3");
+			ConstructGenerator cg = new ConstructGenerator(updateDeleteWhere.getQuads());	
+			HashMap<String,String> deleteStrings =cg.getConstructsWithGraphs(true);
+			for (String graph : deleteStrings.keySet()) {
+				results.add(new UpdateConstruct(deleteStrings.get(graph), "",graph,""));
+			}
+			
+//			System.out.println("3");
 		}
 
 		@Override
-		public void visit(UpdateModify updateModify) {
+		public void visit(UpdateModify updateModify) {//----------------REWORKED
+
+			//OLD CODE:
+			/*
 			String insertString = "";
 			String deleteString = "";
-//			String insertGraph =null;
-//			String deleteGraph =null;
 			if (updateModify.hasDeleteClause() && !updateModify.getDeleteAcc().getQuads().isEmpty()) {
 				Template constructDelete = new Template(updateModify.getDeleteAcc());
 				Query constructQueryDelete = new Query();
@@ -162,9 +172,6 @@ public class SPARQLAnalyzer {
 				constructQueryDelete.setConstructTemplate(constructDelete);
 				constructQueryDelete.setQueryPattern(updateModify.getWherePattern());
 				deleteString = constructQueryDelete.toString();
-//				if(updateModify.getDeleteAcc().getGraph()!=null) {
-//					deleteGraph=updateModify.getDeleteAcc().getGraph().getURI();
-//				}
 			}
 
 			if (updateModify.hasInsertClause() && !updateModify.getInsertAcc().getQuads().isEmpty()) {
@@ -174,30 +181,55 @@ public class SPARQLAnalyzer {
 				constructQueryInsert.setConstructTemplate(constructInsert);
 				constructQueryInsert.setQueryPattern(updateModify.getWherePattern());
 				insertString = constructQueryInsert.serialize();
-//				if(updateModify.getInsertAcc().getGraph()!=null) {
-//					insertGraph=updateModify.getInsertAcc().getGraph().getURI();
-//				}
 			}
-			result = new UpdateConstruct(deleteString, insertString);
-//			if(updateModify.getWithIRI()!=null && insertGraph==null) {
-//				result.setAddedGraph(updateModify.getWithIRI().getURI());
-//			}else {
-//				result.setAddedGraph(insertGraph);
-//			}
-//			if(updateModify.getWithIRI()!=null && deleteGraph==null) {
-//				result.setRemovedGraph(updateModify.getWithIRI().getURI());
-//			}else {
-//				result.setRemovedGraph(deleteGraph);
-//			}
-//
-			System.out.println("4");
+			*/
+			HashMap<String,String> insertStrings=null;
+			HashMap<String,String> deleteStrings=null;
+			if (updateModify.hasDeleteClause() && !updateModify.getDeleteAcc().getQuads().isEmpty()) {				
+				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads());	
+				deleteStrings=cg.getConstructsWithGraphs(true);				
+			}
+
+			if (updateModify.hasInsertClause() && !updateModify.getInsertAcc().getQuads().isEmpty()) {
+				ConstructGenerator cg = new ConstructGenerator(updateModify.getInsertAcc().getQuads());	
+				insertStrings=cg.getConstructsWithGraphs(true);		
+			}
+			if(insertStrings!=null && deleteStrings!=null) {
+				Set<String> graphs = new HashSet(insertStrings.keySet());
+				graphs.addAll(deleteStrings.keySet());
+				for (String graph : graphs) {
+					String deleteString="";
+					String insertString="";
+					String deleteGraph="";
+					String insertGraph="";
+					if(insertStrings.containsKey(graph)) {
+						insertString=insertStrings.get(graph);
+						insertGraph=graph;
+					}
+					if(deleteStrings.containsKey(graph)) {
+						deleteString=deleteStrings.get(graph);
+						deleteGraph=graph;
+					}
+					results.add(new UpdateConstruct(deleteString, insertString,deleteGraph,insertGraph));
+				}
+			}else if(insertStrings==null) {
+				for (String graph : deleteStrings.keySet()) {
+					results.add(new UpdateConstruct(deleteStrings.get(graph), "",graph,""));
+				}
+			}else {//deleteStrings==null
+				for (String graph : insertStrings.keySet()) {
+					results.add(new UpdateConstruct("", insertStrings.get(graph),"",graph));
+				}
+			}
+			
+			//System.out.println("4");
 		}
 
 		@Override
 		public void visit(UpdateClear update) {
 			String deleteConstruct = "CONSTRUCT { ?s ?p ?o } WHERE { GRAPH <" + update.getGraph().getURI()
 					+ "> { ?s ?p ?o } . }";
-			result = new UpdateConstruct(deleteConstruct, "");
+			results.add(new UpdateConstruct(deleteConstruct, "",update.getGraph().getURI(),""));
 //			result.setRemovedGraph(update.getGraph().getURI());
 //
 			System.out.println("5");
@@ -207,7 +239,7 @@ public class SPARQLAnalyzer {
 		public void visit(UpdateDrop update) {
 			String deleteConstruct = "CONSTRUCT { ?s ?p ?o } WHERE { GRAPH <" + update.getGraph().getURI()
 					+ "> { ?s ?p ?o } . }";
-			result = new UpdateConstruct(deleteConstruct, "");
+			results.add(new UpdateConstruct(deleteConstruct, "",update.getGraph().getURI(),""));
 //			result.setRemovedGraph(update.getGraph().getURI());
 //
 			System.out.println("6");
@@ -219,7 +251,7 @@ public class SPARQLAnalyzer {
 					+ "> { ?s ?p ?o } . }";
 			String insertConstruct = "CONSTRUCT { ?s ?p ?o } WHERE { GRAPH <" + update.getSrc().getGraph().getURI()
 					+ "> { ?s ?p ?o } . }";
-			result = new UpdateConstruct(deleteConstruct, insertConstruct);
+			results.add(new UpdateConstruct(deleteConstruct, insertConstruct,update.getDest().getGraph().getURI(),update.getSrc().getGraph().getURI()));
 //			result.setGraph(update.getDest().getGraph().getURI());
 //
 			System.out.println("7");
@@ -229,7 +261,7 @@ public class SPARQLAnalyzer {
 		public void visit(UpdateAdd update) {
 			String insertConstruct = "CONSTRUCT { ?s ?p ?o } WHERE { GRAPH <" + update.getDest().getGraph().getURI()
 					+ "> { ?s ?p ?o } . }";
-			result = new UpdateConstruct("", insertConstruct);
+			results.add(new UpdateConstruct("", insertConstruct,"",update.getDest().getGraph().getURI()));
 //			result.setAddedGraph(update.getDest().getGraph().getURI());
 //
 			System.out.println("8");
@@ -237,8 +269,8 @@ public class SPARQLAnalyzer {
 
 		// TODO: Move
 
-		public UpdateConstruct getResult() {
-			return result;
+		public ArrayList<UpdateConstruct> getResult() {
+			return results;
 		}
 
 		private Query createBaseConstruct(QuadAcc quads) {
@@ -264,16 +296,13 @@ public class SPARQLAnalyzer {
 		sparqlText = request;
 	}
 
-	public UpdateConstruct getConstruct() {
+	public ArrayList<UpdateConstruct> getConstructs() {
+		//System.out.println("sparqlText:\n"+sparqlText);
 		UpdateRequest updates = UpdateFactory.create(sparqlText);
-		String graph= GraphAnalyzer.getGraphURIs(sparqlText).iterator().next();
-		//System.out.println("Graph: "+graph);
 		for (Update up : updates) {			
 			ToConstructUpdateVisitor updateVisitor = new ToConstructUpdateVisitor();
 			up.visit(updateVisitor);
-			UpdateConstruct c=updateVisitor.getResult();
-			c.setGraph(graph);
-			return c;
+			return updateVisitor.getResult();
 		}
 		throw new IllegalArgumentException("No valid operation found");
 	}

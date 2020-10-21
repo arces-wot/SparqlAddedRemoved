@@ -84,6 +84,25 @@ namespace TestViewer.model
 			}
 			return count;
 		}
+		public int warningCount()
+		{
+			int count = 0;
+			if (!updateSameOfInsertDelete) {
+				count++;
+			}
+			if (askCheckDone)
+			{
+				if (!askDeleteOk)
+				{
+					count++;
+				}
+				if (!askInsertOk)
+				{
+					count++;
+				}
+			}
+			return count;
+		}
 		public bool UpdateSameOfInsertDelete { get => updateSameOfInsertDelete; set => updateSameOfInsertDelete = value; }
 		public bool AskCheckDone { get => askCheckDone; set => askCheckDone = value; }
 		public bool AskDeleteOk { get => askDeleteOk; set => askDeleteOk = value; }

@@ -18,8 +18,8 @@ namespace TestViewer.view
             InitializeComponent();
         }
         public void loadSingleTest(MetaTestResult mt) {
-            labelInfo.Text = "Error count: " + mt.errorCount();
-            ;
+            labelInfo.Text = "Error count: " + mt.errorCount() + "\nWarnings count: "+ mt.warningCount();
+            
             metricsTable1.loadPhases(mt.Avarages);
         }
 

@@ -14,7 +14,7 @@ import factories.IRequestFactory;
 import factories.MetaTestFactory;
 import factories.RequestFactory;
 import factories.RequestFactory.RequestName;
-import factories.RequestFactoryForMetaTest;
+import factories.MetaRequestFactory;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
@@ -22,6 +22,7 @@ import it.unibo.arces.wot.sepa.commons.response.UpdateResponse;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
 import model.TestMetric;
+import model.TripleBase;
 import model.UpdateConstruct;
 import support.Environment;
 import support.TestBuilder;
@@ -31,9 +32,9 @@ public class main {
     private static String graph=Environment.graph;
     private static String ontology = Environment.ontology;	     
     private static boolean ONTOLOGY = false;
-    private static boolean POPOLATE = true;
+    private static boolean POPOLATE = false;
     private static boolean RUN = true;
-    private static boolean CLEAN = true;//non rimuove l'ontologia
+    private static boolean CLEAN = false;//non rimuove l'ontologia
     
 	public static void main (String[] args) {
 
@@ -51,6 +52,7 @@ public class main {
 		 
 		 if(RUN){
 			 MetaTestRun();
+			 //constructTester();
 		 }		 
 		
 	
@@ -59,8 +61,7 @@ public class main {
 		ArrayList<TestMetric> phases = new ArrayList<TestMetric> ();
 		SparqlRequest deleteUpdate=null;
 		SparqlRequest insertUpdate=null;
-		SparqlRequest update=(SparqlRequest)RequestFactoryForMetaTest.getInstance().getRequestByName("MT2_Update");
-		update.setSparqlStr(TestBuilder.insertTripleToSparql(update.getSparql().getSparqlString(),RequestFactoryForMetaTest.getInstance().getTripleBaseByName("MT1"),2));
+		SparqlRequest update=(SparqlRequest)MetaRequestFactory.getInstance().getRequestByName("MT3_Update").generate(2);
 		UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
 		if(constructs.needDelete()) {
 			try {
@@ -89,7 +90,7 @@ public class main {
 			e.printStackTrace();
 		}
 		 
-		MetaTest MT1 = MetaTestFactory.getInstance().getTestByName("InsertOnly");	
+		MetaTest MT1 = MetaTestFactory.getInstance().getTestByName("InsertData");	
 		MT1.setPot(5);
 		MT1.setReiteration(2);
 		MT1.setMonitor(monitor);
@@ -98,13 +99,21 @@ public class main {
 		System.out.println("MT1 End");
 	
 		 
-		MetaTest MT2 = MetaTestFactory.getInstance().getTestByName("DeleteOnly");
+		MetaTest MT2 = MetaTestFactory.getInstance().getTestByName("DeleteWhere");
 		MT2.setPot(5);
 		MT2.setReiteration(2);
 		MT2.setMonitor(monitor);		
 		System.out.println("MT2 Start");
 		MT2.execute();
 		System.out.println("MT2 End");
+	 
+//		MetaTest MT3 = MetaTestFactory.getInstance().getTestByName("DeleteInsert");
+//		MT3.setPot(2);
+//		MT3.setReiteration(2);
+//		MT3.setMonitor(monitor);		
+//		System.out.println("MT3 Start");
+//		MT3.execute();
+//		System.out.println("MT3 End");
 		
 		//close 
 		monitor.close();

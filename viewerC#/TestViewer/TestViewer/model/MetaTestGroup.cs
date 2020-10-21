@@ -31,5 +31,14 @@ namespace TestViewer.model
             }
             return count;
         }
+        public int warningCount()
+        {
+            int count = 0;
+            foreach (MetaTestResult mtr in list)
+            {
+                count += mtr.warningCount();
+            }
+            return count;
+        }
     }
 }

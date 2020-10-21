@@ -42,6 +42,15 @@ namespace TestViewer.model
             }
             return count;
         }
+        public int warningCount()
+        {
+            int count = 0;
+            foreach (TestResult tr in Tests)
+            {
+                count += tr.warningCount();
+            }
+            return count;
+        }
         public int TripleNumber { get => tripleNumber; set => tripleNumber = value; }
         public int Replication { get => replication; set => replication = value; }
         public string Name { get => name; set => name = value; }

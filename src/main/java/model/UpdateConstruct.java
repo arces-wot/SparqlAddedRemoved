@@ -14,7 +14,7 @@ public class UpdateConstruct {
 	private String  addedGraph=null;
 	private String  removedGraph=null;
 
-    public UpdateConstruct(String deleteConstruct, String insertConstruct){
+    public UpdateConstruct(String deleteConstruct, String insertConstruct ){
         if(deleteConstruct == null || insertConstruct == null){
             throw new IllegalArgumentException("Construct query cannot be null");
         }
@@ -22,8 +22,20 @@ public class UpdateConstruct {
         this.deleteConstruct = deleteConstruct;
         this.insertConstruct = insertConstruct;
     }
+    public UpdateConstruct(String deleteConstruct, String insertConstruct,String deleteGraph,String insertGraph ){
+        if(deleteConstruct == null || insertConstruct == null){
+            throw new IllegalArgumentException("Construct query cannot be null");
+        }
 
-
+        this.deleteConstruct = deleteConstruct;
+        this.insertConstruct = insertConstruct;
+        if(deleteGraph!="") {
+            this.removedGraph=deleteGraph;
+        }  
+        if(insertGraph!="") {
+        	this.addedGraph=insertGraph;
+        }
+    }
 	public boolean needInsert() {
 		return added!=null && added.size()>0;
 	}

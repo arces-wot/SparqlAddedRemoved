@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.jena.graph.Triple;
+import org.apache.jena.reasoner.TriplePattern;
+import org.apache.jena.shacl.engine.constraint.SparqlComponent;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.syntax.ElementGroup;
+import org.apache.jena.sparql.syntax.ElementTriplesBlock;
 
 public class ConstructGenerator {
 	
@@ -38,22 +41,39 @@ public class ConstructGenerator {
 	public void add(Triple t) {
 		add(this.defaulGraph, t);
 	}
-	public String getConstruct(boolean strict) {
+	public ArrayList<String> getConstructs(boolean strict) {
+		ArrayList<String> constructs = new ArrayList<String>();
+		for (String graph : allTriple.keySet()) {
+			constructs.add(getConstruct(graph,allTriple.get(graph),strict));
+		}
+		return constructs;
+	}
+	
+	public HashMap<String,String> getConstructsWithGraphs(boolean strict) {
+		HashMap<String,String> constructs = new HashMap<String,String>();
+		for (String graph : allTriple.keySet()) {
+			constructs.put(graph,getConstruct(graph,allTriple.get(graph),strict));
+		}
+		return constructs;
+	}
+	
+	public String getConstruct(String graph,ArrayList<Triple> triples,boolean strict) {
+		
 		String sparql = "CONSTRUCT ";
 		String where = " WHERE { \n";
-		ElementGroup list = new ElementGroup();
-		String graph=allTriple.keySet().iterator().next();//per ora ottengo solo il primo grafo
-		for(Triple triple :allTriple.get(graph)) {
-			//sparql+=triple + ".\n";
-			list.addTriplePattern(triple);
+		ElementTriplesBlock list = new ElementTriplesBlock(); //Solution1 
+		String stringList = "";
+		for(Triple triple :triples) {
+			//stringList+= new TriplePattern(triple).toString() + ".\n"; //Solution2
+			list.addTriple(triple);//Solution1 
 		}	
+		stringList="{"+list.toString()+"}";//Solution1 
 		if(strict){
-			where+="GRAPH <"+ graph + "> "+list.toString() +"\n";
+			where+="GRAPH <"+ graph + "> "+stringList +"\n";
 		}else{
 			where+="GRAPH <"+ graph + "> {?s ?p ?o}\n";
 		}
-		sparql+=list.toString() + where +"}";
-		
+		sparql+=stringList+ where +"}";
 		return sparql;
 	}
 	

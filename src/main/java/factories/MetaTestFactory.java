@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import connector.SparqlRequest;
+import core.MetaSparqlRequest;
 import core.MetaTest;
 import model.TripleBase;
 
@@ -22,9 +23,9 @@ public class MetaTestFactory implements IMetaTestFactory {
 	private HashMap<String, MetaTest> requestMap = new HashMap<String, MetaTest>();
 	
 	public MetaTestFactory() {
-		requestMap.put("InsertOnly",generateOnlyInsertMetaTest());
-		requestMap.put("DeleteOnly",generateOnlyDeleteMetaTest());
-		requestMap.put("Update",generateUpdateMetaTest());
+		requestMap.put("InsertData",generateOnlyInsertMetaTest());
+		requestMap.put("DeleteWhere",generateOnlyDeleteMetaTest());
+		requestMap.put("DeleteInsert",generateUpdateMetaTest());
 	}
 	
 	public Set<String> getTestNames() {
@@ -37,19 +38,19 @@ public class MetaTestFactory implements IMetaTestFactory {
 
 	
 	private MetaTest generateOnlyInsertMetaTest() {
-		RequestFactoryForMetaTest instance = RequestFactoryForMetaTest.getInstance();
+		MetaRequestFactory instance = MetaRequestFactory.getInstance();
 		MetaTest test = new MetaTest(
-				(SparqlRequest)instance.getRequestByName("MT1_Query"),
-				(SparqlRequest)instance.getRequestByName("MT1_Update"),
-				(SparqlRequest)instance.getRequestByName("MT1_Rollback"),
-				instance.getTripleBaseByName("MT1"),
+				(MetaSparqlRequest)instance.getRequestByName("MT1_Query"),
+				(MetaSparqlRequest)instance.getRequestByName("MT1_Update"),
+				(MetaSparqlRequest)instance.getRequestByName("MT1_Rollback"),
 				true
 		);
 		test.setMetaTestName("Insert MetaTest");
+		test.setExcAskTest(true);
 		try {
 			test.setPreparation(
-					(SparqlRequest)instance.getRequestByName("MT1_prepare_insert"),
-					(SparqlRequest)instance.getRequestByName("MT1_prepare_rollback"),
+					(MetaSparqlRequest)instance.getRequestByName("MT1_prepare_insert"),
+					(MetaSparqlRequest)instance.getRequestByName("MT1_prepare_rollback"),
 					10);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -59,20 +60,20 @@ public class MetaTestFactory implements IMetaTestFactory {
 	}
 	
 	private MetaTest generateOnlyDeleteMetaTest() {
-		RequestFactoryForMetaTest instance = RequestFactoryForMetaTest.getInstance();
+		MetaRequestFactory instance = MetaRequestFactory.getInstance();
 		MetaTest test = new MetaTest(
-				(SparqlRequest)instance.getRequestByName("MT2_Query"),
-				(SparqlRequest)instance.getRequestByName("MT2_Update"),
-				(SparqlRequest)instance.getRequestByName("MT2_Rollback"),
-				instance.getTripleBaseByName("MT2"),
+				(MetaSparqlRequest)instance.getRequestByName("MT2_Query"),
+				(MetaSparqlRequest)instance.getRequestByName("MT2_Update"),
+				(MetaSparqlRequest)instance.getRequestByName("MT2_Rollback"),
 				true
 		);
 		test.setMetaTestName("Delete MetaTest");
+		test.setExcAskTest(true);
 		try {
 			test.setPreparation(
-					(SparqlRequest)instance.getRequestByName("MT2_prepare_insert"),
-					(SparqlRequest)instance.getRequestByName("MT2_prepare_rollback"),
-					10);
+					(MetaSparqlRequest)instance.getRequestByName("MT2_prepare_insert"),
+					(MetaSparqlRequest)instance.getRequestByName("MT2_prepare_rollback"),
+					90);//need 100% of pre insered or at least 90
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,7 +82,25 @@ public class MetaTestFactory implements IMetaTestFactory {
 	}
 	
 	private MetaTest generateUpdateMetaTest() {
-		return null; //WIP
+		MetaRequestFactory instance = MetaRequestFactory.getInstance();
+		MetaTest test = new MetaTest(
+				(MetaSparqlRequest)instance.getRequestByName("MT3_Query"),
+				(MetaSparqlRequest)instance.getRequestByName("MT3_Update"),
+				(MetaSparqlRequest)instance.getRequestByName("MT3_Rollback"),
+				true
+		);
+		test.setMetaTestName("Update MetaTest");
+		test.setExcAskTest(true);
+		try {
+			test.setPreparation(
+					(MetaSparqlRequest)instance.getRequestByName("MT3_prepare_insert"),
+					(MetaSparqlRequest)instance.getRequestByName("MT3_prepare_rollback"),
+					100);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return test; 
 	}
 	
 }

@@ -45,11 +45,13 @@ namespace TestViewer
                     temp.Add(mtr.Name, mtg);
                 }
                 int count = 0;
+                int warnings = 0;
                 foreach (String name in temp.Keys) {
                     MetaTestGroup mtg;
                     if (temp.TryGetValue(name, out mtg))
                     {
                         count+=mtg.errorCount();
+                        warnings += mtg.warningCount();
                         comboBox1.Items.Add(mtg);
                     }
                 }
@@ -58,7 +60,7 @@ namespace TestViewer
                     comboBox1.SelectedIndex = 0;
                 }
                 labelInfo.Text = "Number of MetaTest: " + comboBox1.Items.Count
-                    +"\nError count: "+ count;
+                    +"\nError count: "+ count + "\nWarnings count: " + warnings;
                 labelLoaded.Text = "Loaded: "+ openFileDialog1.SafeFileName;
                 allMetricChart1.loadMetaTest(temp.Values.ToList<MetaTestGroup>());
             }
@@ -77,7 +79,7 @@ namespace TestViewer
                 if (comboBox2.Items.Count>0) {
                     comboBox2.SelectedIndex = 0;
                 }
-                label3.Text = "MetaTest error: "+selected.errorCount();
+                label3.Text = "MetaTest error: "+selected.errorCount() + "\nWarnings count: " + selected.warningCount();
                 metaChart1.loadMetaTest(selected);
                
             }

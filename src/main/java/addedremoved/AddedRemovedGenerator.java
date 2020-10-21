@@ -35,7 +35,7 @@ public class AddedRemovedGenerator {
 				
 				String insert = "INSERT DATA  {\n";
 				
-				insert+=" GRAPH "+ c.getAddedGraph() + " {\n";
+				insert+=" GRAPH <"+ c.getAddedGraph() + "> {\n";
 				
 				for (Bindings triple : c.getAdded().getBindings()) {					
 				
@@ -69,7 +69,7 @@ public class AddedRemovedGenerator {
 				
 				SparqlObj sparql= originalUpdate.getSparql();
 				
-				String delete = "DELETE DATA { GRAPH  "+ c.getRemovedGraph()+ " \n{\n";
+				String delete = "DELETE DATA { GRAPH  <"+ c.getRemovedGraph()+ "> \n{\n";
 				
 				for (Bindings triple : c.getRemoved().getBindings()) {					
 				
@@ -225,7 +225,8 @@ public class AddedRemovedGenerator {
 				tm1.start();
 				//long start = Timings.getTime();
 				SPARQLAnalyzer sa = new SPARQLAnalyzer(sparql.getSparqlString());
-				UpdateConstruct constructs = sa.getConstruct();
+				//-------------ATTENZIONE---- per ora viene gestito 1 solo grafo 
+				UpdateConstruct constructs = sa.getConstructs().get(0);
 
 				//System.out.println("--------->"+constructs.getAddedGraph());//ok
 				BindingsResults added =  new BindingsResults(new JsonObject());
@@ -252,16 +253,15 @@ public class AddedRemovedGenerator {
 				TestMetric tm2 = new TestMetric("ASKs");
 				tm2.start();
 				for(Bindings bindings : added.getBindings()){
-					boolean isPresent = isBindingPresent( bindings,sparql,ep);
+					boolean isPresent = isBindingPresent(bindings,sparql,ep);
 					if(isPresent){
-						added.getBindings().remove(bindings);
+						added.remove(bindings);
 					}
 				}
-
 				for(Bindings bindings : removed.getBindings()){
 					boolean isPresent = isBindingPresent(bindings,sparql,ep);
 					if(!isPresent){
-						removed.getBindings().remove(bindings);
+						removed.remove(bindings);
 					}
 				}
 				tm2.stop();
@@ -304,7 +304,6 @@ public class AddedRemovedGenerator {
 					tripl+= " ";
 				}				
 				tripl+=" .";
-				System.out.println(tripl);
 				return tripl;
 				
 			} 
