@@ -85,10 +85,11 @@ public class SingleTest implements ITest {
 				}
 			}
 			phase2.stop(pahes2Err);
-			if(constructs==null || (deleteUpdate==null && insertUpdate==null) ){
-				System.out.println("Error: construct or insert-delete generatio fail" );
-				phase2.setError(true);
-			}
+			//non è un vero errore, può capitare che non ci siano insert o delete da eseguire
+//			if(deleteUpdate==null && insertUpdate==null){
+//				System.out.println("Error: construct or insert-delete generation fail" );
+//				phase2.setError(true);
+//			}
 			phases.add(phase2);
 		
 			
@@ -97,7 +98,7 @@ public class SingleTest implements ITest {
 			
 			//------------------------------------------------------------Phase 3
 			//-----------QUERY
-		    System.out.println("-->"+ query.getSparql().getSparqlString());
+		    //System.out.println("-->"+ query.getSparql().getSparqlString());
 			TestMetric phase3 = new TestMetric("Pre-Query");		
 			phase3.start();
 			Response pre_ris_query = query.execute();
@@ -107,10 +108,25 @@ public class SingleTest implements ITest {
 			
 			//------------------------------------------------------------Phase 4
 			//-----------UPDATE
-			TestMetric phase4 = new TestMetric("Execution normal update");
+			TestMetric phase4 = new TestMetric("Execution insert and delete");
+			Response ris_insert =null;
+			Response ris_delete =null;
+			
 			phase4.start();
-			Response ris_update =  update.execute();
-			phase4.stop(ris_update.isError());
+			boolean insertDellErro = false;
+			if(deleteUpdate!=null) {
+				ris_delete =deleteUpdate.execute();
+				if(ris_delete.isError()) {
+					insertDellErro=true;
+				}
+			}
+			if(insertUpdate!=null) {
+				ris_insert =insertUpdate.execute();
+				if(ris_insert.isError()) {
+					insertDellErro=true;
+				}
+			}
+			phase4.stop(insertDellErro);
 			phases.add(phase4);
 			
 			//------------------------------------------------------------Phase 5
@@ -132,25 +148,10 @@ public class SingleTest implements ITest {
 
 			//------------------------------------------------------------Phase 7
 			//-----------INSERT + DELETE 			
-			TestMetric phase7 = new TestMetric("Execution insert and delete");
-			Response ris_insert =null;
-			Response ris_delete =null;
-			
+			TestMetric phase7 = new TestMetric("Execution normal update");
 			phase7.start();
-			boolean insertDellErro = false;
-			if(deleteUpdate!=null) {
-				ris_delete =deleteUpdate.execute();
-				if(ris_delete.isError()) {
-					insertDellErro=true;
-				}
-			}
-			if(insertUpdate!=null) {
-				ris_insert =insertUpdate.execute();
-				if(ris_insert.isError()) {
-					insertDellErro=true;
-				}
-			}
-			phase7.stop(insertDellErro);
+			Response ris_update =  update.execute();
+			phase7.stop(ris_update.isError());
 			phases.add(phase7);
 			
 			//------------------------------------------------------------Phase 8

@@ -100,7 +100,7 @@ public class SPARQLAnalyzer {
 					 } 			 
 			 */
 			ConstructGenerator cg = new ConstructGenerator(updateDataInsert.getQuads());			
-			String insertString = cg.getConstruct();
+			String insertString = cg.getConstruct(false);
 			//OLD CODE------------------INIZIO
 			//			Query insertQuery = createBaseConstruct(new QuadAcc(updateDataInsert.getQuads()));
 			//			String insertString = insertQuery.isUnknownType() ? "" : insertQuery.serialize() + "WHERE{}";
@@ -124,20 +124,28 @@ public class SPARQLAnalyzer {
 
 		@Override
 		public void visit(UpdateDeleteWhere updateDeleteWhere) {
-			Query updateDeleteQuery = createBaseConstruct(new QuadAcc(updateDeleteWhere.getQuads()));
-			if (!updateDeleteQuery.isUnknownType()) {
-				ElementGroup where = new ElementGroup();
-//				String graph = null;
-				for (Quad q : updateDeleteWhere.getQuads()) {
-					where.addTriplePattern(q.asTriple());
-					//----------------------------------STESSO GRAFO DI PRIMA O GRAFI DIVERSI??
-//					graph=q.getGraph().getURI();
-				}
-				updateDeleteQuery.setQueryPattern(where);
-				result = new UpdateConstruct(updateDeleteQuery.serialize(), "");
-//				result.setRemovedGraph(graph);
-			}
+			//Esempio di update che passa qui: Update del test MT2
+			//esempio CONSTRUCT JENA: 
+			/*
+					 CONSTRUCT{ 
+					   GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph> 
+					      { ?s <http://swat.cse.lehigh.edu/onto/univ-bench.owl#memberOf> <http://www.unibo.it> .}
+					 }WHERE{ ?s  <http://swat.cse.lehigh.edu/onto/univ-bench.owl#memberOf>  <http://www.unibo.it> }
+			 */
+			//OLD CODE
+//			Query updateDeleteQuery = createBaseConstruct(new QuadAcc(updateDeleteWhere.getQuads()));
+//			if (!updateDeleteQuery.isUnknownType()) {
+//				ElementGroup where = new ElementGroup();
+//				for (Quad q : updateDeleteWhere.getQuads()) {
+//					where.addTriplePattern(q.asTriple());
+//				}
+//				updateDeleteQuery.setQueryPattern(where);
+//				result = new UpdateConstruct(updateDeleteQuery.serialize(), "");
+//			}
 
+			ConstructGenerator cg = new ConstructGenerator(updateDeleteWhere.getQuads());			
+			String updateDeleteQuery = cg.getConstruct(true);
+			result = new UpdateConstruct(updateDeleteQuery, "");
 			System.out.println("3");
 		}
 

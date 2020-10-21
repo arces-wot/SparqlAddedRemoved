@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.metricsTable1 = new TestViewer.view.MetricsTable();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Param = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,21 +40,12 @@
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(3, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(549, 23);
-            this.label1.TabIndex = 1;
-            // 
             // metricsTable1
             // 
             this.metricsTable1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metricsTable1.Location = new System.Drawing.Point(0, 0);
             this.metricsTable1.Name = "metricsTable1";
-            this.metricsTable1.Size = new System.Drawing.Size(552, 236);
+            this.metricsTable1.Size = new System.Drawing.Size(555, 256);
             this.metricsTable1.TabIndex = 2;
             // 
             // dataGridView1
@@ -70,7 +60,7 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(552, 230);
+            this.dataGridView1.Size = new System.Drawing.Size(555, 249);
             this.dataGridView1.TabIndex = 3;
             // 
             // Param
@@ -87,10 +77,8 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(0, 36);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -101,8 +89,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.metricsTable1);
-            this.splitContainer1.Size = new System.Drawing.Size(552, 470);
-            this.splitContainer1.SplitterDistance = 230;
+            this.splitContainer1.Size = new System.Drawing.Size(555, 509);
+            this.splitContainer1.SplitterDistance = 249;
             this.splitContainer1.TabIndex = 4;
             // 
             // TestResultView
@@ -110,7 +98,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.label1);
             this.Name = "TestResultView";
             this.Size = new System.Drawing.Size(555, 509);
             this.Load += new System.EventHandler(this.TestResultView_Load);
@@ -124,7 +111,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label label1;
         private MetricsTable metricsTable1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Param;

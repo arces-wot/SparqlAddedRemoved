@@ -32,9 +32,11 @@ namespace TestViewer.model
 
 		private int testTripleCount;
 		private int preInseredTripleCount;
+		private int index = 0;
 
-		public TestResult(JObject obj)
+		public TestResult(JObject obj,int index)
         {
+			this.index = index;
 			phases = new List<Metric>();
 			updateSameOfInsertDelete = obj.GetValue("insDelOk").Value<Boolean>();
 			askCheckDone = obj.GetValue("askCheckDone").Value<Boolean>();
@@ -61,6 +63,27 @@ namespace TestViewer.model
 			}
 		}
 
+		public Metric getMetricByName(String name) {
+			foreach (Metric m in phases)
+			{
+				if (m.Name==name)
+				{
+					return m;
+				}
+			}
+			return null;
+		}
+		public int errorCount()
+		{
+			int count = 0;
+			foreach (Metric m in phases)
+			{
+				if (m.Err) {
+					count++;
+				}
+			}
+			return count;
+		}
 		public bool UpdateSameOfInsertDelete { get => updateSameOfInsertDelete; set => updateSameOfInsertDelete = value; }
 		public bool AskCheckDone { get => askCheckDone; set => askCheckDone = value; }
 		public bool AskDeleteOk { get => askDeleteOk; set => askDeleteOk = value; }
@@ -82,7 +105,7 @@ namespace TestViewer.model
 
 		public override string ToString()
 		{
-			return "Metric test with " + this.preInseredTripleCount + " pre insered triple on " + this.testTripleCount;
+			return "Metric test, execution N°" + index;
 		}
 	}
 }

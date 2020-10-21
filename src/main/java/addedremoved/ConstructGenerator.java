@@ -38,7 +38,26 @@ public class ConstructGenerator {
 	public void add(Triple t) {
 		add(this.defaulGraph, t);
 	}
-	public String getConstruct() {
+	public String getConstruct(boolean strict) {
+		String sparql = "CONSTRUCT ";
+		String where = " WHERE { \n";
+		ElementGroup list = new ElementGroup();
+		String graph=allTriple.keySet().iterator().next();//per ora ottengo solo il primo grafo
+		for(Triple triple :allTriple.get(graph)) {
+			//sparql+=triple + ".\n";
+			list.addTriplePattern(triple);
+		}	
+		if(strict){
+			where+="GRAPH <"+ graph + "> "+list.toString() +"\n";
+		}else{
+			where+="GRAPH <"+ graph + "> {?s ?p ?o}\n";
+		}
+		sparql+=list.toString() + where +"}";
+		
+		return sparql;
+	}
+	
+	public String getConstruct_deprecate(boolean strict) {
 		String sparql = "CONSTRUCT ";
 		String where = " WHERE { \n";
 		boolean firstGraph = true;
@@ -50,10 +69,18 @@ public class ConstructGenerator {
 			}	
 			if(firstGraph) {
 				firstGraph=false;
-				where+="{GRAPH <"+ graph + "> {?s ?p ?o}}\n";
+				if(strict){
+					where+="{GRAPH <"+ graph + "> "+list.toString() +"}\n";
+				}else{
+					where+="{GRAPH <"+ graph + "> {?s ?p ?o}}\n";
+				}
+				
 			}else {
-
-				where+="UNION{GRAPH <"+ graph + "> {?s ?p ?o}}\n";
+				if(strict){
+					where+="UNION{GRAPH <"+ graph + "> "+list.toString() +"}\n";
+				}else {
+					where+="UNION{GRAPH <"+ graph + "> {?s ?p ?o}}\n";
+				}
 			}
 		}
 		sparql+=list.toString() + where +"}";

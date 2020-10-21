@@ -232,18 +232,19 @@ public class AddedRemovedGenerator {
 				BindingsResults removed =  new BindingsResults(new JsonObject());
 
 				String dc = constructs.getDeleteConstruct();
-				//System.out.println("DC-->"+dc+"\n\n");
-				if (dc.length() > 0) {				
+				if (dc.length() > 0) {		
+					//System.out.println("DC-->"+dc+"\n\n");		
 					SparqlObj getRemovedSparql =sparql; // sparql.clone();
 					getRemovedSparql.setSparql(dc);
 					removed = ((QueryResponse) new SparqlRequest(getRemovedSparql,ep).execute()).getBindingsResults();
 				}
 
 				String ac = constructs.getInsertConstruct();
-				System.out.println("AC-->"+ac+"\n\n");
 				if (ac.length() > 0) {
+					//System.out.println("AC-->"+ac+"\n\n");
 					SparqlObj getAddedSparql =sparql ;// sparql.clone();
 					getAddedSparql.setSparql(ac);
+					// System.out.println("-->"+new SparqlRequest(getAddedSparql,ep).execute().toString());
 					added  = ((QueryResponse) new SparqlRequest(getAddedSparql,ep).execute()).getBindingsResults();
 					
 				}

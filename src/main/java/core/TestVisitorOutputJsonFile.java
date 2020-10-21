@@ -12,6 +12,7 @@ import model.TestResult;
 public class TestVisitorOutputJsonFile implements ITestVisitor {
 	//----------JSON fields
 	private static String TRIPLE_NUMBER="TRIPLE_NUMBER";
+	private static String NAME_MT="NAME_MT";
 	private static String REPLICATION="REPLICATION";
 	private static String TESTS="TESTS";
 	private static String AVARAGES="AVARAGES";
@@ -34,7 +35,7 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 		writeLineOnFile("{");//OPEN 0
 	}
 	
-	public void start(int n, int replication) {
+	public void start(int n, int replication,String name) {
 		String str = "'"+testID + "':{";
 		testID++;
 		subTestID=0;
@@ -44,6 +45,7 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 			str=","+str;
 		}
 		writeLineOnFile(str); //OPEN 1
+		writeLineOnFile("'"+NAME_MT + "':\""+name+"\",");
 		writeLineOnFile("'"+TRIPLE_NUMBER + "':"+n+",");
 		writeLineOnFile("'"+REPLICATION + "':"+replication+",");
 		writeLineOnFile("'"+TESTS + "':{");//OPEN 2

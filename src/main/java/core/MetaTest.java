@@ -18,6 +18,7 @@ public class MetaTest implements ITest {
 	private int pot; //power of two, number of test and number of test triple as: 2^x with x in[0;pot]
 	private boolean needPreparation=false;
 	private ITestVisitor monitor;
+	private String metaTestName ="GenericMetaTest";
 	
 	public MetaTest(SparqlRequest query,SparqlRequest update,SparqlRequest rollback,TripleBase tripleBase,boolean askTestOn) {		
 		reiteration=1;
@@ -46,7 +47,7 @@ public class MetaTest implements ITest {
 		ArrayList<TestMetric> singleTestsTime = new ArrayList<TestMetric>();
 		while(actualPot<=pot) {
 			int n=(int) Math.pow(2, actualPot);
-			monitor.start(n,reiteration);
+			monitor.start(n,reiteration,metaTestName);
 			//-------------build Test
 			SingleTest actualTest =TestBuilder.build(this, n);
 			//-------------execute Test
@@ -75,10 +76,20 @@ public class MetaTest implements ITest {
 
 
 	//----------------------------------GETTERS and SETTERS
+	
+	
 	public void setMonitor(ITestVisitor m) {
 		this.monitor=m;
 	}
 	
+	public String getMetaTestName() {
+		return metaTestName;
+	}
+
+	public void setMetaTestName(String metaTestName) {
+		this.metaTestName = metaTestName;
+	}
+
 	public void setReiteration(int reiteration) {
 		this.reiteration = reiteration;
 	}

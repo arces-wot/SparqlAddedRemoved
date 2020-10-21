@@ -45,6 +45,7 @@ public class MetaTestFactory implements IMetaTestFactory {
 				instance.getTripleBaseByName("MT1"),
 				true
 		);
+		test.setMetaTestName("Insert MetaTest");
 		try {
 			test.setPreparation(
 					(SparqlRequest)instance.getRequestByName("MT1_prepare_insert"),
@@ -66,6 +67,7 @@ public class MetaTestFactory implements IMetaTestFactory {
 				instance.getTripleBaseByName("MT2"),
 				true
 		);
+		test.setMetaTestName("Delete MetaTest");
 		try {
 			test.setPreparation(
 					(SparqlRequest)instance.getRequestByName("MT2_prepare_insert"),

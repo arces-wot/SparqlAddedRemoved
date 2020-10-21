@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,16 +56,29 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\MetaTestGroup.cs" />
     <Compile Include="model\MetaTestResult.cs" />
     <Compile Include="model\Metric.cs" />
     <Compile Include="model\TestResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="view\MetaTestView.cs">
+    <Compile Include="view\AllMetricChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="view\MetaTestView.Designer.cs">
-      <DependentUpon>MetaTestView.cs</DependentUpon>
+    <Compile Include="view\AllMetricChart.Designer.cs">
+      <DependentUpon>AllMetricChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="view\MetaChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="view\MetaChart.Designer.cs">
+      <DependentUpon>MetaChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="view\SingleTestView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="view\SingleTestView.Designer.cs">
+      <DependentUpon>SingleTestView.cs</DependentUpon>
     </Compile>
     <Compile Include="view\MetricsTable.cs">
       <SubType>UserControl</SubType>
@@ -90,8 +104,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="view\MetaTestView.resx">
-      <DependentUpon>MetaTestView.cs</DependentUpon>
+    <EmbeddedResource Include="view\AllMetricChart.resx">
+      <DependentUpon>AllMetricChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\MetaChart.resx">
+      <DependentUpon>MetaChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\SingleTestView.resx">
+      <DependentUpon>SingleTestView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="view\MetricsTable.resx">
       <DependentUpon>MetricsTable.cs</DependentUpon>

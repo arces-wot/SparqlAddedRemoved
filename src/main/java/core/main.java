@@ -31,9 +31,9 @@ public class main {
     private static String graph=Environment.graph;
     private static String ontology = Environment.ontology;	     
     private static boolean ONTOLOGY = false;
-    private static boolean POPOLATE = false;
+    private static boolean POPOLATE = true;
     private static boolean RUN = true;
-    private static boolean CLEAN = false;//non rimuove l'ontologia
+    private static boolean CLEAN = true;//non rimuove l'ontologia
     
 	public static void main (String[] args) {
 
@@ -52,8 +52,6 @@ public class main {
 		 if(RUN){
 			 MetaTestRun();
 		 }		 
-		 
-		
 		
 	
 	}
@@ -61,17 +59,15 @@ public class main {
 		ArrayList<TestMetric> phases = new ArrayList<TestMetric> ();
 		SparqlRequest deleteUpdate=null;
 		SparqlRequest insertUpdate=null;
-		SparqlRequest update=(SparqlRequest)RequestFactoryForMetaTest.getInstance().getRequestByName("MT1_Update");
+		SparqlRequest update=(SparqlRequest)RequestFactoryForMetaTest.getInstance().getRequestByName("MT2_Update");
 		update.setSparqlStr(TestBuilder.insertTripleToSparql(update.getSparql().getSparqlString(),RequestFactoryForMetaTest.getInstance().getTripleBaseByName("MT1"),2));
-	 UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
-		boolean  pahes2Err = false;
+		UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
 		if(constructs.needDelete()) {
 			try {
 				deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update.clone(),constructs);				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				pahes2Err=true;
 			}
 		}
 		if(constructs.needInsert()) {
@@ -80,7 +76,6 @@ public class main {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				pahes2Err=true;
 			}
 		}
 	}
@@ -95,7 +90,7 @@ public class main {
 		}
 		 
 		MetaTest MT1 = MetaTestFactory.getInstance().getTestByName("InsertOnly");	
-		MT1.setPot(2);
+		MT1.setPot(5);
 		MT1.setReiteration(2);
 		MT1.setMonitor(monitor);
 		System.out.println("MT1 Start");
@@ -103,13 +98,14 @@ public class main {
 		System.out.println("MT1 End");
 	
 		 
-//		MetaTest MT2 = MetaTestFactory.getInstance().getTestByName("DeleteOnly");
-//		MT2.setMonitor(monitor);
-//		MT1.setPot(2);
-//		System.out.println("MT2 Start");
-//		MT2.execute();
-//		System.out.println("MT2 End");
-//		
+		MetaTest MT2 = MetaTestFactory.getInstance().getTestByName("DeleteOnly");
+		MT2.setPot(5);
+		MT2.setReiteration(2);
+		MT2.setMonitor(monitor);		
+		System.out.println("MT2 Start");
+		MT2.execute();
+		System.out.println("MT2 End");
+		
 		//close 
 		monitor.close();
 	}

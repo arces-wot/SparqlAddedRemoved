@@ -19,7 +19,6 @@ namespace TestViewer.view
         }
 
         public void loadTestResult(TestResult tr) {
-            label1.Text = tr.ToString();
             dataGridView1.Rows.Clear();
             dataGridView1.Rows.Add("Insert Delete check result", tr.UpdateSameOfInsertDelete);
             dataGridView1.Rows.Add("Ask check done", tr.AskCheckDone);

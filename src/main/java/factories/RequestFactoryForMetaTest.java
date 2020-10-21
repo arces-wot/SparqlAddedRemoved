@@ -65,7 +65,7 @@ public class RequestFactoryForMetaTest implements IRequestFactory{
 		requestMap.put("MT2_Query", createQueryMT2());
 		requestMap.put("MT2_Update", createUpdateMT2());
 		requestMap.put("MT2_Rollback", createRollbackMT2());
-		requestMap.put("MT2_prepare_rollback", createRollbackMT1());		
+		requestMap.put("MT2_prepare_rollback", createRollbackMT2());		
 		tripleBaseMap.put("MT2", createTripleBaseMT2());
 
 		//-----------------------------------MetaTest 3 (INSERT DATA + DELETE WHERE)
