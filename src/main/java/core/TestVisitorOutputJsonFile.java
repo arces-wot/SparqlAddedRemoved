@@ -16,6 +16,7 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 	private static String REPLICATION="REPLICATION";
 	private static String TESTS="TESTS";
 	private static String AVARAGES="AVARAGES";
+	private static String PREPARE="PREPARE";
 	//--------------------
 	
 	
@@ -35,7 +36,7 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 		writeLineOnFile("{");//OPEN 0
 	}
 	
-	public void start(int n, int replication,String name) {
+	public void start(int n, int replication,String name, int prepare) {
 		String str = "'"+testID + "':{";
 		testID++;
 		subTestID=0;
@@ -48,6 +49,7 @@ public class TestVisitorOutputJsonFile implements ITestVisitor {
 		writeLineOnFile("'"+NAME_MT + "':\""+name+"\",");
 		writeLineOnFile("'"+TRIPLE_NUMBER + "':"+n+",");
 		writeLineOnFile("'"+REPLICATION + "':"+replication+",");
+		writeLineOnFile("'"+PREPARE + "':"+prepare+",");
 		writeLineOnFile("'"+TESTS + "':{");//OPEN 2
 	}
 

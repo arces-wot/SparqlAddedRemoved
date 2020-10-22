@@ -115,16 +115,17 @@ public class SPARQLAnalyzer {
 		}
 
 		@Override
-		public void visit(UpdateDataDelete updateDataDelete) {
-			Query deleteQuery = createBaseConstruct(new QuadAcc(updateDataDelete.getQuads()));
-			String deleteString = deleteQuery.isUnknownType() ? "" : deleteQuery.serialize() + "WHERE{}";
-			results.add(new UpdateConstruct(deleteString, ""));
-		
-//			if(deleteQuery.getGraphURIs().size()>0) {
-//				result.setRemovedGraph(deleteQuery.getGraphURIs().get(0));
-//				//----------------------------------STESSO GRAFO DI PRIMA O GRAFI DIVERSI??
-//			}
-//
+		public void visit(UpdateDataDelete updateDataDelete) {//----------------REWORKED
+			//OLD CODE------------------INIZIO
+//			Query deleteQuery = createBaseConstruct(new QuadAcc(updateDataDelete.getQuads()));
+//			String deleteString = deleteQuery.isUnknownType() ? "" : deleteQuery.serialize() + "WHERE{}";
+//			results.add(new UpdateConstruct(deleteString, ""));
+			//OLD CODE------------------FINE
+			ConstructGenerator cg = new ConstructGenerator(updateDataDelete.getQuads());	
+			HashMap<String,String> deleteStrings =cg.getConstructsWithGraphs(false);
+			for (String graph :deleteStrings.keySet()) {
+				results.add(new UpdateConstruct(deleteStrings.get(graph),"",graph,""));
+			}
 			System.out.println("2");
 		}
 
@@ -183,11 +184,14 @@ public class SPARQLAnalyzer {
 				insertString = constructQueryInsert.serialize();
 			}
 			*/
+			
+			//-------------- ATTENZIONE si potrebbe usare  updateModify.getWherePattern() in sostituzione al boolean STRICT
+			
 			HashMap<String,String> insertStrings=null;
 			HashMap<String,String> deleteStrings=null;
 			if (updateModify.hasDeleteClause() && !updateModify.getDeleteAcc().getQuads().isEmpty()) {				
 				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads());	
-				deleteStrings=cg.getConstructsWithGraphs(true);				
+				deleteStrings=cg.getConstructsWithGraphs(false);				
 			}
 
 			if (updateModify.hasInsertClause() && !updateModify.getInsertAcc().getQuads().isEmpty()) {

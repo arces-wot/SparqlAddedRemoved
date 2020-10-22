@@ -75,12 +75,71 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 		requestMap.put("MT3_prepare_rollback", createRoolbackPrepareMT3());	
 		
 		//-----------------------------------MetaTest 4 (DELETE DATA)
-//		requestMap.put("MT3_prepare_insert", createPrepareInsertMT3());
-//		requestMap.put("MT3_Query", createQueryMT3());
-//		requestMap.put("MT3_Update", createUpdateMT3());
-//		requestMap.put("MT3_Rollback", createRoolbackMT3());
-//		requestMap.put("MT3_prepare_rollback", createRoolbackPrepareMT3());	
+		requestMap.put("MT4_prepare_insert", createPrepareMT4());
+		requestMap.put("MT4_Query", createQueryMT4());
+		requestMap.put("MT4_Update", createUpdateMT4());
+		requestMap.put("MT4_Rollback", createRollbackMT4());
+		requestMap.put("MT4_prepare_rollback", createPrepareRollbackMT4());	
 	}
+	
+//-------------------------------------------------------------------------------MT4 START
+	
+		private MetaSparqlRequest createPrepareMT4() {
+			String sparqlStr = ""+
+					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+					"PREFIX ub: "+_ontology+"\r\n" + 
+					"INSERT DATA  {  GRAPH "+_graph+" { "+
+					MetaSparqlRequest.getBuilderBindInsert()
+					+" } }";
+			
+			SparqlObj sparql= new SparqlObj(sparqlStr) ;
+			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
+			MetaSparqlRequest msr = new MetaSparqlRequest(new SparqlRequest(sparql,endPointHost));
+			msr.setTripleInsert(createTripleBaseMT1());
+			return msr;
+		}
+		
+
+		private MetaSparqlRequest createUpdateMT4() {
+			String sparqlStr = ""+
+					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+					"PREFIX ub: "+_ontology+"\r\n" + 
+					"DELETE DATA { GRAPH "+_graph+" { "+
+							MetaSparqlRequest.getBuilderBindDelete()
+							+ " } }";			
+			SparqlObj sparql= new SparqlObj(sparqlStr) ;
+			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
+			MetaSparqlRequest msr = new MetaSparqlRequest(new SparqlRequest(sparql,endPointHost));
+			msr.setTripleDelete(createTripleBaseMT1());
+			return msr;
+		}
+		
+		
+		private MetaSparqlRequest createRollbackMT4() {
+			String sparqlStr = ""+
+					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
+					"PREFIX ub: "+_ontology+"\r\n" + 
+					"INSERT DATA  {  GRAPH "+_graph+" { "+
+					MetaSparqlRequest.getBuilderBindInsert()
+					+" } }";
+			
+			SparqlObj sparql= new SparqlObj(sparqlStr) ;
+			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
+			MetaSparqlRequest msr = new MetaSparqlRequest(new SparqlRequest(sparql,endPointHost));
+			msr.setTripleInsert(createTripleBaseMT1());
+			return msr;
+		}
+		
+		private MetaSparqlRequest createQueryMT4() {
+			return createQueryMT1();
+		}
+		
+		private MetaSparqlRequest createPrepareRollbackMT4() {
+			return createRollbackMT1();
+		}
+		
+
+//-------------------------------------------------------------------------------MT4 END
 //-------------------------------------------------------------------------------MT3 START
 	
 		private MetaSparqlRequest createPrepareInsertMT3() {

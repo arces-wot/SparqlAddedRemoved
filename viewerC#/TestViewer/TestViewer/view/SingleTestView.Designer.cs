@@ -37,9 +37,9 @@
             // 
             this.labelInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelInfo.Location = new System.Drawing.Point(12, 15);
+            this.labelInfo.Location = new System.Drawing.Point(12, 0);
             this.labelInfo.Name = "labelInfo";
-            this.labelInfo.Size = new System.Drawing.Size(378, 28);
+            this.labelInfo.Size = new System.Drawing.Size(378, 58);
             this.labelInfo.TabIndex = 0;
             // 
             // metricsTable1
@@ -47,15 +47,15 @@
             this.metricsTable1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.metricsTable1.Location = new System.Drawing.Point(15, 59);
+            this.metricsTable1.Location = new System.Drawing.Point(15, 74);
             this.metricsTable1.Name = "metricsTable1";
-            this.metricsTable1.Size = new System.Drawing.Size(377, 241);
+            this.metricsTable1.Size = new System.Drawing.Size(377, 226);
             this.metricsTable1.TabIndex = 5;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 43);
+            this.label2.Location = new System.Drawing.Point(12, 58);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(91, 13);
             this.label2.TabIndex = 6;

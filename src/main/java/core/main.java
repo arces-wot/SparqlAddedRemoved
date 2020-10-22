@@ -100,7 +100,7 @@ public class main {
 	
 		 
 		MetaTest MT2 = MetaTestFactory.getInstance().getTestByName("DeleteWhere");
-		MT2.setPot(5);
+		MT2.setPot(4);
 		MT2.setReiteration(2);
 		MT2.setMonitor(monitor);		
 		System.out.println("MT2 Start");
@@ -109,11 +109,19 @@ public class main {
 	 
 		MetaTest MT3 = MetaTestFactory.getInstance().getTestByName("DeleteInsert");
 		MT3.setPot(4);
-		MT3.setReiteration(1);
+		MT3.setReiteration(2);
 		MT3.setMonitor(monitor);		
 		System.out.println("MT3 Start");
 		MT3.execute();
 		System.out.println("MT3 End");
+		
+		MetaTest MT4 = MetaTestFactory.getInstance().getTestByName("DeleteData");
+		MT4.setPot(4);
+		MT4.setReiteration(2);
+		MT4.setMonitor(monitor);		
+		System.out.println("MT4 Start");
+		MT4.execute();
+		System.out.println("MT4 End");
 		
 		//close 
 		monitor.close();

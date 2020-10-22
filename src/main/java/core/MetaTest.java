@@ -61,7 +61,7 @@ public class MetaTest implements ITest {
 		ArrayList<TestMetric> singleTestsTime = new ArrayList<TestMetric>();
 		while(actualPot<=pot) {
 			int n=(int) Math.pow(2, actualPot);
-			monitor.start(n,reiteration,metaTestName);
+			monitor.start(n,reiteration,metaTestName,preparationPercentage);
 			//-------------build Test
 			SingleTest actualTest =TestBuilder.build(this, n);
 			//-------------execute Test

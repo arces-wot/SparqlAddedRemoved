@@ -11,6 +11,7 @@ namespace TestViewer.model
     {
         private int tripleNumber;
         private int replication;
+        private int percentagePreInsert;
         private List<TestResult> tests;
         private List<Metric> avarages;
         private String name;
@@ -19,6 +20,7 @@ namespace TestViewer.model
             tests = new List<TestResult>();
             tripleNumber = obj.GetValue("TRIPLE_NUMBER").Value<int>();
             replication = obj.GetValue("REPLICATION").Value<int>();
+            percentagePreInsert = obj.GetValue("PREPARE").Value<int>();
             name = obj.GetValue("NAME_MT").Value<String>();
             JObject temp = obj.GetValue("TESTS").Value<JObject>();
             int index = 1;
@@ -56,7 +58,7 @@ namespace TestViewer.model
         public string Name { get => name; set => name = value; }
         internal List<TestResult> Tests { get => tests; set => tests = value; }
         internal List<Metric> Avarages { get => avarages; set => avarages = value; }
-
+        public int PercentagePreInsert { get => percentagePreInsert; set => percentagePreInsert = value; }
 
         public override string ToString()
         {

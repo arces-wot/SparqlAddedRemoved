@@ -57,6 +57,8 @@ public class ConstructGenerator {
 		return constructs;
 	}
 	
+	
+	
 	public String getConstruct(String graph,ArrayList<Triple> triples,boolean strict) {
 		
 		String sparql = "CONSTRUCT ";
@@ -74,6 +76,8 @@ public class ConstructGenerator {
 			where+="GRAPH <"+ graph + "> {?s ?p ?o}\n";
 		}
 		sparql+=stringList+ where +"}";
+
+		//System.out.println("construct:\n"+sparql);
 		return sparql;
 	}
 	
@@ -104,7 +108,6 @@ public class ConstructGenerator {
 			}
 		}
 		sparql+=list.toString() + where +"}";
-		
 		return sparql;
 	}
 	
