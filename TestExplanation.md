@@ -103,26 +103,37 @@ Possiede la metric aprincipale dei test, la quantità di tempo necessaria ad ese
 -Tab General
 Mostra il numero di MetaTest, il numero di fasi la cui esecuzione è fallita (Error count) e il numero di flag di verifica falliti (warnings count).
 Si può visualizzare il grafico di una delle fasi di tutti i MetaTest.
+
+<div align="center">
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img1">
   <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img1.png">
 </a>
+</div>
 
 -Tab MetaTest
 Si può visualizzare il grafico di una o più fasi per tutti i SingleTest del MetaTest selezionato.
+
+<div align="center">
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img2">
   <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img2.png">
-</a>
+</a>  
+</div>
 
 -Tab SingleTest
 Si possono visualizzare i dati medi delle varie fasi.
 'Prepare Insert' indica la percentuale di dati pre inseriti nella fase Phase1 sul totale delle triple trattate dal test.
+
+<div align="center">
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img3">
   <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img3.png">
 </a>
-
+</div>
 
 -Tab SingleExecution
 Si possono visualizzare i dati relativi alle fasi di una singola esecuzione e i relativi flag.
+
+<div align="center">
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img4">
   <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img4.png">
 </a>
+</div>
