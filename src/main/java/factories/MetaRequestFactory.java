@@ -66,14 +66,20 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 		requestMap.put("MT2_Update", createUpdateMT2());
 		requestMap.put("MT2_Rollback", createRollbackMT2());
 		requestMap.put("MT2_prepare_rollback", createRollbackPreInsered());	
+		
 		//-----------------------------------MetaTest 3 (INSERT DATA + DELETE WHERE)
 		requestMap.put("MT3_prepare_insert", createPrepareInsertMT3());
 		requestMap.put("MT3_Query", createQueryMT3());
 		requestMap.put("MT3_Update", createUpdateMT3());
-		requestMap.put("MT3_Rollback", createRoolbackPrepareMT3());
+		requestMap.put("MT3_Rollback", createRoolbackMT3());
 		requestMap.put("MT3_prepare_rollback", createRoolbackPrepareMT3());	
 		
-		
+		//-----------------------------------MetaTest 4 (DELETE DATA)
+//		requestMap.put("MT3_prepare_insert", createPrepareInsertMT3());
+//		requestMap.put("MT3_Query", createQueryMT3());
+//		requestMap.put("MT3_Update", createUpdateMT3());
+//		requestMap.put("MT3_Rollback", createRoolbackMT3());
+//		requestMap.put("MT3_prepare_rollback", createRoolbackPrepareMT3());	
 	}
 //-------------------------------------------------------------------------------MT3 START
 	
@@ -112,7 +118,7 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 			return msr;
 		}
 		
-		private MetaSparqlRequest createRoolbackPrepareMT3() {
+		private MetaSparqlRequest createRoolbackMT3() {
 			//is the same of the update, with inverted triples
 			String sparqlStr = ""+
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
@@ -129,7 +135,9 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 			msr.setTripleDelete(createTripleBaseMT3B());
 			return msr;
 		}
-		
+		private MetaSparqlRequest createRoolbackPrepareMT3() {
+			return createRollbackMT1();
+		}
 		private TripleBase createTripleBaseMT3A() {
 			return  new TripleBase("<http://www.unibo.it/Student_A__X__>","ub:memberOf","<http://www.unibo.it>");
 		}

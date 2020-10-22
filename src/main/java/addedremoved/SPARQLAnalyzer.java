@@ -192,7 +192,7 @@ public class SPARQLAnalyzer {
 
 			if (updateModify.hasInsertClause() && !updateModify.getInsertAcc().getQuads().isEmpty()) {
 				ConstructGenerator cg = new ConstructGenerator(updateModify.getInsertAcc().getQuads());	
-				insertStrings=cg.getConstructsWithGraphs(true);		
+				insertStrings=cg.getConstructsWithGraphs(false);		
 			}
 			if(insertStrings!=null && deleteStrings!=null) {
 				Set<String> graphs = new HashSet(insertStrings.keySet());

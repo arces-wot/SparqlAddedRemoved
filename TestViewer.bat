@@ -1,0 +1,1 @@
+start "TestViewer" ".\viewerC#\TestViewer\TestViewer\bin\Debug\TestViewer.exe"
