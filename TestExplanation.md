@@ -31,7 +31,7 @@ dove il primo test verrà eseguito con una sola tripla e l'ultimo test con 2^X t
 Se X=5 verrà eseguito il test 5 volte rispettivamente con 1,2,4,8,16 e 32 triple.
 
 ```java
-MT1.setReiteration(Y);
+MetaTest.setReiteration(Y);
 ```
 Imposta il numero di volte che ogni singolo test deve essere rieseguito.
 
@@ -104,25 +104,25 @@ Possiede la metric aprincipale dei test, la quantità di tempo necessaria ad ese
 Mostra il numero di MetaTest, il numero di fasi la cui esecuzione è fallita (Error count) e il numero di flag di verifica falliti (warnings count).
 Si può visualizzare il grafico di una delle fasi di tutti i MetaTest.
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img1">
-  <img width="300px" src="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img1.png">
+  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img1.png">
 </a>
 
 -Tab MetaTest
 Si può visualizzare il grafico di una o più fasi per tutti i SingleTest del MetaTest selezionato.
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img2">
-  <img width="300px" src="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img2.png">
+  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img2.png">
 </a>
 
 -Tab SingleTest
 Si possono visualizzare i dati medi delle varie fasi.
 'Prepare Insert' indica la percentuale di dati pre inseriti nella fase Phase1 sul totale delle triple trattate dal test.
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img3">
-  <img width="300px" src="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img3.png">
+  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img3.png">
 </a>
 
 
 -Tab SingleExecution
 Si possono visualizzare i dati relativi alle fasi di una singola esecuzione e i relativi flag.
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img4">
-  <img width="300px" src="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img4.png">
+  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img4.png">
 </a>
