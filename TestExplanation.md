@@ -35,13 +35,13 @@ MetaTest.setReiteration(Y);
 ```
 Imposta il numero di volte che ogni singolo test deve essere rieseguito.
 
-Se X=3 ed Y=2 si otterranno 3 SingleTest(#SingleTest) ciascuno con 2 SingleExecution(#SingleExecution)
+Se X=3 ed Y=2 si otterranno 3 SingleTest ciascuno con 2 SingleExecution
 
 ## SingleTest
 Un SingleTest racchiude le esecuzioni del medesimo test e la media dei risultati di tali esecuzioni.
 
 ## SingleExecution
-La singola esecuzione di un test è divisa in 11 Phase(#Phase)
+La singola esecuzione di un test è divisa in 11 Phase
 
 Phase1) Preparation (opzionale)
   Consiste in una Update iniziale per preparare la base di dati al test (UpdatePreparation).
@@ -95,7 +95,7 @@ La SingleExecution possiede:
 16. TripleExampleAskDelete: una tripla di esempio filtrata dalle ask sulle triple da rimuovere.
 
 ## Phase
-Rappresenta una fase del singolo test (elencate in SingleExecution(#SingleExecution)).
+Rappresenta una fase del singolo test (elencate in SingleExecution).
 Possiede la metric aprincipale dei test, la quantità di tempo necessaria ad eseguire la fase stessa ed un flag di errore, 'true' se l'esecuzione della fase è fallita.
 
 ## TestViewer
