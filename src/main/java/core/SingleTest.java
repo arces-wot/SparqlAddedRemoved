@@ -178,9 +178,8 @@ public class SingleTest implements ITest {
 				phase10.start();
 				ris_Rollback =rollbackPreparation.execute();
 				phase10.stop(ris_Rollback.isError());
-				phases.add(phase10);
 			}
-		
+			phases.add(phase10);
 			
 			
 			//------------------------------------Bulding result

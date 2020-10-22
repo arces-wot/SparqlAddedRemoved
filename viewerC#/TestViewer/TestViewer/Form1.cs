@@ -90,7 +90,7 @@ namespace TestViewer
             if (comboBox1.SelectedItem != null)
             {
                 MetaTestResult selected = (MetaTestResult)comboBox2.SelectedItem;
-                metaTestView1.loadSingleTest(selected);
+                singleTestView1.loadSingleTest(selected);
                 comboBox3.Items.Clear();
                 comboBox3.Items.AddRange(selected.Tests.ToArray());
                 if (comboBox3.Items.Count > 0)
