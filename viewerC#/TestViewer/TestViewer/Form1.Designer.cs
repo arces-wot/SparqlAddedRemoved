@@ -46,6 +46,15 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.testResultView1 = new TestViewer.view.TestResultView();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.MetaTest = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.update = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.other = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.C4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label5 = new System.Windows.Forms.Label();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.allMetricChart1 = new TestViewer.view.AllMetricChart();
             this.metaChart1 = new TestViewer.view.MetaChart();
             this.singleTestView1 = new TestViewer.view.SingleTestView();
@@ -54,6 +63,8 @@
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -88,10 +99,11 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(12, 41);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(520, 370);
+            this.tabControl1.Size = new System.Drawing.Size(827, 608);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
@@ -101,7 +113,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage1.Size = new System.Drawing.Size(512, 344);
+            this.tabPage1.Size = new System.Drawing.Size(819, 582);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -112,7 +124,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelInfo.Location = new System.Drawing.Point(9, 11);
             this.labelInfo.Name = "labelInfo";
-            this.labelInfo.Size = new System.Drawing.Size(493, 50);
+            this.labelInfo.Size = new System.Drawing.Size(800, 50);
             this.labelInfo.TabIndex = 0;
             // 
             // tabPage2
@@ -124,7 +136,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage2.Size = new System.Drawing.Size(512, 344);
+            this.tabPage2.Size = new System.Drawing.Size(819, 582);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "MetaTest";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -135,7 +147,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.Location = new System.Drawing.Point(6, 30);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(500, 49);
+            this.label3.Size = new System.Drawing.Size(807, 49);
             this.label3.TabIndex = 2;
             this.label3.Text = "MetaTest error:";
             // 
@@ -155,7 +167,7 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(98, 6);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(408, 21);
+            this.comboBox1.Size = new System.Drawing.Size(715, 21);
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -167,7 +179,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage3.Size = new System.Drawing.Size(512, 344);
+            this.tabPage3.Size = new System.Drawing.Size(819, 582);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "SingleTest";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -179,7 +191,7 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(164, 7);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(342, 21);
+            this.comboBox2.Size = new System.Drawing.Size(649, 21);
             this.comboBox2.TabIndex = 0;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -201,7 +213,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage4.Size = new System.Drawing.Size(512, 344);
+            this.tabPage4.Size = new System.Drawing.Size(819, 582);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "SingleExecution";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -213,7 +225,7 @@
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Location = new System.Drawing.Point(101, 9);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(405, 21);
+            this.comboBox3.Size = new System.Drawing.Size(712, 21);
             this.comboBox3.TabIndex = 2;
             this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
@@ -234,8 +246,100 @@
             this.testResultView1.Location = new System.Drawing.Point(6, 36);
             this.testResultView1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.testResultView1.Name = "testResultView1";
-            this.testResultView1.Size = new System.Drawing.Size(501, 305);
+            this.testResultView1.Size = new System.Drawing.Size(808, 543);
             this.testResultView1.TabIndex = 0;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.dataGridView1);
+            this.tabPage5.Controls.Add(this.label5);
+            this.tabPage5.Controls.Add(this.radioButton2);
+            this.tabPage5.Controls.Add(this.radioButton1);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage5.Size = new System.Drawing.Size(819, 582);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Hypothesis";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.MetaTest,
+            this.update,
+            this.other,
+            this.C4});
+            this.dataGridView1.Location = new System.Drawing.Point(11, 56);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 82;
+            this.dataGridView1.Size = new System.Drawing.Size(802, 520);
+            this.dataGridView1.TabIndex = 8;
+            // 
+            // MetaTest
+            // 
+            this.MetaTest.HeaderText = "MetaTest";
+            this.MetaTest.MinimumWidth = 10;
+            this.MetaTest.Name = "MetaTest";
+            // 
+            // update
+            // 
+            this.update.HeaderText = "t(Update)";
+            this.update.MinimumWidth = 10;
+            this.update.Name = "update";
+            // 
+            // other
+            // 
+            this.other.HeaderText = "t(Constrcut)+t(asks)+t(insert)+t(delete)";
+            this.other.MinimumWidth = 10;
+            this.other.Name = "other";
+            // 
+            // C4
+            // 
+            this.C4.HeaderText = "Column1";
+            this.C4.MinimumWidth = 10;
+            this.C4.Name = "C4";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 40);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(290, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Hypothesis: t(Update)=t(Construct)+t(asks)+t(insert)+t(delete)";
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(748, 6);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(65, 17);
+            this.radioButton2.TabIndex = 6;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Avarage";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(11, 6);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(60, 17);
+            this.radioButton1.TabIndex = 5;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Median";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // allMetricChart1
             // 
@@ -244,7 +348,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.allMetricChart1.Location = new System.Drawing.Point(12, 64);
             this.allMetricChart1.Name = "allMetricChart1";
-            this.allMetricChart1.Size = new System.Drawing.Size(494, 274);
+            this.allMetricChart1.Size = new System.Drawing.Size(801, 512);
             this.allMetricChart1.TabIndex = 1;
             // 
             // metaChart1
@@ -252,9 +356,9 @@
             this.metaChart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.metaChart1.Location = new System.Drawing.Point(9, 82);
+            this.metaChart1.Location = new System.Drawing.Point(6, 82);
             this.metaChart1.Name = "metaChart1";
-            this.metaChart1.Size = new System.Drawing.Size(497, 256);
+            this.metaChart1.Size = new System.Drawing.Size(807, 494);
             this.metaChart1.TabIndex = 3;
             // 
             // singleTestView1
@@ -264,14 +368,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.singleTestView1.Location = new System.Drawing.Point(9, 34);
             this.singleTestView1.Name = "singleTestView1";
-            this.singleTestView1.Size = new System.Drawing.Size(497, 304);
+            this.singleTestView1.Size = new System.Drawing.Size(804, 542);
             this.singleTestView1.TabIndex = 2;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(544, 423);
+            this.ClientSize = new System.Drawing.Size(851, 661);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelLoaded);
             this.Controls.Add(this.button1);
@@ -287,6 +391,9 @@
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -311,6 +418,15 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MetaTest;
+        private System.Windows.Forms.DataGridViewTextBoxColumn update;
+        private System.Windows.Forms.DataGridViewTextBoxColumn other;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn C4;
         private view.AllMetricChart allMetricChart1;
         private view.MetaChart metaChart1;
         private view.SingleTestView singleTestView1;

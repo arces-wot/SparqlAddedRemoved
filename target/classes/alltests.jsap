@@ -1,0 +1,191 @@
+{
+	"host": "localhost",
+	"oauth": {
+		"enable": false
+	},
+	"sparql11protocol": {
+		"protocol": "http",
+		"port": 8000,
+		"query": {
+			"path": "/query",
+			"method": "POST",
+			"format": "JSON"
+		},
+		"update": {
+			"path": "/update",
+			"method": "POST",
+			"format": "JSON"
+		}
+	},
+	"sparql11seprotocol": {
+		"protocol": "ws",
+		"reconnect" : true,
+		"availableProtocols": {
+			"ws": {
+				"port": 9000,
+				"path": "/subscribe"
+			},
+			"wss": {
+				"port": 9443,
+				"path": "/secure/subscribe"
+			}
+		}
+	},
+	"extended": {
+		"tests": {
+			"UpdateDataInsert" : {
+				"PreUpdateLink": "INSERT_DATA_1",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "INSERT_DATA_1",
+				"RollbackLink" : "DELETE_WHERE_1",
+				"QueryLink": "QUERY_1",
+				"Pot" : 4,
+				"Reiteration": 5,
+				"AskTestEnable": true,
+				"PreparationPercentage":10
+				},	
+			"UpdateDeleteWhere" : {
+				"PreUpdateLink": "INSERT_DATA_1",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "DELETE_WHERE_1",
+				"RollbackLink" : "INSERT_DATA_1",
+				"QueryLink": "QUERY_1",
+				"Pot" : 4,
+				"Reiteration": 5,
+				"AskTestEnable": true,
+				"PreparationPercentage":90
+				},	
+			"UpdateModify" : {
+				"PreUpdateLink": "INSERT_DATA_2",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "INSERT_DELETE_1",
+				"RollbackLink" : "INSERT_DELETE_2",
+				"QueryLink": "QUERY_1",
+				"Pot" : 4,
+				"Reiteration": 5,
+				"AskTestEnable": true,
+				"PreparationPercentage":100 
+				},
+			"UpdateDataDelete" : {
+				"PreUpdateLink": "INSERT_DATA_1",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "DELETE_DATA_1",
+				"RollbackLink" : "INSERT_DATA_1",
+				"QueryLink": "QUERY_1",
+				"Pot" : 4,
+				"Reiteration": 5,
+				"AskTestEnable": true,
+				"PreparationPercentage":90 
+				}
+		}
+	},
+	"graphs": {
+	},
+	"namespaces": {
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"ub": "http://swat.cse.lehigh.edu/onto/univ-bench.owl#"
+	},
+	"updates": {
+		"INSERT_DATA_1": {			
+			"sparql":"
+					INSERT DATA  {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph> { 
+							?tripleBaseInsert
+						}
+					}					
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"DELETE_WHERE_1": {			
+			"sparql":"
+					DELETE WHERE {
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph> { 
+							?s ub:memberOf <http://www.unibo.it>
+						} 
+					}					
+				"
+		},
+		"INSERT_DATA_2": {			
+			"sparql":"
+					INSERT DATA  {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph> { 
+							?tripleBaseInsert
+						}
+					}					
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_A__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"INSERT_DELETE_1": {			
+			"sparql":"
+					DELETE {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph>  {
+						?tripleBaseDelete
+					} } INSERT {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph> {
+						?tripleBaseInsert
+					} }	WHERE {}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_B__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseDelete": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_A__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"INSERT_DELETE_2": {			
+			"sparql":"
+					DELETE {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph>  {
+						?tripleBaseDelete
+					} } INSERT {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph> {
+						?tripleBaseInsert
+					} } WHERE {}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_A__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseDelete": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_B__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"DELETE_DATA_1": {			
+			"sparql":"
+					DELETE DATA { GRAPH  <http://lumb/for.sepa.test/workspace/defaultgraph> { 
+						?tripleBaseDelete
+					} }				
+				",
+				"forcedBindings": {
+					"tripleBaseDelete": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		}
+	},
+	"queries": {
+		"QUERY_1": {
+			"sparql": "
+					SELECT ?s ?p ?o
+					FROM <http://lumb/for.sepa.test/workspace/defaultgraph> WHERE {
+						?s ?p ?o .
+						?s ub:memberOf <http://www.unibo.it> .
+					}		
+					"
+			}
+		}
+	}

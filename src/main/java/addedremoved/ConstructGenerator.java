@@ -14,13 +14,7 @@ import org.apache.jena.sparql.syntax.ElementTriplesBlock;
 public class ConstructGenerator {
 	
 	private HashMap<String,ArrayList<Triple>> allTriple = new  HashMap<String,ArrayList<Triple>>();
-	private String defaulGraph="";
-	public ConstructGenerator(String defaulGraph) {
-		this.defaulGraph=defaulGraph;
-	}
-	public ConstructGenerator() {
-		defaulGraph=null;
-	}
+
 	
 	public ConstructGenerator(List<Quad> quadList) {
 		for(Quad q :quadList) {
@@ -35,12 +29,12 @@ public class ConstructGenerator {
 			ArrayList<Triple> new_List = new ArrayList<Triple>();
 			new_List.add(t);
 			allTriple.put(graph, new_List);
+			
 		}
 	}
 	
-	public void add(Triple t) {
-		add(this.defaulGraph, t);
-	}
+	
+	
 	public ArrayList<String> getConstructs(boolean strict) {
 		ArrayList<String> constructs = new ArrayList<String>();
 		for (String graph : allTriple.keySet()) {
@@ -62,7 +56,6 @@ public class ConstructGenerator {
 	public String getConstruct(String graph,ArrayList<Triple> triples,boolean strict) {
 		
 		String sparql = "CONSTRUCT ";
-		String where = " WHERE { \n";
 		ElementTriplesBlock list = new ElementTriplesBlock(); //Solution1 
 		String stringList = "";
 		for(Triple triple :triples) {
@@ -70,6 +63,8 @@ public class ConstructGenerator {
 			list.addTriple(triple);//Solution1 
 		}	
 		stringList="{"+list.toString()+"}";//Solution1 
+
+		String where = " WHERE { \n";
 		if(strict){
 			where+="GRAPH <"+ graph + "> "+stringList +"\n";
 		}else{
@@ -80,36 +75,13 @@ public class ConstructGenerator {
 		//System.out.println("construct:\n"+sparql);
 		return sparql;
 	}
-	
-	public String getConstruct_deprecate(boolean strict) {
-		String sparql = "CONSTRUCT ";
-		String where = " WHERE { \n";
-		boolean firstGraph = true;
-		ElementGroup list = new ElementGroup();
-		for (String graph : allTriple.keySet()) {
-			for(Triple triple :allTriple.get(graph)) {
-				//sparql+=triple + ".\n";
-				list.addTriplePattern(triple);
-			}	
-			if(firstGraph) {
-				firstGraph=false;
-				if(strict){
-					where+="{GRAPH <"+ graph + "> "+list.toString() +"}\n";
-				}else{
-					where+="{GRAPH <"+ graph + "> {?s ?p ?o}}\n";
-				}
-				
-			}else {
-				if(strict){
-					where+="UNION{GRAPH <"+ graph + "> "+list.toString() +"}\n";
-				}else {
-					where+="UNION{GRAPH <"+ graph + "> {?s ?p ?o}}\n";
-				}
-			}
-		}
-		sparql+=list.toString() + where +"}";
-		return sparql;
+
+	public HashMap<String, ArrayList<Triple>> getAllTriple() {
+		return allTriple;
 	}
+	
+
+	
 	
 	
 }

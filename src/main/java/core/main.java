@@ -6,25 +6,32 @@ import java.util.ArrayList;
 import org.apache.jena.base.Sys;
 
 import addedremoved.AddedRemovedGenerator;
+import addedremoved.UpdateConstruct;
 import connector.CleanerRDFStore;
 import connector.SparqlRequest;
 import edu.lehigh.swat.bench.uba.Generator;
 import edu.lehigh.swat.bench.uba.Ontology;
 import factories.IRequestFactory;
+import factories.JsapMetaTestFactory;
 import factories.MetaTestFactory;
 import factories.RequestFactory;
 import factories.RequestFactory.RequestName;
 import factories.MetaRequestFactory;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
+import it.unibo.arces.wot.sepa.commons.exceptions.SEPAPropertiesException;
+import it.unibo.arces.wot.sepa.commons.exceptions.SEPAProtocolException;
+import it.unibo.arces.wot.sepa.commons.exceptions.SEPASecurityException;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
 import it.unibo.arces.wot.sepa.commons.response.UpdateResponse;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
+import it.unibo.arces.wot.sepa.pattern.GenericClient;
+import it.unibo.arces.wot.sepa.pattern.JSAP;
 import model.TestMetric;
 import model.TripleBase;
-import model.UpdateConstruct;
 import support.Environment;
+import support.JSAPProvider;
 import support.TestBuilder;
 
 public class main {
@@ -32,9 +39,9 @@ public class main {
     private static String graph=Environment.graph;
     private static String ontology = Environment.ontology;	     
     private static boolean ONTOLOGY = false;
-    private static boolean POPOLATE = false;
-    private static boolean RUN = true;
-    private static boolean CLEAN = false;//non rimuove l'ontologia
+    private static boolean POPOLATE = true;
+    private static boolean RUN = false;
+    private static boolean CLEAN = true;//non rimuove l'ontologia
     
 	public static void main (String[] args) {
 
@@ -51,12 +58,35 @@ public class main {
 		 }
 		 
 		 if(RUN){
-			 MetaTestRun();
+			 //MetaTestRun();
 			 //constructTester();
+			 jsapIntegration();
 		 }		 
 		
 	
 	}
+
+	private static void jsapIntegration() {
+		ITestVisitor monitor=null;
+		try {				
+			monitor = new TestVisitorOutputJsonFile("E:\\prova.json");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		MetaTest MT1 = JsapMetaTestFactory.getInstance().getTestByName("INSERT_DATA");
+		MT1.setPot(4);
+		MT1.setReiteration(5);
+		MT1.setMonitor(monitor);
+		System.out.println("MT1 Start");
+		MT1.execute();
+		System.out.println("MT1 End");
+
+		//close 
+		monitor.close();
+	}
+	
 	private static void constructTester() {
 		ArrayList<TestMetric> phases = new ArrayList<TestMetric> ();
 		SparqlRequest deleteUpdate=null;
@@ -90,38 +120,38 @@ public class main {
 			e.printStackTrace();
 		}
 		 
-//		MetaTest MT1 = MetaTestFactory.getInstance().getTestByName("InsertData");	
-//		MT1.setPot(5);
-//		MT1.setReiteration(2);
-//		MT1.setMonitor(monitor);
-//		System.out.println("MT1 Start");
-//		MT1.execute();
-//		System.out.println("MT1 End");
-//	
-//		 
-//		MetaTest MT2 = MetaTestFactory.getInstance().getTestByName("DeleteWhere");
-//		MT2.setPot(4);
-//		MT2.setReiteration(2);
-//		MT2.setMonitor(monitor);		
-//		System.out.println("MT2 Start");
-//		MT2.execute();
-//		System.out.println("MT2 End");
+		MetaTest MT1 = MetaTestFactory.getInstance().getTestByName("InsertData");	
+		MT1.setPot(4);
+		MT1.setReiteration(5);
+		MT1.setMonitor(monitor);
+		System.out.println("MT1 Start");
+		MT1.execute();
+		System.out.println("MT1 End");
+	
+		 
+		MetaTest MT2 = MetaTestFactory.getInstance().getTestByName("DeleteWhere");
+		MT2.setPot(4);
+		MT2.setReiteration(5);
+		MT2.setMonitor(monitor);		
+		System.out.println("MT2 Start");
+		MT2.execute();
+		System.out.println("MT2 End");
 	 
 		MetaTest MT3 = MetaTestFactory.getInstance().getTestByName("DeleteInsert");
 		MT3.setPot(4);
-		MT3.setReiteration(2);
+		MT3.setReiteration(5);
 		MT3.setMonitor(monitor);		
 		System.out.println("MT3 Start");
 		MT3.execute();
 		System.out.println("MT3 End");
 		
-//		MetaTest MT4 = MetaTestFactory.getInstance().getTestByName("DeleteData");
-//		MT4.setPot(4);
-//		MT4.setReiteration(2);
-//		MT4.setMonitor(monitor);		
-//		System.out.println("MT4 Start");
-//		MT4.execute();
-//		System.out.println("MT4 End");
+		MetaTest MT4 = MetaTestFactory.getInstance().getTestByName("DeleteData");
+		MT4.setPot(4);
+		MT4.setReiteration(5);
+		MT4.setMonitor(monitor);		
+		System.out.println("MT4 Start");
+		MT4.execute();
+		System.out.println("MT4 End");
 		
 		//close 
 		monitor.close();

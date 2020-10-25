@@ -5,6 +5,7 @@ public class TripleBase {
 	private String base_s;
 	private String base_p;
 	private String base_o;
+	private String triple=null;
 	private String bind;
 	private int inc;
 	
@@ -14,7 +15,7 @@ public class TripleBase {
 		this.base_s = base_s;
 		this.base_p = base_p;
 		this.base_o = base_o;
-		this.bind = "__X__";
+		this.bind = "__X__"; //as default
 		this.inc=0;
 	}
 	
@@ -26,12 +27,29 @@ public class TripleBase {
 		this.bind = bind;
 		this.inc=0;
 	}
+	
+	public TripleBase(String triple) {
+		super();
+		this.triple = triple;
+		this.bind = "__X__"; //as default
+		this.inc=0;
+	}
+	public TripleBase(String triple,String bind) {
+		super();
+		this.triple = triple;
+		this.bind = bind;
+		this.inc=0;
+	}
 	//------------------------------------------------
 	
 	public String getNextTriple() {
 		String next =  this.inc+"";
 		this.inc++;
-		return base_s.replace(this.bind, next)+ " "+  base_p.replace(this.bind, next) + " "+  base_o.replace(this.bind, next); 
+		if(this.triple==null) {
+			return base_s.replace(this.bind, next)+ " "+  base_p.replace(this.bind, next) + " "+  base_o.replace(this.bind, next); 
+		}else {
+			return triple.replace(this.bind, next); 
+		}
 	}
 	public void reset() {
 		this.inc=0;
@@ -60,6 +78,14 @@ public class TripleBase {
 	}
 	public void setInc(int inc) {
 		this.inc = inc;
+	}
+
+	public String getTriple() {
+		return triple;
+	}
+
+	public void setTriple(String triple) {
+		this.triple = triple;
 	}
 	
 	

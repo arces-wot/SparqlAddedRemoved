@@ -1,83 +1,20 @@
 package addedremoved;
 
-import org.apache.jena.atlas.lib.Sink;
-import org.apache.jena.base.Sys;
 import org.apache.jena.graph.Triple;
-import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.Syntax;
-import org.apache.jena.sparql.algebra.*;
-import org.apache.jena.sparql.algebra.op.OpBGP;
-import org.apache.jena.sparql.core.BasicPattern;
-import org.apache.jena.sparql.core.Quad;
-import org.apache.jena.sparql.core.TriplePath;
-import org.apache.jena.sparql.lang.UpdateParserFactory;
-import org.apache.jena.sparql.lang.arq.ParseException;
 import org.apache.jena.sparql.modify.request.*;
-import org.apache.jena.sparql.syntax.*;
 import org.apache.jena.update.Update;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import model.UpdateConstruct;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SPARQLAnalyzer {
 
-	String test = null;
-
-	public void setString(String s) {
-		test = s;
-	}
-
-	class MyTransform extends TransformCopy {
-		@Override
-		public Op transform(OpBGP opBGP) {
-			// create a new construct query
-			Query q = QueryFactory.make();
-			q.setQueryConstructType();
-
-			// parse the bgp
-			BasicPattern b = opBGP.getPattern();
-			Iterator<Triple> opIterator = b.iterator();
-			Template ttt = new Template(b);
-			q.setConstructTemplate(ttt);
-			ElementGroup body = new ElementGroup();
-			ElementUnion union = new ElementUnion();
-
-			while (opIterator.hasNext()) {
-				Triple bb = opIterator.next();
-
-				// for the query
-				ElementTriplesBlock block = new ElementTriplesBlock(); // Make a BGP
-				block.addTriple(bb);
-				body.addElement(block);
-				logger.debug(bb.toString());
-
-				// union
-				union.addElement(block);
-
-			}
-
-			q.setQueryPattern(body);
-			q.setQueryPattern(union);
-
-			setString(q.toString());
-			logger.debug(q.toString());
-
-			return opBGP;
-		}
-	}
 
 	class ToConstructUpdateVisitor extends UpdateVisitorBase {
 		private ArrayList<UpdateConstruct> results = new ArrayList<UpdateConstruct>();
@@ -107,9 +44,9 @@ public class SPARQLAnalyzer {
 			//			String insertString = insertQuery.isUnknownType() ? "" : insertQuery.serialize() + "WHERE{}";
 			//OLD CODE------------------FINE
 			ConstructGenerator cg = new ConstructGenerator(updateDataInsert.getQuads());	
-			HashMap<String,String> insertStrings =cg.getConstructsWithGraphs(false);
-			for (String graph :insertStrings.keySet()) {
-				results.add(new UpdateConstruct("", insertStrings.get(graph),"",graph));
+			HashMap<String,ArrayList<Triple>> insertTriples =cg.getAllTriple();
+			for (String graph :insertTriples.keySet()) {
+				results.add(new UpdateConstruct(null,"",insertTriples.get(graph),graph));
 			}
 			//System.out.println("1");
 		}
@@ -122,11 +59,11 @@ public class SPARQLAnalyzer {
 //			results.add(new UpdateConstruct(deleteString, ""));
 			//OLD CODE------------------FINE
 			ConstructGenerator cg = new ConstructGenerator(updateDataDelete.getQuads());	
-			HashMap<String,String> deleteStrings =cg.getConstructsWithGraphs(false);
-			for (String graph :deleteStrings.keySet()) {
-				results.add(new UpdateConstruct(deleteStrings.get(graph),"",graph,""));
+			HashMap<String,ArrayList<Triple>> deleteTriples =cg.getAllTriple();
+			for (String graph :deleteTriples.keySet()) {
+				results.add(new UpdateConstruct(deleteTriples.get(graph),graph,null,""));
 			}
-			System.out.println("2");
+			//System.out.println("2");
 		}
 
 		@Override
@@ -156,7 +93,7 @@ public class SPARQLAnalyzer {
 				results.add(new UpdateConstruct(deleteStrings.get(graph), "",graph,""));
 			}
 			
-//			System.out.println("3");
+			//System.out.println("3");
 		}
 
 		@Override
@@ -277,16 +214,7 @@ public class SPARQLAnalyzer {
 			return results;
 		}
 
-		private Query createBaseConstruct(QuadAcc quads) {
-			Query result = new Query();
-			if (!quads.getQuads().isEmpty()) {
-				Template construct = new Template(quads);
-				result = new Query();
-				result.setQueryConstructType();
-				result.setConstructTemplate(construct);
-			}
-			return result;
-		}
+
 
 	}
 
@@ -311,25 +239,6 @@ public class SPARQLAnalyzer {
 		throw new IllegalArgumentException("No valid operation found");
 	}
 
-	// Construct Generator
-	String getConstructFromQuery() throws ParseException {
 
-		// This method allows to derive the CONSTRUCT query
-		// from the SPARQL SUBSCRIPTION
-
-		// get the algebra from the query
-
-		Query qqq = QueryFactory.create(sparqlText, Syntax.syntaxSPARQL);
-		Op op = Algebra.compile(qqq);
-
-		// get the algebra version of the construct query and
-		// convert it back to query
-		Transform transform = new MyTransform();
-		op = Transformer.transform(transform, op);
-		Query q = OpAsQuery.asQuery(op);
-		// return
-		return test;
-
-	}
 
 }

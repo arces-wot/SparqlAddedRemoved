@@ -48,39 +48,56 @@ namespace TestViewer.view
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            plot();
 
-            if (comboBox1.SelectedItem!=null)
+
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            plot();
+
+        }
+        private void plot() {
+            if (comboBox1.SelectedItem != null)
             {
                 chart1.Series.Clear();
                 foreach (MetaTestGroup group in groups)
                 {
                     String name = group.MetaTestName;//.Replace(" ", "_");
                     chart1.Series.Add(name);
+
                     foreach (MetaTestResult mtr in group.List)
                     {
+                        double[] temp = new double[mtr.Tests.Count];
+                        int index = 0;
                         double avarage = 0;
-                        int n = 0;
                         foreach (TestResult tr in mtr.Tests)
                         {
 
                             Metric m = tr.getMetricByName((String)comboBox1.SelectedItem);
                             if (m != null)
                             {
-                                n++;
-                                avarage += m.Value;
+                                temp[index] = m.Value;
+                                index++;
+                                avarage+= m.Value;
                             }//esle ignore
                         }
-                        chart1.Series[name].Points.AddXY(mtr.TripleNumber, avarage / n);
+                        if (radioButton1.Checked)
+                        {
+                            chart1.Series[name].Points.AddXY(mtr.TripleNumber, temp[index / 2]);
+                        }
+                        else
+                        {
+                            chart1.Series[name].Points.AddXY(mtr.TripleNumber, avarage / index);
+                        }
                     }
                     chart1.Series[name].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
                     chart1.Series[name].BorderWidth = 2;
                 }
-        
+
             }
-
-           
-        
-
         }
     }
 }

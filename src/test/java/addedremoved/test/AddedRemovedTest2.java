@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import addedremoved.AddedRemovedGenerator;
+import addedremoved.UpdateConstruct;
 import connector.SparqlRequest;
 import core.Inspector;
 import factories.IRequestFactory;
@@ -22,7 +23,6 @@ import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import model.TestMetric;
-import model.UpdateConstruct;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AddedRemovedTest2 {
 
@@ -329,7 +329,7 @@ public class AddedRemovedTest2 {
 		Phase8.stop();
 		phases.add(Phase8);	
 		assertFalse("#)  Phase8",ris_Rollback.isError());
-		System.out.println("ROOLBACK-> \n\n" + rollback_for_Q3.getSparql().getSparqlString());
+		System.out.println("ROLLBACK-> \n\n" + rollback_for_Q3.getSparql().getSparqlString());
 		//----------------------------------Phase 9	
 		//assertTrue("#)  Phase9 Querys resutl (need be equasl)",Inspector.areEq(ris_Query_2.getBindingsResults(),ris_Query.getBindingsResults()));
 		

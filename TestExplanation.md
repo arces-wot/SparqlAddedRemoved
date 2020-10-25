@@ -8,11 +8,11 @@ le tempistiche di esecuzione.
 A tale scopo un test ha obbligatoriamente:
 -**UPDATE**: oggetto di studio.
 -QUERY: relativa query alla **UPDATE**.
--ROOLBACK: relativa roolback delle **UPDATE** (update che annulla gli effetti della **UPDATE** in analisi).
+-ROLLBACK: relativa rollback delle **UPDATE** (update che annulla gli effetti della **UPDATE** in analisi).
 
 Opzionali sono invece:
 -UpdatePreparation: update di preparazione al test (eseguita prima del test).
--RoolbackPreparation: update che annulla la PreUpdate (eseguita alla fine del test).
+-RollbackPreparation: update che annulla la PreUpdate (eseguita alla fine del test).
 
 ## Struttura del test
 - [MetaTest](#MetaTest)
@@ -61,8 +61,8 @@ Phase5) Insert e Delete
 Phase6) Query
   Esecuzione della QUERY, per ottenere i cambiamenti sulla base di dati causati dalle update di Insert e Delete.
   
-Phase7) Roolback
-  Esecuzione della ROOLBACK, per annullare i cambiamenti sulla base di dati causati dalle update di Insert e Delete.
+Phase7) Rollback
+  Esecuzione della ROLLBACK, per annullare i cambiamenti sulla base di dati causati dalle update di Insert e Delete.
   
 Phase8) Update
   Esecuzione della **Update**.
@@ -70,11 +70,11 @@ Phase8) Update
 Phase9) Query
   Esecuzione della QUERY, per ottenere i cambiamenti sulla base di dati causati della **Update**.
   
-Phase10) Roolback
-  Esecuzione della ROOLBACK, per annullare i cambiamenti sulla base di dati causati della **Update**.
+Phase10) Rollback
+  Esecuzione della ROLLBACK, per annullare i cambiamenti sulla base di dati causati della **Update**.
   
-Phase11) Roolback Preparation (opzionale)
-  Esecuzione della RoolbackPreparation, per annullare i cambiamenti sulla base di dati causati della UpdatePreparation (se eseguita).
+Phase11) Rollback Preparation (opzionale)
+  Esecuzione della RollbackPreparation, per annullare i cambiamenti sulla base di dati causati della UpdatePreparation (se eseguita).
   
 La SingleExecution possiede:
 1. InsertDellChackResult: flag di controllo 'true' se la **Update** e le update di Insert e Delete hanno avuto il medesimo effetto sulla base di dati.

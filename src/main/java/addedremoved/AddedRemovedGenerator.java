@@ -20,7 +20,6 @@ import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
 import model.EndPoint;
 import model.SparqlObj;
 import model.TestMetric;
-import model.UpdateConstruct;
 
 public class AddedRemovedGenerator {
 	
@@ -232,24 +231,30 @@ public class AddedRemovedGenerator {
 				BindingsResults added =  new BindingsResults(new JsonObject());
 				BindingsResults removed =  new BindingsResults(new JsonObject());
 
-				String dc = constructs.getDeleteConstruct();
-				if (dc.length() > 0) {		
-					//System.out.println("DC-->"+dc+"\n\n");		
-					SparqlObj getRemovedSparql =sparql; // sparql.clone();
-					getRemovedSparql.setSparql(dc);
-					removed = ((QueryResponse) new SparqlRequest(getRemovedSparql,ep).execute()).getBindingsResults();
-				}
+				if(!constructs.isSkipConstruct()) {
+					String dc = constructs.getDeleteConstruct();
+					if (dc.length() > 0) {		
+						//System.out.println("DC-->"+dc+"\n\n");		
+						SparqlObj getRemovedSparql =sparql; // sparql.clone();
+						getRemovedSparql.setSparql(dc);
+						removed = ((QueryResponse) new SparqlRequest(getRemovedSparql,ep).execute()).getBindingsResults();
+					}
 
-				String ac = constructs.getInsertConstruct();
-				if (ac.length() > 0) {
-					//System.out.println("AC-->"+ac+"\n\n");
-					SparqlObj getAddedSparql =sparql ;// sparql.clone();
-					getAddedSparql.setSparql(ac);
-					// System.out.println("-->"+new SparqlRequest(getAddedSparql,ep).execute().toString());
-					added  = ((QueryResponse) new SparqlRequest(getAddedSparql,ep).execute()).getBindingsResults();
-					
-				}
+					String ac = constructs.getInsertConstruct();
+					if (ac.length() > 0) {
+						//System.out.println("AC-->"+ac+"\n\n");
+						SparqlObj getAddedSparql =sparql ;// sparql.clone();
+						getAddedSparql.setSparql(ac);
+						// System.out.println("-->"+new SparqlRequest(getAddedSparql,ep).execute().toString());
+						added  = ((QueryResponse) new SparqlRequest(getAddedSparql,ep).execute()).getBindingsResults();
+						
+					}
+				}else {
+					added =  constructs.getAdded();
+					removed =  constructs.getRemoved();
+				}			
 				tm1.stop();
+				
 				TestMetric tm2 = new TestMetric("ASKs");
 				tm2.start();
 				for(Bindings bindings : added.getBindings()){
@@ -273,26 +278,7 @@ public class AddedRemovedGenerator {
 				return constructs;
 			}
 			
-			private static String constructGraphFilter(String sparql) {
-			
-				    String lower= sparql.toLowerCase();
-				    String splits[] = lower.split("\\{");
-				   // System.out.println("splits.length "+splits.length);
-					if(splits.length>2 && splits[0].contains("construct") && splits[1].contains("graph")) {				
-						int end1 = lower.indexOf("graph");
-						String filtered = sparql.substring(0,end1);
-						//System.out.print("0-"+end1+ ":   "+filtered); //ok
-						int start2=splits[0].length()+splits[1].length()+2;
-						int end2 = start2+splits[2].indexOf("}");
 
-						//System.out.print(start2+"-"+end2+ ":   "+sparql.substring(start2,end2));
-						//System.out.print(end2+"-"+sparql.length()+ ":   "+sparql.substring(end2,sparql.length()));//ok
-						filtered+=sparql.substring(start2,end2)+sparql.substring(end2+1,sparql.length());
-						//System.out.println("filtered:\n"+filtered);
-						return filtered;
-					}
-					return sparql;
-			}
 			
 			public static String nuplaToString(Bindings triple) throws SEPABindingsException {
 				if(triple.getVariables().size()<1){

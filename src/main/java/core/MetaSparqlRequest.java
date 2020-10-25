@@ -5,19 +5,11 @@ import model.TripleBase;
 
 public class MetaSparqlRequest implements IMetaSparqlRequest {
 	
-	//-----------------------------------------------------STATIC PART
-	private static String builderBindInsert = "_?_I_TRIPLES_?_";
-	private static String builderBindDelete = "_?_D_TRIPLES_?_";
+	private  String builderBindInsert = "_?_I_TRIPLES_?_";
+	private  String builderBindDelete = "_?_D_TRIPLES_?_";
 	
-	public static String getBuilderBindInsert() {
-		return builderBindInsert;
-	}
 	
-	public static String getBuilderBindDelete() {
-		return builderBindDelete;
-	}
-	
-	public static String insertTripleToSparql(String sparql, TripleBase tripleInsert,TripleBase tripleDelete, int number) {
+	public  String insertTripleToSparql(String sparql, TripleBase tripleInsert,TripleBase tripleDelete, int number) {
 		
 		boolean needInsertInjeption = sparql.contains(builderBindInsert);
 		boolean needDeleteInjeption = sparql.contains(builderBindDelete);		
@@ -95,6 +87,22 @@ public class MetaSparqlRequest implements IMetaSparqlRequest {
 
 	public TripleBase getTripleDelete() {
 		return tripleDelete;
+	}
+
+	public String getBuilderBindInsert() {
+		return builderBindInsert;
+	}
+
+	public void setBuilderBindInsert(String builderBindInsert) {
+		this.builderBindInsert = builderBindInsert;
+	}
+
+	public String getBuilderBindDelete() {
+		return builderBindDelete;
+	}
+
+	public void setBuilderBindDelete(String builderBindDelete) {
+		this.builderBindDelete = builderBindDelete;
 	}
 
 	

@@ -3,12 +3,12 @@ package core;
 import java.util.ArrayList;
 
 import addedremoved.AddedRemovedGenerator;
+import addedremoved.UpdateConstruct;
 import connector.SparqlRequest;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
 import model.TestMetric;
 import model.TestResult;
-import model.UpdateConstruct;
 
 public class SingleTest implements ITest {
 
@@ -85,7 +85,7 @@ public class SingleTest implements ITest {
 				}
 			}
 			phase2.stop(pahes2Err);
-			//non è un vero errore, può capitare che non ci siano insert o delete da eseguire
+			//non ï¿½ un vero errore, puï¿½ capitare che non ci siano insert o delete da eseguire
 //			if(deleteUpdate==null && insertUpdate==null){
 //				System.out.println("Error: construct or insert-delete generation fail" );
 //				phase2.setError(true);
@@ -139,7 +139,7 @@ public class SingleTest implements ITest {
 			inspector.setQueryAfterNormalUpdate(((QueryResponse)ris_Query).getBindingsResults());
 		
 			//------------------------------------------------------------Phase 6
-			//-----------ROOLBACK
+			//-----------ROLLBACK
 			TestMetric phase6 = new TestMetric("Execution RollBack Update");
 			phase6.start();
 			Response ris_Rollback =rollback.execute();
@@ -164,7 +164,7 @@ public class SingleTest implements ITest {
 			inspector.setQueryAfterInsertDell(((QueryResponse)ris_Query_2).getBindingsResults());
 			
 			//------------------------------------------------------------Phase 9
-			//-----------ROOLBACK
+			//-----------ROLLBACK
 			TestMetric phase9 = new TestMetric("Re-Execution RollBack");			
 			phase9.start();
 			ris_Rollback =rollback.execute();
@@ -172,7 +172,7 @@ public class SingleTest implements ITest {
 			phases.add(phase9);
 			
 			//------------------------------------------------------------Phase 10
-			//-----------ROOLBACK PREPARATION			
+			//-----------ROLLBACK PREPARATION			
 			TestMetric phase10 = new TestMetric("RollBack preparation");	
 			if(preparationInsert!=null && rollbackPreparation!=null) {
 				phase10.start();

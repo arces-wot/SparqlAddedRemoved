@@ -13,13 +13,15 @@ import model.TripleBase;
 import support.Environment;
 import support.TestBuilder;
 /*
- * The query QUERY° with ° from 1 to 14
+ * The query QUERYï¿½ with ï¿½ from 1 to 14
  * refer to http://swat.cse.lehigh.edu/projects/lubm/queries-sparql.txt
  */
 
 
 public class MetaRequestFactory implements IMetaRequestFactory{
 
+	private static String builderBindInsert = "_?_I_TRIPLES_?_";
+	private static String builderBindDelete = "_?_D_TRIPLES_?_";
 	
 	
 	private static MetaRequestFactory instance=null;
@@ -71,8 +73,8 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 		requestMap.put("MT3_prepare_insert", createPrepareInsertMT3());
 		requestMap.put("MT3_Query", createQueryMT3());
 		requestMap.put("MT3_Update", createUpdateMT3());
-		requestMap.put("MT3_Rollback", createRoolbackMT3());
-		requestMap.put("MT3_prepare_rollback", createRoolbackPrepareMT3());	
+		requestMap.put("MT3_Rollback", createRollbackMT3());
+		requestMap.put("MT3_prepare_rollback", createRollbackPrepareMT3());	
 		
 		//-----------------------------------MetaTest 4 (DELETE DATA)
 		requestMap.put("MT4_prepare_insert", createPrepareMT4());
@@ -89,7 +91,7 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 					"PREFIX ub: "+_ontology+"\r\n" + 
 					"INSERT DATA  {  GRAPH "+_graph+" { "+
-					MetaSparqlRequest.getBuilderBindInsert()
+					builderBindInsert
 					+" } }";
 			
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
@@ -105,7 +107,7 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 					"PREFIX ub: "+_ontology+"\r\n" + 
 					"DELETE DATA { GRAPH "+_graph+" { "+
-							MetaSparqlRequest.getBuilderBindDelete()
+					builderBindDelete
 							+ " } }";			
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
 			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
@@ -120,7 +122,7 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 					"PREFIX ub: "+_ontology+"\r\n" + 
 					"INSERT DATA  {  GRAPH "+_graph+" { "+
-					MetaSparqlRequest.getBuilderBindInsert()
+					builderBindInsert
 					+" } }";
 			
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
@@ -147,7 +149,7 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 					"PREFIX ub: "+_ontology+"\r\n" + 
 					"INSERT DATA  {  GRAPH "+_graph+" { "+
-					MetaSparqlRequest.getBuilderBindInsert()
+					builderBindInsert
 					+" } }";
 			
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
@@ -165,9 +167,9 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 					"PREFIX ub: "+_ontology+"\r\n" + 
 					"DELETE {  GRAPH "+_graph+" { "+
-					MetaSparqlRequest.getBuilderBindDelete()
+					builderBindDelete
 					+" } } INSERT {  GRAPH "+_graph+"{"+
-					MetaSparqlRequest.getBuilderBindInsert()
+					builderBindInsert
 					+ " } } WHERE {?s ?p ?o}";			
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
 			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
@@ -177,15 +179,15 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 			return msr;
 		}
 		
-		private MetaSparqlRequest createRoolbackMT3() {
+		private MetaSparqlRequest createRollbackMT3() {
 			//is the same of the update, with inverted triples
 			String sparqlStr = ""+
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 					"PREFIX ub: "+_ontology+"\r\n" + 
 					"DELETE {  GRAPH "+_graph+" { "+
-					MetaSparqlRequest.getBuilderBindDelete()
+					builderBindDelete
 					+" } }INSERT {  GRAPH "+_graph+"{"+
-					MetaSparqlRequest.getBuilderBindInsert()
+					builderBindInsert
 					+ " } } WHERE {?s ?p ?o}";	
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
 			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");
@@ -194,7 +196,7 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 			msr.setTripleDelete(createTripleBaseMT3B());
 			return msr;
 		}
-		private MetaSparqlRequest createRoolbackPrepareMT3() {
+		private MetaSparqlRequest createRollbackPrepareMT3() {
 			return createRollbackMT1();
 		}
 		private TripleBase createTripleBaseMT3A() {
@@ -235,7 +237,7 @@ public class MetaRequestFactory implements IMetaRequestFactory{
 				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n" + 
 				"PREFIX ub: "+_ontology+"\r\n" + 
 				"INSERT DATA  {  GRAPH "+_graph+" { "+
-				MetaSparqlRequest.getBuilderBindInsert()
+				builderBindInsert
 				+" } }";
 		
 		SparqlObj sparql= new SparqlObj(sparqlStr) ;
