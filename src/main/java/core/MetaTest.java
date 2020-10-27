@@ -38,6 +38,7 @@ public class MetaTest implements ITest {
 		this.query=query;
 		this.update=update;
 		this.rollback=rollback;
+		this.excAskTest=askTestOn;
 	}
 	
 	public MetaTest(MetaSparqlRequest query,MetaSparqlRequest update,MetaSparqlRequest rollback,boolean askTestOn,int reiteration, int pot) {
@@ -61,7 +62,9 @@ public class MetaTest implements ITest {
 		ArrayList<TestMetric> singleTestsTime = new ArrayList<TestMetric>();
 		while(actualPot<=pot) {
 			int n=(int) Math.pow(2, actualPot);
-			monitor.start(n,reiteration,metaTestName,preparationPercentage);
+			if(monitor!=null) {
+				monitor.start(n,reiteration,metaTestName,preparationPercentage);
+			}
 			//-------------build Test
 			SingleTest actualTest =TestBuilder.build(this, n);
 			//-------------execute Test
@@ -75,14 +78,17 @@ public class MetaTest implements ITest {
 				}else{
 					metricAvarage.add(partialResult.getPhases());
 				}
-				//-------------------------------------WIP
-				monitor.visit(partialResult);
+				if(monitor!=null) {
+					monitor.visit(partialResult);
+				}
 			}
 			general.stop();
 			singleTestsTime.add(general);
-			monitor.visit(metricAvarage.finalizeAndGetAvarage());
+			if(monitor!=null) {
+				monitor.visit(metricAvarage.finalizeAndGetAvarage());
+				monitor.end();
+			}
 			actualPot++;
-			monitor.end();
 		}	
 	
 		return new TestResult(singleTestsTime);

@@ -16,3 +16,4 @@ E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\Tes
 E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.exe
 E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.pdb
 E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.csprojAssemblyReference.cache
+E:\andrea\scuola\Universita\magistrale\Tesi\addedremoved\viewerC#\TestViewer\TestViewer\obj\Debug\TestViewer.view.SparqlView.resources

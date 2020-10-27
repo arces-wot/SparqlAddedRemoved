@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,6 +60,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\jsap\JsapBind.cs" />
+    <Compile Include="model\jsap\Jsap.cs" />
+    <Compile Include="model\jsap\IJsapRequest.cs" />
+    <Compile Include="model\jsap\JsapQuery.cs" />
+    <Compile Include="model\jsap\JsapTest.cs" />
+    <Compile Include="model\jsap\JsapUpdate.cs" />
     <Compile Include="model\MetaTestGroup.cs" />
     <Compile Include="model\MetaTestResult.cs" />
     <Compile Include="model\Metric.cs" />
@@ -89,6 +96,12 @@
     <Compile Include="view\MetricsTable.Designer.cs">
       <DependentUpon>MetricsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="view\SparqlView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="view\SparqlView.Designer.cs">
+      <DependentUpon>SparqlView.cs</DependentUpon>
+    </Compile>
     <Compile Include="view\TestResultView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -118,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="view\MetricsTable.resx">
       <DependentUpon>MetricsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\SparqlView.resx">
+      <DependentUpon>SparqlView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="view\TestResultView.resx">
       <DependentUpon>TestResultView.cs</DependentUpon>

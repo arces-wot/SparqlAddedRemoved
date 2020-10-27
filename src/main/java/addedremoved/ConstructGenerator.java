@@ -52,6 +52,14 @@ public class ConstructGenerator {
 	}
 	
 	
+	public HashMap<String,String> getConstructsWithGraphs(String where) {
+		HashMap<String,String> constructs = new HashMap<String,String>();
+		for (String graph : allTriple.keySet()) {
+			constructs.put(graph,getConstruct(graph,allTriple.get(graph),where));
+		}
+		return constructs;
+	}
+	
 	
 	public String getConstruct(String graph,ArrayList<Triple> triples,boolean strict) {
 		
@@ -71,6 +79,23 @@ public class ConstructGenerator {
 			where+="GRAPH <"+ graph + "> {?s ?p ?o}\n";
 		}
 		sparql+=stringList+ where +"}";
+
+		//System.out.println("construct:\n"+sparql);
+		return sparql;
+	}
+	
+	public String getConstruct(String graph,ArrayList<Triple> triples,String where) {
+		
+		String sparql = "CONSTRUCT ";
+		ElementTriplesBlock list = new ElementTriplesBlock(); //Solution1 
+		String stringList = "";
+		for(Triple triple :triples) {
+			//stringList+= new TriplePattern(triple).toString() + ".\n"; //Solution2
+			list.addTriple(triple);//Solution1 
+		}	
+		stringList="{"+list.toString()+"}";//Solution1 
+
+		sparql+=stringList+  " WHERE "+ where;
 
 		//System.out.println("construct:\n"+sparql);
 		return sparql;

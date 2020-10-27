@@ -59,8 +59,8 @@ public class main {
 		 
 		 if(RUN){
 			 //MetaTestRun();
-			 //constructTester();
-			 jsapIntegration();
+			 constructTester();
+			 //jsapIntegration();
 		 }		 
 		
 	
@@ -88,27 +88,14 @@ public class main {
 	}
 	
 	private static void constructTester() {
-		ArrayList<TestMetric> phases = new ArrayList<TestMetric> ();
-		SparqlRequest deleteUpdate=null;
-		SparqlRequest insertUpdate=null;
-		SparqlRequest update=(SparqlRequest)MetaRequestFactory.getInstance().getRequestByName("MT3_Update").generate(2);
-		UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
-		if(constructs.needDelete()) {
-			try {
-				deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update.clone(),constructs);				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if(constructs.needInsert()) {
-			try {
-				insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update.clone(),constructs);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		 
+		MetaTest MT1 = JsapMetaTestFactory.getInstance().getTestByName("UpdateModify2");
+		MT1.setPot(1);
+		MT1.setReiteration(1);
+		System.out.println("MT Start");
+		MT1.execute();
+		System.out.println("MT End");
+
 	}
 	
 	private static void MetaTestRun() {
@@ -157,16 +144,6 @@ public class main {
 		monitor.close();
 	}
 	
-	public static void process(Response res) {
-		if(res instanceof QueryResponse ) {
-			BindingsResults results = ((QueryResponse) res).getBindingsResults();
-			System.out.println("Query Ris: "+ results.toJson().toString());
-		}else if(res instanceof UpdateResponse) {
-			System.out.println("Update ok: "+ !((UpdateResponse)res).isError());
-		}else {
-			System.out.println("Res is not valid!");
-		}
-	}
 
 	
 	private static void loadOntology() {

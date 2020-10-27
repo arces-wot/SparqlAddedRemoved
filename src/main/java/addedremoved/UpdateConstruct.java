@@ -59,21 +59,25 @@ public class UpdateConstruct {
 	}
 	
 	
-	public UpdateConstruct(ArrayList<Triple> removed,String removedGraph, ArrayList<Triple> added, String addedGraph) {
-		this.added= new BindingsResults(new JsonObject());
-		if(added!=null) {
-			for (Triple triple : added) {
+	public UpdateConstruct(ArrayList<Triple> r,String removedGraph, ArrayList<Triple> a, String addedGraph) {
+		ArrayList<String> vars = new ArrayList<String>();
+		vars.add("s");
+		vars.add("p");
+		vars.add("o");
+		this.added= new BindingsResults(vars,  new ArrayList<Bindings>());
+		if(a!=null) {
+			for (Triple triple : a) {
 				this.added.add(convertTripleToBindings(triple));
 			}
 		}
 			
-		this.removed= new BindingsResults(new JsonObject());
-		if(removed!=null) {
-			for (Triple triple : removed) {
+		this.removed=new BindingsResults(vars,  new ArrayList<Bindings>());
+		if(r!=null) {
+			for (Triple triple : r) {
 				this.removed.add(convertTripleToBindings(triple));
 			}
 		}
-	
+//		System.out.println("this.removed" + this.removed.size());
 		this.addedGraph=addedGraph;
 		this.removedGraph=removedGraph;
 		this.skipConstruct=true;

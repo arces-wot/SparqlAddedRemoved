@@ -84,15 +84,10 @@ public class SingleTest implements ITest {
 					pahes2Err=true;
 				}
 			}
+			
 			phase2.stop(pahes2Err);
-			//non � un vero errore, pu� capitare che non ci siano insert o delete da eseguire
-//			if(deleteUpdate==null && insertUpdate==null){
-//				System.out.println("Error: construct or insert-delete generation fail" );
-//				phase2.setError(true);
-//			}
 			phases.add(phase2);
 		
-			
 		    inspector.setAskForDelete(constructs.getRemoved());
 		    inspector.setAskForInsert(constructs.getAdded());
 			

@@ -122,19 +122,21 @@ public class SPARQLAnalyzer {
 			}
 			*/
 			
-			//-------------- ATTENZIONE si potrebbe usare  updateModify.getWherePattern() in sostituzione al boolean STRICT
 			
 			HashMap<String,String> insertStrings=null;
 			HashMap<String,String> deleteStrings=null;
+			
 			if (updateModify.hasDeleteClause() && !updateModify.getDeleteAcc().getQuads().isEmpty()) {				
-				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads());	
-				deleteStrings=cg.getConstructsWithGraphs(false);				
+				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads());
+				
+				deleteStrings=cg.getConstructsWithGraphs(updateModify.getWherePattern().toString());				
 			}
 
 			if (updateModify.hasInsertClause() && !updateModify.getInsertAcc().getQuads().isEmpty()) {
 				ConstructGenerator cg = new ConstructGenerator(updateModify.getInsertAcc().getQuads());	
-				insertStrings=cg.getConstructsWithGraphs(false);		
+				insertStrings=cg.getConstructsWithGraphs(updateModify.getWherePattern().toString());		
 			}
+			
 			if(insertStrings!=null && deleteStrings!=null) {
 				Set<String> graphs = new HashSet(insertStrings.keySet());
 				graphs.addAll(deleteStrings.keySet());

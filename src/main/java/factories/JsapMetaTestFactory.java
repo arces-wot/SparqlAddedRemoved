@@ -67,7 +67,7 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		
 		HashMap<String, MetaSparqlRequest> requestMap =getRequestsFromJsap(jsap);
 		for (Entry<String, JsonElement> test : 	jsap.getExtendedData().get("tests").getAsJsonObject().entrySet()) {
-			metaTestMap.put(test.getKey(), getFromJsap(test.getValue().getAsJsonObject(),requestMap));
+			metaTestMap.put(test.getKey(), getFromJsap(test.getValue().getAsJsonObject(),requestMap,test.getKey()));
 		} 
 		
 
@@ -83,7 +83,7 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		return metaTestMap.get(name);
 	}
 	
-	private MetaTest getFromJsap(JsonObject obj,HashMap<String, MetaSparqlRequest> request) throws Exception {	
+	private MetaTest getFromJsap(JsonObject obj,HashMap<String, MetaSparqlRequest> request,String name) throws Exception {	
 		
 		MetaTest ris = new MetaTest(
 				request.get(obj.get("QueryLink").getAsString()),
@@ -92,6 +92,7 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 				obj.get("AskTestEnable").getAsBoolean()
 				);
 		
+		ris.setMetaTestName(name);
 		if(obj.get("PreparationPercentage").getAsInt()>0 &&  obj.get("PreUpdateLink").getAsString()!=null && obj.get("PreUpdateRollbackLink").getAsString() !=null) {
 			ris.setPreparation(
 					request.get(obj.get("PreUpdateLink").getAsString()), 
