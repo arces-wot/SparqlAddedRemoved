@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Set;
 
 import connector.SparqlRequest;
-import core.MetaSparqlRequest;
-import core.MetaTest;
+import core.request.MetaSparqlRequest;
+import core.test.MetaTest;
 import model.TripleBase;
 
 public class MetaTestFactory implements IMetaTestFactory {

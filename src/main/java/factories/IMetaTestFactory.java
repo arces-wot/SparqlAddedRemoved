@@ -2,7 +2,7 @@ package factories;
 
 import java.util.Set;
 
-import core.MetaTest;
+import core.test.MetaTest;
 
 
 public interface IMetaTestFactory {

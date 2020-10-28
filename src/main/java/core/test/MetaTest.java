@@ -1,8 +1,10 @@
-package core;
+package core.test;
 
 import java.util.ArrayList;
 
 import connector.SparqlRequest;
+import core.request.IMetaSparqlRequest;
+import core.request.MetaSparqlRequest;
 import model.TestMetric;
 import model.TestResult;
 import model.TripleBase;
@@ -11,11 +13,11 @@ import support.TestBuilder;
 
 public class MetaTest implements ITest {
 
-	private MetaSparqlRequest preparationInsert=null;
-	private MetaSparqlRequest query=null;
-	private MetaSparqlRequest update=null;
-	private MetaSparqlRequest rollback=null;
-	private MetaSparqlRequest rollbackPreparation=null;
+	private IMetaSparqlRequest preparationInsert=null;
+	private IMetaSparqlRequest query=null;
+	private IMetaSparqlRequest update=null;
+	private IMetaSparqlRequest rollback=null;
+	private IMetaSparqlRequest rollbackPreparation=null;
 	
 	private int preparationPercentage;
 	private int reiteration;//reiteration of the same test
@@ -32,7 +34,7 @@ public class MetaTest implements ITest {
 	private boolean excAskTest;
 	
 	
-	public MetaTest(MetaSparqlRequest query,MetaSparqlRequest update,MetaSparqlRequest rollback,boolean askTestOn) {		
+	public MetaTest(IMetaSparqlRequest query,IMetaSparqlRequest update,IMetaSparqlRequest rollback,boolean askTestOn) {		
 		reiteration=1;
 		pot=0;//2^0=1 --> 1 only test with 1 only triple
 		this.query=query;
@@ -41,13 +43,13 @@ public class MetaTest implements ITest {
 		this.excAskTest=askTestOn;
 	}
 	
-	public MetaTest(MetaSparqlRequest query,MetaSparqlRequest update,MetaSparqlRequest rollback,boolean askTestOn,int reiteration, int pot) {
+	public MetaTest(IMetaSparqlRequest query,IMetaSparqlRequest update,IMetaSparqlRequest rollback,boolean askTestOn,int reiteration, int pot) {
 		this(query,update,rollback,askTestOn);
 		this.reiteration=reiteration;
 		this.pot=pot;		
 	}
 	
-	public void setPreparation(MetaSparqlRequest preparation,MetaSparqlRequest preparationRollback,int preparationPercentage) throws Exception {
+	public void setPreparation(IMetaSparqlRequest preparation,IMetaSparqlRequest preparationRollback,int preparationPercentage) throws Exception {
 		if(preparationPercentage<0 || preparationPercentage>100) {
 			throw new Exception("The percentage must be in range of 0-100, it is: "+preparationPercentage );
 		}
@@ -58,6 +60,9 @@ public class MetaTest implements ITest {
 	}
 
 	public TestResult execute() {
+		if(pot<0 || reiteration<=0) {
+			return new TestResult(new ArrayList<TestMetric>());
+		}
 		int actualPot = 0;
 		ArrayList<TestMetric> singleTestsTime = new ArrayList<TestMetric>();
 		while(actualPot<=pot) {
@@ -104,27 +109,27 @@ public class MetaTest implements ITest {
 		this.monitor=m;
 	}
 	
-	public MetaSparqlRequest getQuery() {
+	public IMetaSparqlRequest getQuery() {
 		return query;
 	}
 
-	public void setQuery(MetaSparqlRequest query) {
+	public void setQuery(IMetaSparqlRequest query) {
 		this.query = query;
 	}
 
-	public MetaSparqlRequest getUpdate() {
+	public IMetaSparqlRequest getUpdate() {
 		return update;
 	}
 
-	public void setUpdate(MetaSparqlRequest update) {
+	public void setUpdate(IMetaSparqlRequest update) {
 		this.update = update;
 	}
 
-	public MetaSparqlRequest getRollback() {
+	public IMetaSparqlRequest getRollback() {
 		return rollback;
 	}
 
-	public void setRollback(MetaSparqlRequest rollback) {
+	public void setRollback(IMetaSparqlRequest rollback) {
 		this.rollback = rollback;
 	}
 
@@ -136,11 +141,11 @@ public class MetaTest implements ITest {
 		this.excAskTest = excAskTest;
 	}
 
-	public MetaSparqlRequest getPreparationInsert() {
+	public IMetaSparqlRequest getPreparationInsert() {
 		return preparationInsert;
 	}
 
-	public MetaSparqlRequest getRollbackPreparation() {
+	public IMetaSparqlRequest getRollbackPreparation() {
 		return rollbackPreparation;
 	}
 

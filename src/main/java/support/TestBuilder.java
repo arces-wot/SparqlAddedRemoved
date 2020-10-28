@@ -3,8 +3,8 @@ package support;
 import org.apache.jena.base.Sys;
 
 import connector.SparqlRequest;
-import core.MetaTest;
-import core.SingleTest;
+import core.test.MetaTest;
+import core.test.SingleTest;
 import model.TripleBase;
 
 public class TestBuilder {

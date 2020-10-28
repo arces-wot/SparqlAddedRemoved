@@ -5,8 +5,8 @@ import java.util.Set;
 
 import connector.ISparqlRequest;
 import connector.SparqlRequest;
-import core.IMetaSparqlRequest;
-import core.MetaSparqlRequest;
+import core.request.IMetaSparqlRequest;
+import core.request.MetaSparqlRequest;
 import model.EndPoint;
 import model.SparqlObj;
 import model.TripleBase;

@@ -33,6 +33,7 @@ namespace TestViewer.view
             this.testName = testName;
             if (comboBox1.Items.Count>0 ) {
                 comboBox1.SelectedIndex = 0;
+                richTextBox1.Text = this.jsap.getSparqlOf(this.testName, (String)comboBox1.SelectedItem).Trim();
             }
         }
 

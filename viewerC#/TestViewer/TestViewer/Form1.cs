@@ -29,6 +29,7 @@ namespace TestViewer
 
         private void button1_Click(object sender, EventArgs e)
         {
+            openFileDialog1.Filter = "json files (*.json)|*.json|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == DialogResult.OK) {
 
                 try {
@@ -192,6 +193,7 @@ namespace TestViewer
 
         private void button2_Click(object sender, EventArgs e)
         {
+            openFileDialog1.Filter = "jsap files (*.jsap)|*.jsap|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             { 
                 var myJsonString = File.ReadAllText(openFileDialog1.FileName);

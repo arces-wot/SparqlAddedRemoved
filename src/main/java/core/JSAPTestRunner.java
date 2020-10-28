@@ -3,6 +3,9 @@ package core;
 import java.io.File;
 import java.io.IOException;
 
+import core.test.ITestVisitor;
+import core.test.MetaTest;
+import core.test.TestVisitorOutputJsonFile;
 import factories.JsapMetaTestFactory;
 
 public class JSAPTestRunner {

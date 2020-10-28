@@ -9,7 +9,7 @@ namespace TestViewer.model.jsap
     interface IJsapRequest
     {
         String getSparql();
-
+        String getNotResolvedSparql();
         List<JsapBind> getBinds();
     }
 }

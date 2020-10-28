@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gson.JsonObject;
 
+import addedremoved.UpdateConstruct;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
 import model.TestMetric;
@@ -120,6 +121,27 @@ public class Inspector {
 		this.askForDelete = askForDelete;
 	}
 
+	public void setAsks(ArrayList<UpdateConstruct> constructList) {
+		for (UpdateConstruct constructs : constructList) {
+			if(	this.askForDelete ==null) {
+				this.askForDelete = new BindingsResults(constructs.getRemoved());
+			}else {
+				for (Bindings bind : constructs.getRemoved().getBindings()) {
+					this.askForDelete.add(bind);	
+				}
+			}
+			if(	this.askForInsert ==null) {
+				this.askForInsert = new BindingsResults(constructs.getAdded());
+			}else {
+				for (Bindings bind : constructs.getAdded().getBindings()) {
+					this.askForInsert.add(bind);	
+				}
+			}
+		}
+	}
+
+	
+	
 	public BindingsResults getAskForInsert() {
 		return askForInsert;
 	}

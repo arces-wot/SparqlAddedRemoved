@@ -1,10 +1,11 @@
-package core;
+package core.test;
 
 import java.util.ArrayList;
 
 import addedremoved.AddedRemovedGenerator;
 import addedremoved.UpdateConstruct;
 import connector.SparqlRequest;
+import core.Inspector;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
 import model.TestMetric;
@@ -64,32 +65,27 @@ public class SingleTest implements ITest {
 			TestMetric phase2 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");		
 			
 			phase2.start();
-			UpdateConstruct constructs = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
+			ArrayList<UpdateConstruct> constructsList = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
 			boolean  pahes2Err = false;
-			if(constructs.needDelete()) {
-				try {
-					deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update.clone(),constructs);				
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					pahes2Err=true;
-				}
+			try {
+				deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update.clone(),constructsList);				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				pahes2Err=true;
 			}
-			if(constructs.needInsert()) {
-				try {
-					insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update.clone(),constructs);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					pahes2Err=true;
-				}
+			try {
+				insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update.clone(),constructsList);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				pahes2Err=true;
 			}
 			
 			phase2.stop(pahes2Err);
 			phases.add(phase2);
-		
-		    inspector.setAskForDelete(constructs.getRemoved());
-		    inspector.setAskForInsert(constructs.getAdded());
+			
+		    inspector.setAsks(constructsList);
 			
 			//------------------------------------------------------------Phase 3
 			//-----------QUERY

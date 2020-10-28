@@ -138,7 +138,7 @@ public class SPARQLAnalyzer {
 			}
 			
 			if(insertStrings!=null && deleteStrings!=null) {
-				Set<String> graphs = new HashSet(insertStrings.keySet());
+				Set<String> graphs = new HashSet<String>(insertStrings.keySet());
 				graphs.addAll(deleteStrings.keySet());
 				for (String graph : graphs) {
 					String deleteString="";

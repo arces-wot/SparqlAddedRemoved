@@ -1,4 +1,4 @@
-package core;
+package core.request;
 
 import connector.SparqlRequest;
 import model.TripleBase;

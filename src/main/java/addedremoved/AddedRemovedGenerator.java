@@ -24,72 +24,99 @@ import model.TestMetric;
 public class AddedRemovedGenerator {
 	
 	
-			public static SparqlRequest generateInsertUpdate(SparqlRequest originalUpdate,UpdateConstruct c) throws Exception {
+			public static SparqlRequest generateInsertUpdate(SparqlRequest originalUpdate,ArrayList<UpdateConstruct> contructsList) throws Exception {
 
-				if(c.getAddedGraph()==null) {
-					throw new Exception("Miss graph for generate Insert update.");
+				
+				if(contructsList.size()<=0) {
+					return null;
 				}
 				
-				SparqlObj sparql= originalUpdate.getSparql();
 				
-				String insert = "INSERT DATA  {\n";
-				
-				insert+=" GRAPH <"+ c.getAddedGraph() + "> {\n";
-				
-				for (Bindings triple : c.getAdded().getBindings()) {					
-				
-					try {
-						//System.out.println("triple-->"+tripleToString(triple)); //ok
-						String temp = tripleToString(triple);
-						if(temp!=null) {
-							insert+=temp+"\n";
-						}
-					} catch (SEPABindingsException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				insert+=" }\n}\n";
-				
-				sparql.setSparql(insert);
-				
+				String insert = "INSERT DATA  {";
 			
-				return new SparqlRequest(sparql,originalUpdate.getEndPointHost());
+				boolean needInsert = false;
+				for (UpdateConstruct contruct : contructsList) {
+					if(contruct.needInsert()) {						
+						if(contruct.getAddedGraph()==null) {
+							throw new Exception("Miss graph for generate Insert update.");
+						}
+						needInsert=true;						
+						insert+="\nGRAPH<"+ contruct.getAddedGraph()+ "> {\n";
+						for (Bindings triple : contruct.getAdded().getBindings()) {					
+							
+							try {
+								//System.out.println("triple-->"+tripleToString(triple)); //ok
+								String temp = tripleToString(triple);
+								if(temp!=null) {
+									insert+=temp+"\n";
+								}
+							} catch (SEPABindingsException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						insert+="}";
+					}//else ignore
+					
+				}
+			
+				insert+="}";
+				
+				if(needInsert) {
+					SparqlObj sparql= originalUpdate.getSparql();	
+					sparql.setSparql(insert);			
+					return new SparqlRequest(sparql,originalUpdate.getEndPointHost());
+				}else {
+					return null;
+				}
+			
 			
 			}	
 			
 
-			public static SparqlRequest generateDeleteUpdate(SparqlRequest originalUpdate,UpdateConstruct c) throws Exception {
+			public static SparqlRequest generateDeleteUpdate(SparqlRequest originalUpdate,ArrayList<UpdateConstruct> contructsList) throws Exception {
 				
-				
-				if(c.getRemovedGraph()==null) {
-					throw new Exception("Miss graph for generate Delete update.");
+				if(contructsList.size()<=0) {
+					return null;
 				}
 				
-				SparqlObj sparql= originalUpdate.getSparql();
-				
-				String delete = "DELETE DATA { GRAPH  <"+ c.getRemovedGraph()+ "> \n{\n";
-				
-				for (Bindings triple : c.getRemoved().getBindings()) {					
-				
-					try {
-						//System.out.println("triple-->"+tripleToString(triple)); //ok
-						String temp = tripleToString(triple);
-						if(temp!=null) {
-							delete+=temp+"\n";
+				String delete = "DELETE DATA {";
+				boolean needDelete = false;
+				for (UpdateConstruct contruct : contructsList) {
+					
+					if(contruct.needDelete()) {						
+						if(contruct.getRemovedGraph()==null) {
+							throw new Exception("Miss graph for generate Delete update.");
 						}
-					} catch (SEPABindingsException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+						needDelete=true;						
+						delete+="\nGRAPH<"+ contruct.getRemovedGraph()+ "> \n{\n";
+						for (Bindings triple : contruct.getRemoved().getBindings()) {					
+							
+							try {
+								//System.out.println("triple-->"+tripleToString(triple)); //ok
+								String temp = tripleToString(triple);
+								if(temp!=null) {
+									delete+=temp+"\n";
+								}
+							} catch (SEPABindingsException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						delete+="}";
+					}//else ignore
+					
 				}
+				delete+="}";
 				
-				
-				delete+=" } }";
-				sparql.setSparql(delete);
-				
+				if(needDelete) {
+					SparqlObj sparql= originalUpdate.getSparql();
+					sparql.setSparql(delete);				
+					return new SparqlRequest(sparql,originalUpdate.getEndPointHost());
+				}else {
+					return null;
+				}
 			
-				return new SparqlRequest(sparql,originalUpdate.getEndPointHost());
 			
 			}
 			
@@ -161,7 +188,7 @@ public class AddedRemovedGenerator {
 			
 			}
 			
-			public static UpdateConstruct getAddedRemovedFrom(SparqlRequest req,ArrayList<TestMetric> m) {
+			public static ArrayList<UpdateConstruct> getAddedRemovedFrom(SparqlRequest req,ArrayList<TestMetric> m) {
 				try {
 					EndPoint endPointforQuery= req.getEndPointHost();
 					endPointforQuery.setPath("/query");
@@ -174,7 +201,7 @@ public class AddedRemovedGenerator {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return null;
+				return new ArrayList<UpdateConstruct>();
 			
 			}
 			
@@ -219,63 +246,72 @@ public class AddedRemovedGenerator {
 
 	
 			
-			private static UpdateConstruct GetAddedRemovedTriples(SparqlObj sparql, EndPoint ep, ArrayList<TestMetric> m) throws SEPASecurityException, SEPABindingsException {
+			private static 	ArrayList<UpdateConstruct>  GetAddedRemovedTriples(SparqlObj sparql, EndPoint ep, ArrayList<TestMetric> m) throws SEPASecurityException, SEPABindingsException {
 				TestMetric tm1 = new TestMetric("Constructs");	
+				
 				tm1.start();
 				//long start = Timings.getTime();
 				SPARQLAnalyzer sa = new SPARQLAnalyzer(sparql.getSparqlString());
-				//-------------ATTENZIONE---- per ora viene gestito 1 solo grafo 
-				UpdateConstruct constructs = sa.getConstructs().get(0);
+				ArrayList<UpdateConstruct> constructsList = sa.getConstructs();
+				//per ogni grafo  (per ogni grafo)
+				for (UpdateConstruct constructs : constructsList) {
+					//System.out.println("--------->"+constructs.getAddedGraph());//ok
 
-				//System.out.println("--------->"+constructs.getAddedGraph());//ok
-				BindingsResults added =  new BindingsResults(new JsonObject());
-				BindingsResults removed =  new BindingsResults(new JsonObject());
-
-				if(!constructs.isSkipConstruct()) {
-					String dc = constructs.getDeleteConstruct();
-					if (dc.length() > 0) {		
-						//System.out.println("DC-->"+dc+"\n\n");		
-						SparqlObj getRemovedSparql =sparql; // sparql.clone();
-						getRemovedSparql.setSparql(dc);
-						removed = ((QueryResponse) new SparqlRequest(getRemovedSparql,ep).execute()).getBindingsResults();
-					}
-
-					String ac = constructs.getInsertConstruct();
-					if (ac.length() > 0) {
-						//System.out.println("AC-->"+ac+"\n\n");
-						SparqlObj getAddedSparql =sparql ;// sparql.clone();
-						getAddedSparql.setSparql(ac);
-						// System.out.println("-->"+new SparqlRequest(getAddedSparql,ep).execute().toString());
-						added  = ((QueryResponse) new SparqlRequest(getAddedSparql,ep).execute()).getBindingsResults();
+					if(!constructs.isSkipConstruct()) {
 						
-					}
-				}else {
-					added =  constructs.getAdded();
-					removed =  constructs.getRemoved();
-				}			
-				tm1.stop();
+						String dc = constructs.getDeleteConstruct();
+						if (dc.length() > 0) {		
+							//System.out.println("DC-->"+dc+"\n\n");		
+							SparqlObj getRemovedSparql =sparql; // sparql.clone();
+							getRemovedSparql.setSparql(dc);
+							constructs.setRemoved(((QueryResponse) new SparqlRequest(getRemovedSparql,ep).execute()).getBindingsResults());
+						}else {
+							constructs.setRemoved( new BindingsResults(new JsonObject()));
+						}
+
+						String ac = constructs.getInsertConstruct();
+						if (ac.length() > 0) {
+							//System.out.println("AC-->"+ac+"\n\n");
+							SparqlObj getAddedSparql =sparql ;// sparql.clone();
+							getAddedSparql.setSparql(ac);
+							// System.out.println("-->"+new SparqlRequest(getAddedSparql,ep).execute().toString());
+							constructs.setAdded(((QueryResponse) new SparqlRequest(getAddedSparql,ep).execute()).getBindingsResults());
+							
+						}else {
+							constructs.setAdded( new BindingsResults(new JsonObject()));
+						}
+						
+					}else {
+						constructs.setAdded(constructs.getAdded());
+						constructs.setRemoved(constructs.getRemoved());
+					}	
+				}
 				
+					
+				tm1.stop();				
+				//nuovamente per ogni construct (per ogni grafo)				
 				TestMetric tm2 = new TestMetric("ASKs");
 				tm2.start();
-				for(Bindings bindings : added.getBindings()){
-					boolean isPresent = isBindingPresent(bindings,sparql,ep);
-					if(isPresent){
-						added.remove(bindings);
+				for (UpdateConstruct constructs : constructsList) {
+					for(Bindings bindings : constructs.getAdded().getBindings()){
+						boolean isPresent = isBindingPresent(bindings,sparql,ep);
+						if(isPresent){
+							constructs.removeBingingFromAddedList(bindings);
+						}
 					}
-				}
-				for(Bindings bindings : removed.getBindings()){
-					boolean isPresent = isBindingPresent(bindings,sparql,ep);
-					if(!isPresent){
-						removed.remove(bindings);
+					for(Bindings bindings : constructs.getRemoved().getBindings()){
+						boolean isPresent = isBindingPresent(bindings,sparql,ep);
+						if(!isPresent){
+							constructs.removeBingingFromRemovedList(bindings);
+						}
 					}
+				
 				}
 				tm2.stop();
+				
 				m.add(tm1);
 				m.add(tm2);
-				//long stop = System.currentTimeMillis();
-				constructs.setAdded(added);	
-				constructs.setRemoved(removed);
-				return constructs;
+				return constructsList;
 			}
 			
 

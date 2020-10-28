@@ -1,5 +1,6 @@
 package factories;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -8,9 +9,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import connector.SparqlRequest;
-import core.IMetaSparqlRequest;
-import core.MetaSparqlRequest;
-import core.MetaTest;
+import core.request.IMetaSparqlRequest;
+import core.request.JsapMetaSparqlRequest;
+import core.request.MetaSparqlRequest;
+import core.test.MetaTest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPAPropertiesException;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPASecurityException;
 import it.unibo.arces.wot.sepa.pattern.JSAP;
@@ -65,7 +67,7 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		_graph=jsap.getNamespaces().get("test");
 		
 		
-		HashMap<String, MetaSparqlRequest> requestMap =getRequestsFromJsap(jsap);
+		HashMap<String, JsapMetaSparqlRequest> requestMap =getRequestsFromJsap(jsap);
 		for (Entry<String, JsonElement> test : 	jsap.getExtendedData().get("tests").getAsJsonObject().entrySet()) {
 			metaTestMap.put(test.getKey(), getFromJsap(test.getValue().getAsJsonObject(),requestMap,test.getKey()));
 		} 
@@ -83,7 +85,7 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		return metaTestMap.get(name);
 	}
 	
-	private MetaTest getFromJsap(JsonObject obj,HashMap<String, MetaSparqlRequest> request,String name) throws Exception {	
+	private MetaTest getFromJsap(JsonObject obj,HashMap<String, JsapMetaSparqlRequest> request,String name) throws Exception {	
 		
 		MetaTest ris = new MetaTest(
 				request.get(obj.get("QueryLink").getAsString()),
@@ -107,8 +109,8 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		return ris;
 	}
 	
-	private HashMap<String, MetaSparqlRequest> getRequestsFromJsap(JSAP jsap){
-		HashMap<String, MetaSparqlRequest> requestMap = new HashMap<String, MetaSparqlRequest>();
+	private HashMap<String, JsapMetaSparqlRequest> getRequestsFromJsap(JSAP jsap){
+		HashMap<String, JsapMetaSparqlRequest> requestMap = new HashMap<String, JsapMetaSparqlRequest>();
 		String prefixs= "";
 		for (String  ns : jsap.getNamespaces().keySet()) {
 			prefixs+="PREFIX "+ ns + ": <"+jsap.getNamespaces().get(ns)+ ">\r\n";
@@ -118,41 +120,25 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 			String sparqlStr = prefixs+jsap.getSPARQLUpdate(id);
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
 			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");	
-			MetaSparqlRequest msr = new MetaSparqlRequest(new SparqlRequest(sparql,endPointHost));
+			HashMap<String,TripleBase> forceBinds = new HashMap<String,TripleBase>();
 			if(jsap.getUpdateBindings(id).getVariables().size()>0) {
-				for (String bindVar : jsap.getUpdateBindings(id).getVariables()) {
-					if(bindVar.compareTo(builderBindInsert)==0  ) {
-						msr.setTripleInsert(new TripleBase( jsap.getUpdateBindings(id).getValue(bindVar)));
-						msr.setBuilderBindInsert("?"+bindVar);
-					}else if(bindVar.compareTo(builderBindDelete)==0 ) {
-						msr.setTripleDelete( new TripleBase(jsap.getUpdateBindings(id).getValue(bindVar)));
-						msr.setBuilderBindDelete("?"+bindVar);
-					}else {
-						System.out.println("Warning, in this Tester only bind as "+builderBindInsert+" and "+builderBindDelete+ " are allowed by Jsap.");
-					}
+				for (String bindVar : jsap.getUpdateBindings(id).getVariables()) {	
+					forceBinds.put("?"+bindVar, new TripleBase( jsap.getUpdateBindings(id).getValue(bindVar)));
 				}
 			}
-			requestMap.put(id, msr);
+			requestMap.put(id, new JsapMetaSparqlRequest(new SparqlRequest(sparql,endPointHost),forceBinds));
 		}
 		for (String  id : jsap.getQueryIds()) {
 			String sparqlStr = prefixs+jsap.getSPARQLQuery(id);
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
 			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/query");	
-			MetaSparqlRequest msr = new MetaSparqlRequest(new SparqlRequest(sparql,endPointHost));
+			HashMap<String,TripleBase> forceBinds = new HashMap<String,TripleBase>();
 			if(jsap.getQueryBindings(id).getVariables().size()>0) {
 				for (String bindVar : jsap.getQueryBindings(id).getVariables()) {
-					if(bindVar.compareTo(builderBindInsert)==0 ) {
-						msr.setTripleInsert(new TripleBase( jsap.getQueryBindings(id).getValue(bindVar)));
-						msr.setBuilderBindInsert("?"+bindVar);
-					}else if(bindVar.compareTo(builderBindDelete)==0  ) {
-						msr.setTripleDelete( new TripleBase(jsap.getQueryBindings(id).getValue(bindVar)));
-						msr.setBuilderBindInsert("?"+bindVar);
-					}else {
-						System.out.println("Warning, in this Tester only bind as "+builderBindInsert+" and "+builderBindDelete+ " are allowed by Jsap.");
-					}
+					forceBinds.put("?"+bindVar, new TripleBase( jsap.getUpdateBindings(id).getValue(bindVar)));
 				}
 			}
-			requestMap.put(id, msr);
+			requestMap.put(id,  new JsapMetaSparqlRequest(new SparqlRequest(sparql,endPointHost),forceBinds));
 		}
 		return requestMap;
 	}

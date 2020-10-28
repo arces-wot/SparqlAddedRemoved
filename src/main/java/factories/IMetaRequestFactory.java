@@ -2,7 +2,7 @@ package factories;
 
 import java.util.Set;
 
-import core.IMetaSparqlRequest;
+import core.request.IMetaSparqlRequest;
 
 public interface IMetaRequestFactory {
 	Set<String> getRequestNames();

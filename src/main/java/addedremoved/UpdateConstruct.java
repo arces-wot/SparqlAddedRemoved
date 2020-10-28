@@ -20,8 +20,8 @@ public class UpdateConstruct {
     private String prefix;
     private boolean skipConstruct=false;
     
-	private BindingsResults added;
-	private BindingsResults removed;
+	private BindingsResults added=null;
+	private BindingsResults removed=null;
 
 	private String  addedGraph=null;
 	private String  removedGraph=null;
@@ -177,7 +177,22 @@ public class UpdateConstruct {
 		this.prefix = prefix;
 	}
 
-
+	
+	public void removeBingingFromAddedList(Bindings bindings) {
+		if(this.added !=null) {
+			this.added.remove(bindings);
+		}else {
+			System.out.println("Warning: added BindingResult is null");
+		}
+	}
+	
+	public void removeBingingFromRemovedList(Bindings bindings) {
+		if(this.removed !=null) {
+			this.removed.remove(bindings);
+		}else {
+			System.out.println("Warning: removed BindingResult is null");
+		}	
+	}
 
 	/**
      * Get delete construct string. An empty string indicates that there are no deleted
