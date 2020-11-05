@@ -94,11 +94,13 @@ namespace TestViewer
                 comboBox2.Items.Clear();
                 comboBox2.Items.AddRange(selected.List.ToArray());
                 if (comboBox2.Items.Count > 0) {
-                    comboBox2.SelectedIndex = 0;
+                    comboBox2.SelectedIndex = comboBox2.Items.Count-1;
                 }
                 label3.Text = "MetaTest error: " + selected.errorCount() + "\nWarnings count: " + selected.warningCount();
                 metaChart1.loadMetaTest(selected);
                 sparqlView1.load(selected.MetaTestName);
+                label4.Text = "["+selected.MetaTestName + "] Select execution:";
+                label2.Text ="[" +selected.MetaTestName+ "] Select Single test of MetaTest:";
 
             }
         }
@@ -113,7 +115,7 @@ namespace TestViewer
                 comboBox3.Items.AddRange(selected.Tests.ToArray());
                 if (comboBox3.Items.Count > 0)
                 {
-                    comboBox3.SelectedIndex = 0;
+                    comboBox3.SelectedIndex = comboBox3.Items.Count-1;
                 }
             }
         }

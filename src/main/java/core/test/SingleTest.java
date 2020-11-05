@@ -62,9 +62,9 @@ public class SingleTest implements ITest {
 			
 			//------------------------------------------------------------Phase 2
 			//-----------Generation, CONSTRUCT and ASKs
-			TestMetric phase2 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");		
-			
+			TestMetric phase2 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");				
 			phase2.start();
+			
 			ArrayList<UpdateConstruct> constructsList = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
 			boolean  pahes2Err = false;
 			try {
@@ -98,7 +98,7 @@ public class SingleTest implements ITest {
 			inspector.setQuery(((QueryResponse)pre_ris_query).getBindingsResults());
 			
 			//------------------------------------------------------------Phase 4
-			//-----------UPDATE
+			//-----------INSERT + DELETE 	
 			TestMetric phase4 = new TestMetric("Execution insert and delete");
 			Response ris_insert =null;
 			Response ris_delete =null;
@@ -122,7 +122,7 @@ public class SingleTest implements ITest {
 			
 			//------------------------------------------------------------Phase 5
 			//-----------QUERY
-			TestMetric phase5 = new TestMetric("Execution Query after normal update");
+			TestMetric phase5 = new TestMetric("Execution Query after insert-delete");
 			phase5.start();
 			Response ris_Query =query.execute();
 			phase5.stop(ris_Query.isError());
@@ -138,7 +138,7 @@ public class SingleTest implements ITest {
 			phases.add(phase6);			
 
 			//------------------------------------------------------------Phase 7
-			//-----------INSERT + DELETE 			
+			//-----------UPDATE
 			TestMetric phase7 = new TestMetric("Execution normal update");
 			phase7.start();
 			Response ris_update =  update.execute();
@@ -147,7 +147,7 @@ public class SingleTest implements ITest {
 			
 			//------------------------------------------------------------Phase 8
 			//-----------QUERY
-			TestMetric phase8 = new TestMetric("Execution Query after insert-delete");	
+			TestMetric phase8 = new TestMetric("Execution Query after normal update");	
 			phase8.start();
 			Response ris_Query_2 = query.execute();
 			phase8.stop(ris_Query_2.isError());

@@ -40,9 +40,9 @@
 				"RollbackLink" : "DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
 				"Pot" : 4,
-				"Reiteration": 5,
+				"Reiteration": 3,
 				"AskTestEnable": true,
-				"PreparationPercentage":100
+				"PreparationPercentage":0
 				},	
 			"UpdateDeleteWhere" : {
 				"PreUpdateLink": "INSERT_DATA_1",
@@ -51,7 +51,7 @@
 				"RollbackLink" : "INSERT_DATA_1",
 				"QueryLink": "QUERY_1",
 				"Pot" : 4,
-				"Reiteration": 5,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100
 				},	
@@ -62,7 +62,7 @@
 				"RollbackLink" : "INSERT_DELETE_2",
 				"QueryLink": "QUERY_1",
 				"Pot" : 4,
-				"Reiteration": 5,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				},
@@ -73,7 +73,7 @@
 				"RollbackLink" : "INSERT_DATA_1",
 				"QueryLink": "QUERY_1",
 				"Pot" : 4,
-				"Reiteration": 5,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				},
@@ -84,7 +84,7 @@
 				"RollbackLink" : "INSERT_DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
 				"Pot" : 4,
-				"Reiteration": 5,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				}

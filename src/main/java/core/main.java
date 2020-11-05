@@ -45,11 +45,11 @@ public class main {
 
     private static String graph=Environment.graph;
     private static String ontology = Environment.ontology;	     
-    private static boolean ONTOLOGY = true;
+    private static boolean ONTOLOGY = false;
     private static boolean POPOLATE = true;
     private static boolean RUN = false;
     private static boolean CLEAN = false;//non rimuove l'ontologia
-    
+    private static int graphsNumber = 2;
 	public static void main (String[] args) {
 
 		 if(ONTOLOGY){
@@ -57,11 +57,11 @@ public class main {
 		 }
 		 
 		 if(CLEAN){
-			 cleanStore();
+			 cleanStore(graphsNumber);
 		 }
 		 
 		 if(POPOLATE){
-			 popolateStore();
+			 popolateStore(graphsNumber);
 		 }
 		 
 		 if(RUN){
@@ -185,7 +185,7 @@ public class main {
 		
 	}
 	
-	private static void popolateStore() {
+	private static void popolateStore(int graphNumber) {
 			
 			
 			//options:
@@ -195,16 +195,22 @@ public class main {
 			//   -daml generate DAML+OIL data; OWL data by default
 			//   -onto url of the univ-bench ontology
 			  
-		    int univNum = 2, startIndex = 0, seed = 0;
+		    int univNum = 1, startIndex = 0, seed = 0;
 		    boolean daml = false;
-		    new Generator().start(univNum, startIndex, seed, daml, ontology,graph);
+		    
+			for(int x=0;x<graphNumber ;x++) {
+				new Generator().start(univNum, startIndex, seed, daml, ontology,Environment.generateGraphN(graphNumber));
+				System.out.println("Graphs: " +(x+1)+ "/"+graphNumber);
+			}
+		  
 	}
 	
-	private static void cleanStore() {
-		ArrayList<String> graphs = new ArrayList<String>();
-		graphs.add(graph);
+	private static void cleanStore(int graphNumber) {
+		ArrayList<String> graphs = new ArrayList<String>();	
+		for(int x=0;x<graphNumber ;x++) {
+			graphs.add(Environment.generateGraphN(graphNumber));
+		}
 		System.out.println("Clean success: "+CleanerRDFStore.clean(graphs));
-		
 		/*
 		 * TO check run ---> SELECT ?s ?p ?o FROM <http://lumb/for.sepa.test/workspace/defaultgraph> WHERE { ?s ?p ?o }
 		 */

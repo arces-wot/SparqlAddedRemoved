@@ -546,7 +546,7 @@ public class Generator {
     	notError=false;
     	System.out.println("Failed to create log file!");
     }
-    System.out.println("Completed!");
+    //System.out.println("Completed!");
     return notError;
   }
 
@@ -628,7 +628,7 @@ public class Generator {
     _generateCourses();
     _generateRaTa();
 
-    System.out.println(fileName + " generated");
+    //System.out.println(fileName + " generated");
     String bar = "";
     for (int i = 0; i < fileName.length(); i++)
       bar += '-';

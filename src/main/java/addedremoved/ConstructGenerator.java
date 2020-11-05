@@ -28,8 +28,7 @@ public class ConstructGenerator {
 		}else {
 			ArrayList<Triple> new_List = new ArrayList<Triple>();
 			new_List.add(t);
-			allTriple.put(graph, new_List);
-			
+			allTriple.put(graph, new_List);			
 		}
 	}
 	

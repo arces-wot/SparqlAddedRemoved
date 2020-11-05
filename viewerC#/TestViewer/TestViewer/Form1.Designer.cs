@@ -309,20 +309,20 @@
             this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(101, 9);
+            this.comboBox3.Location = new System.Drawing.Point(382, 9);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(712, 21);
+            this.comboBox3.Size = new System.Drawing.Size(431, 21);
             this.comboBox3.TabIndex = 2;
             this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 12);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 13);
+            this.label4.Size = new System.Drawing.Size(370, 13);
             this.label4.TabIndex = 1;
             this.label4.Text = "Select execution:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // testResultView1
             // 
@@ -363,20 +363,20 @@
             this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(164, 7);
+            this.comboBox2.Location = new System.Drawing.Point(399, 7);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(649, 21);
+            this.comboBox2.Size = new System.Drawing.Size(414, 21);
             this.comboBox2.TabIndex = 0;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 10);
+            this.label2.Location = new System.Drawing.Point(3, 10);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(152, 13);
+            this.label2.Size = new System.Drawing.Size(390, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Select Single test of MetaTest:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // tabPage2
@@ -528,9 +528,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
             this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

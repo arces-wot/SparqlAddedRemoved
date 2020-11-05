@@ -40,7 +40,7 @@
 				"RollbackLink" : "DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
 				"Pot" : 4,
-				"Reiteration": 5,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100
 				}

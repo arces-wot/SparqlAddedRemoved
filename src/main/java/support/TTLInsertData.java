@@ -52,7 +52,7 @@ public class TTLInsertData {
 		boolean notError = true;
 		String[] lines=this.triples.split("\n");
 		if(lines.length<=maxLines){
-			System.out.println("-->"+lines.length );
+			//System.out.println("-->"+lines.length );
 			insertDataSplit(this.triples);
 		}else{			
 			int nPartSize = (int) Math.ceil((double)lines.length/(double)maxLines);
@@ -83,7 +83,7 @@ public class TTLInsertData {
 	}
 	
 	private String stringify(String[] lines, int start,int stop) {
-		System.out.println("--->"+start+ "   :    "+stop);
+		//System.out.println("--->"+start+ "   :    "+stop);
 		String ris = "";
 		for(int x=start;x<stop;x++) {
 			ris+=lines[x];
@@ -101,7 +101,9 @@ public class TTLInsertData {
 		String sparql=head+"\n"+t + "\n}}";		
 		EndPoint endPointHost= new EndPoint("http","localhost",8000,"/update");
 		Response res = new SparqlRequest(new SparqlObj(sparql),endPointHost).execute();
-		System.out.println("InsertData success: "+!res.isError());
+		if(res.isError()) {
+			System.out.println("Error: failed to insert data on localhost:8000!");
+		}		
 		return !res.isError();
 	}
 	

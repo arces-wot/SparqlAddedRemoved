@@ -7,5 +7,8 @@ public class Environment {
 	public static String protocol="http";
 	public static String closeOntology ="<http://swat.cse.lehigh.edu/onto/univ-bench.owl#>";
 	public static String ontology ="http://swat.cse.lehigh.edu/onto/univ-bench.owl";
-	public static String graph ="<http://lumb/for.sepa.test/workspace/defaultgraph>"; 
+	public static String graph ="<http://lumb/for.sepa.test/workspace/defaultgraph0>"; 
+	public static String generateGraphN(int n) {
+			return "<http://lumb/for.sepa.test/workspace/defaultgraph" +n+ ">";
+	}
 }

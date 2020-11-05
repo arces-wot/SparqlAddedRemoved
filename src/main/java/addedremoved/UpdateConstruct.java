@@ -59,7 +59,23 @@ public class UpdateConstruct {
 	}
 	
 	
-	public UpdateConstruct(ArrayList<Triple> r,String removedGraph, ArrayList<Triple> a, String addedGraph) {
+	
+	private UpdateConstruct(String deleteConstruct, String insertConstruct, String prefix, boolean skipConstruct,
+			BindingsResults added, BindingsResults removed, String addedGraph, String removedGraph) {
+		super();
+		this.deleteConstruct = deleteConstruct;
+		this.insertConstruct = insertConstruct;
+		this.prefix = prefix;
+		this.skipConstruct = skipConstruct;
+		this.added = added;
+		this.removed = removed;
+		this.addedGraph = addedGraph;
+		this.removedGraph = removedGraph;
+	}//for clone
+
+
+
+	public UpdateConstruct(ArrayList<Triple> r,ArrayList<Triple> a, String graph) {
 		ArrayList<String> vars = new ArrayList<String>();
 		vars.add("s");
 		vars.add("p");
@@ -78,8 +94,8 @@ public class UpdateConstruct {
 			}
 		}
 //		System.out.println("this.removed" + this.removed.size());
-		this.addedGraph=addedGraph;
-		this.removedGraph=removedGraph;
+		this.addedGraph=graph;
+		this.removedGraph=graph;
 		this.skipConstruct=true;
 	}
 	
@@ -98,12 +114,25 @@ public class UpdateConstruct {
 
         this.deleteConstruct = deleteConstruct;
         this.insertConstruct = insertConstruct;
-        if(deleteGraph!="") {
+        if(deleteGraph.length()>0) {
             this.removedGraph=deleteGraph;
         }  
-        if(insertGraph!="") {
+        if(insertGraph.length()>0) {
         	this.addedGraph=insertGraph;
         }
+    }
+    
+    public UpdateConstruct(String deleteConstruct, String insertConstruct,String graph){
+        if(deleteConstruct == null || insertConstruct == null){
+            throw new IllegalArgumentException("Construct query cannot be null");
+        }
+
+        this.deleteConstruct = deleteConstruct;
+        this.insertConstruct = insertConstruct;
+        if(graph.length()>0) {
+            this.removedGraph=graph;
+        	this.addedGraph=graph;
+        }  
     }
 	public boolean needInsert() {
 		return added!=null && added.size()>0;
@@ -193,7 +222,24 @@ public class UpdateConstruct {
 			System.out.println("Warning: removed BindingResult is null");
 		}	
 	}
-
+	
+	
+	public void removeBingingFromAddedList(BindingsResults bindings) {
+		if(this.added !=null) {
+			for (Bindings b : bindings.getBindings()) {
+				this.added.remove(b);
+			}
+		}else {
+			System.out.println("Warning: added BindingResult is null");
+		}
+	}
+	
+	
+	public void clearRemoved() {
+		removed=null;
+	}
+	
+	
 	/**
      * Get delete construct string. An empty string indicates that there are no deleted
      * triples
@@ -224,5 +270,9 @@ public class UpdateConstruct {
     		ris+=">";
     	}
     	return ris;
+    }
+    public UpdateConstruct clone() {
+    	return new UpdateConstruct(deleteConstruct,  insertConstruct,  prefix,  skipConstruct,
+    			new BindingsResults(added.toJson()),new BindingsResults(removed.toJson()) , addedGraph,  removedGraph) ;
     }
 }

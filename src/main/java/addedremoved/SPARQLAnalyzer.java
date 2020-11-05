@@ -46,7 +46,7 @@ public class SPARQLAnalyzer {
 			ConstructGenerator cg = new ConstructGenerator(updateDataInsert.getQuads());	
 			HashMap<String,ArrayList<Triple>> insertTriples =cg.getAllTriple();
 			for (String graph :insertTriples.keySet()) {
-				results.add(new UpdateConstruct(null,"",insertTriples.get(graph),graph));
+				results.add(new UpdateConstruct(null,insertTriples.get(graph),graph));
 			}
 			//System.out.println("1");
 		}
@@ -61,7 +61,7 @@ public class SPARQLAnalyzer {
 			ConstructGenerator cg = new ConstructGenerator(updateDataDelete.getQuads());	
 			HashMap<String,ArrayList<Triple>> deleteTriples =cg.getAllTriple();
 			for (String graph :deleteTriples.keySet()) {
-				results.add(new UpdateConstruct(deleteTriples.get(graph),graph,null,""));
+				results.add(new UpdateConstruct(deleteTriples.get(graph),null,graph));
 			}
 			//System.out.println("2");
 		}
@@ -143,25 +143,21 @@ public class SPARQLAnalyzer {
 				for (String graph : graphs) {
 					String deleteString="";
 					String insertString="";
-					String deleteGraph="";
-					String insertGraph="";
 					if(insertStrings.containsKey(graph)) {
 						insertString=insertStrings.get(graph);
-						insertGraph=graph;
 					}
 					if(deleteStrings.containsKey(graph)) {
 						deleteString=deleteStrings.get(graph);
-						deleteGraph=graph;
 					}
-					results.add(new UpdateConstruct(deleteString, insertString,deleteGraph,insertGraph));
+					results.add(new UpdateConstruct(deleteString, insertString,graph));
 				}
 			}else if(insertStrings==null) {
 				for (String graph : deleteStrings.keySet()) {
-					results.add(new UpdateConstruct(deleteStrings.get(graph), "",graph,""));
+					results.add(new UpdateConstruct(deleteStrings.get(graph), "",graph));
 				}
 			}else {//deleteStrings==null
 				for (String graph : insertStrings.keySet()) {
-					results.add(new UpdateConstruct("", insertStrings.get(graph),"",graph));
+					results.add(new UpdateConstruct("", insertStrings.get(graph),graph));
 				}
 			}
 			
