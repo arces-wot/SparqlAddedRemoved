@@ -6,7 +6,7 @@ import connector.ISparqlRequest;
 
 public interface IRequestFactory {
 
-	Set<String> getRequestNames();
+	Set<RequestName> getRequestNames();
 	
-	ISparqlRequest getRequestByName(String name);
+	ISparqlRequest getRequestByName(RequestName name);
 }

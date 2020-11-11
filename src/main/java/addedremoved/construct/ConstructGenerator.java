@@ -1,4 +1,4 @@
-package addedremoved;
+package addedremoved.construct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +10,8 @@ import org.apache.jena.shacl.engine.constraint.SparqlComponent;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.syntax.ElementGroup;
 import org.apache.jena.sparql.syntax.ElementTriplesBlock;
+
+import addedremoved.BindingTag;
 
 public class ConstructGenerator {
 	
@@ -75,7 +77,9 @@ public class ConstructGenerator {
 		if(strict){
 			where+="GRAPH <"+ graph + "> "+stringList +"\n";
 		}else{
-			where+="GRAPH <"+ graph + "> {?s ?p ?o}\n";
+			where+="GRAPH <"+ graph + "> {?"+BindingTag.SUBJECT.toString()
+				+" ?"+BindingTag.PREDICATE.toString()
+				+" ?"+BindingTag.OBJECT.toString()+"}\n";
 		}
 		sparql+=stringList+ where +"}";
 

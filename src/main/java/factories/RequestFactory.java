@@ -1,6 +1,7 @@
 package factories;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import connector.ISparqlRequest;
@@ -15,35 +16,7 @@ import support.Environment;
 
 
 public class RequestFactory implements IRequestFactory{
-	public enum RequestName {
-		  SIMPLE_INSERT,
-		  SIMPLE_QUERY,
-		  SIMPLE_DELETE,
-		  //------------------LUMB query
-		  QUERY1,
-		  QUERY2,
-		  QUERY3,
-		  QUERY4,
-		  QUERY5,
-		  QUERY6,
-		  QUERY7,
-		  QUERY8,
-		  QUERY9,
-		  QUERY10,
-		  QUERY11,
-		  QUERY12,
-		  QUERY13,
-		  QUERY14,
-		  //-------------------------
-		  UPDATE_FOR_Q2,
-		  ROLLBACK_FOR_Q2,
-		  UPDATE_FOR_Q3,
-		  ROLLBACK_FOR_Q3,
-		  UPDATE_FOR_Q4,
-		  ROLLBACK_FOR_Q4,
-	}
-	
-	
+
 	
 	private static RequestFactory instance=null;
 	
@@ -65,7 +38,7 @@ public class RequestFactory implements IRequestFactory{
 	private String _protocol=Environment.protocol;
 	private String _ontology=Environment.closeOntology;
 	private String _graph=Environment.graph;
-	private HashMap<String, ISparqlRequest> requestMap = new HashMap<String, ISparqlRequest>();
+	private HashMap<RequestName, ISparqlRequest> requestMap = new HashMap<RequestName, ISparqlRequest>();
 	
 	
 	private RequestFactory(String protocol,String host, int port) {
@@ -78,41 +51,41 @@ public class RequestFactory implements IRequestFactory{
 	private RequestFactory() {
 		
 		
-		requestMap.put(RequestName.SIMPLE_INSERT.toString(), createSimpleInsert());
-		requestMap.put(RequestName.SIMPLE_QUERY.toString(), createSimpleQuery());
-		requestMap.put(RequestName.SIMPLE_DELETE.toString(), createSimpleDelete());
-		requestMap.put(RequestName.QUERY1.toString(), createQuery1());
-		requestMap.put(RequestName.QUERY2.toString(), createQuery2());
-		requestMap.put(RequestName.QUERY3.toString(), createQuery3());
-		requestMap.put(RequestName.QUERY4.toString(), createQuery4());
-		requestMap.put(RequestName.QUERY5.toString(), createQuery5());
-		requestMap.put(RequestName.QUERY6.toString(), createQuery6());
-		requestMap.put(RequestName.QUERY7.toString(), createQuery7());
-		requestMap.put(RequestName.QUERY8.toString(), createQuery8());
-		requestMap.put(RequestName.QUERY9.toString(), createQuery9());
-		requestMap.put(RequestName.QUERY10.toString(), createQuery10());
-		requestMap.put(RequestName.QUERY11.toString(), createQuery11());
-		requestMap.put(RequestName.QUERY12.toString(), createQuery12());
-		requestMap.put(RequestName.QUERY13.toString(), createQuery13());
-		requestMap.put(RequestName.QUERY14.toString(), createQuery14());
-		requestMap.put(RequestName.UPDATE_FOR_Q2.toString(), createUpdateForQ2());
-		requestMap.put(RequestName.ROLLBACK_FOR_Q2.toString(), createRollBackForQ2());
-		requestMap.put(RequestName.UPDATE_FOR_Q3.toString(), createUpdateForQ3());
-		//requestMap.put(RequestName.ROLLBACK_FOR_Q3.toString(), createRol()); //need args (see method 'buildRequestByName')
-		requestMap.put(RequestName.ROLLBACK_FOR_Q4.toString(), createRollBackForQ4());
-		requestMap.put(RequestName.UPDATE_FOR_Q4.toString(), createUpdateForQ4());
+		requestMap.put(RequestName.SIMPLE_INSERT, createSimpleInsert());
+		requestMap.put(RequestName.SIMPLE_QUERY, createSimpleQuery());
+		requestMap.put(RequestName.SIMPLE_DELETE, createSimpleDelete());
+		requestMap.put(RequestName.QUERY1, createQuery1());
+		requestMap.put(RequestName.QUERY2, createQuery2());
+		requestMap.put(RequestName.QUERY3, createQuery3());
+		requestMap.put(RequestName.QUERY4, createQuery4());
+		requestMap.put(RequestName.QUERY5, createQuery5());
+		requestMap.put(RequestName.QUERY6, createQuery6());
+		requestMap.put(RequestName.QUERY7, createQuery7());
+		requestMap.put(RequestName.QUERY8, createQuery8());
+		requestMap.put(RequestName.QUERY9, createQuery9());
+		requestMap.put(RequestName.QUERY10, createQuery10());
+		requestMap.put(RequestName.QUERY11, createQuery11());
+		requestMap.put(RequestName.QUERY12, createQuery12());
+		requestMap.put(RequestName.QUERY13, createQuery13());
+		requestMap.put(RequestName.QUERY14, createQuery14());
+		requestMap.put(RequestName.UPDATE_FOR_Q2, createUpdateForQ2());
+		requestMap.put(RequestName.ROLLBACK_FOR_Q2, createRollBackForQ2());
+		requestMap.put(RequestName.UPDATE_FOR_Q3, createUpdateForQ3());
+		//requestMap.put(RequestName.ROLLBACK_FOR_Q3, createRol()); //need args (see method 'buildRequestByName')
+		requestMap.put(RequestName.ROLLBACK_FOR_Q4, createRollBackForQ4());
+		requestMap.put(RequestName.UPDATE_FOR_Q4, createUpdateForQ4());
 		
 	}
 	
-	public Set<String> getRequestNames() {
+	public Set<RequestName> getRequestNames() {
 		return requestMap.keySet();
 	}
 
-	public ISparqlRequest getRequestByName(String name) {
+	public ISparqlRequest getRequestByName(RequestName name) {
 		return requestMap.get(name);
 	}
-	public ISparqlRequest buildRequestByName(String name,String arg) throws Exception {
-		if(name==RequestName.ROLLBACK_FOR_Q3.toString()) {
+	public ISparqlRequest buildRequestByName(RequestName name,String arg) throws Exception {
+		if(name==RequestName.ROLLBACK_FOR_Q3) {
 			return createRollBackForQ3(arg);
 		}
 		throw new Exception("Request name not found.");

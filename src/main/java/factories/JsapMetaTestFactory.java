@@ -1,6 +1,5 @@
 package factories;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -9,9 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import connector.SparqlRequest;
-import core.request.IMetaSparqlRequest;
 import core.request.JsapMetaSparqlRequest;
-import core.request.MetaSparqlRequest;
 import core.test.MetaTest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPAPropertiesException;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPASecurityException;
@@ -25,9 +22,6 @@ import support.JSAPProvider;
 public class JsapMetaTestFactory implements IMetaTestFactory{
 	
 
-
-	private static String builderBindInsert = "tripleBaseInsert";
-	private static String builderBindDelete = "tripleBaseDelete";
 	
 	private static JsapMetaTestFactory instance=null;
 		
@@ -75,15 +69,6 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 
 	}
 	
-	public Set<String> getTestNames() {
-		// TODO Auto-generated method stub
-		return metaTestMap.keySet();
-	}
-
-	public MetaTest getTestByName(String name) {
-		// TODO Auto-generated method stub
-		return metaTestMap.get(name);
-	}
 	
 	private MetaTest getFromJsap(JsonObject obj,HashMap<String, JsapMetaSparqlRequest> request,String name) throws Exception {	
 		
@@ -142,5 +127,44 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		}
 		return requestMap;
 	}
+	
+	//-------------------------------------GETTERS and SETTERS
+	
+	
+	public Set<String> getTestNames() {
+		// TODO Auto-generated method stub
+		return metaTestMap.keySet();
+	}
+
+	public String getHost() {
+		return _host;
+	}
+
+
+	public int getPort() {
+		return _port;
+	}
+
+
+	public String getProtocol() {
+		return _protocol;
+	}
+
+
+	public String getOntology() {
+		return _ontology;
+	}
+
+
+	public String getGraph() {
+		return _graph;
+	}
+
+
+	public MetaTest getTestByName(String name) {
+		// TODO Auto-generated method stub
+		return metaTestMap.get(name);
+	}
+	
 
 }

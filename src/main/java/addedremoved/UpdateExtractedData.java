@@ -13,59 +13,27 @@ import it.unibo.arces.wot.sepa.commons.sparql.RDFTermBNode;
 import it.unibo.arces.wot.sepa.commons.sparql.RDFTermLiteral;
 import it.unibo.arces.wot.sepa.commons.sparql.RDFTermURI;
 
-public class UpdateConstruct {
 
+public class UpdateExtractedData {
+
+	//---------------------------------Construct data
     private String deleteConstruct;
     private String insertConstruct;
-    private String prefix;
     private boolean skipConstruct=false;
     
+    //---------------------------------ASK data
 	private BindingsResults added=null;
 	private BindingsResults removed=null;
-
 	private String  addedGraph=null;
 	private String  removedGraph=null;
 
-	private Bindings convertTripleToBindings(Triple t) {
-		Bindings temp = new Bindings();
-		if(t.getSubject().isLiteral()){
-			temp.addBinding("s", new RDFTermLiteral(t.getSubject().toString()));
-		}else if(t.getSubject().isURI()) {
-			temp.addBinding("s", new RDFTermURI(t.getSubject().getURI()));			
-		}else if(t.getSubject().isBlank()) {
-			temp.addBinding("s", new RDFTermBNode(t.getSubject().toString()));		
-		}else {
-			System.out.println("Warning, cannot convert Subject of Triple to Bindings, for triple: "+t.toString());
-		}
-		if(t.getPredicate().isLiteral()){
-			temp.addBinding("p", new RDFTermLiteral(t.getPredicate().toString()));
-		}else if(t.getPredicate().isURI()) {
-			temp.addBinding("p", new RDFTermURI(t.getPredicate().getURI()));			
-		}else if(t.getPredicate().isBlank()) {
-			temp.addBinding("p", new RDFTermBNode(t.getPredicate().toString()));		
-		}else {
-			System.out.println("Warning, cannot convert Predicate of Triple to Bindings, for triple: "+t.toString());
-		}
-		if(t.getObject().isLiteral()){
-			temp.addBinding("o", new RDFTermLiteral(t.getObject().toString()));
-		}else if(t.getObject().isURI()) {
-			temp.addBinding("o", new RDFTermURI(t.getObject().getURI()));			
-		}else if(t.getObject().isBlank()) {
-			temp.addBinding("o", new RDFTermBNode(t.getObject().toString()));		
-		}else {
-			System.out.println("Warning, cannot convert Object of Triple to Bindings, for triple: "+t.toString());
-		}
-		return temp;
-	}
 	
 	
-	
-	private UpdateConstruct(String deleteConstruct, String insertConstruct, String prefix, boolean skipConstruct,
+	private UpdateExtractedData(String deleteConstruct, String insertConstruct, boolean skipConstruct,
 			BindingsResults added, BindingsResults removed, String addedGraph, String removedGraph) {
 		super();
 		this.deleteConstruct = deleteConstruct;
 		this.insertConstruct = insertConstruct;
-		this.prefix = prefix;
 		this.skipConstruct = skipConstruct;
 		this.added = added;
 		this.removed = removed;
@@ -75,22 +43,22 @@ public class UpdateConstruct {
 
 
 
-	public UpdateConstruct(ArrayList<Triple> r,ArrayList<Triple> a, String graph) {
+	public UpdateExtractedData(ArrayList<Triple> r,ArrayList<Triple> a, String graph) {
 		ArrayList<String> vars = new ArrayList<String>();
-		vars.add("s");
-		vars.add("p");
-		vars.add("o");
+		vars.add(BindingTag.SUBJECT.toString());
+		vars.add(BindingTag.PREDICATE.toString());
+		vars.add(BindingTag.OBJECT.toString());
 		this.added= new BindingsResults(vars,  new ArrayList<Bindings>());
 		if(a!=null) {
 			for (Triple triple : a) {
-				this.added.add(convertTripleToBindings(triple));
+				this.added.add(TripleConverter.convertTripleToBindings(triple));
 			}
 		}
 			
 		this.removed=new BindingsResults(vars,  new ArrayList<Bindings>());
 		if(r!=null) {
 			for (Triple triple : r) {
-				this.removed.add(convertTripleToBindings(triple));
+				this.removed.add(TripleConverter.convertTripleToBindings(triple));
 			}
 		}
 //		System.out.println("this.removed" + this.removed.size());
@@ -99,7 +67,7 @@ public class UpdateConstruct {
 		this.skipConstruct=true;
 	}
 	
-    public UpdateConstruct(String deleteConstruct, String insertConstruct ){
+    public UpdateExtractedData(String deleteConstruct, String insertConstruct ){
         if(deleteConstruct == null || insertConstruct == null){
             throw new IllegalArgumentException("Construct query cannot be null");
         }
@@ -107,7 +75,7 @@ public class UpdateConstruct {
         this.deleteConstruct = deleteConstruct;
         this.insertConstruct = insertConstruct;
     }
-    public UpdateConstruct(String deleteConstruct, String insertConstruct,String deleteGraph,String insertGraph ){
+    public UpdateExtractedData(String deleteConstruct, String insertConstruct,String deleteGraph,String insertGraph ){
         if(deleteConstruct == null || insertConstruct == null){
             throw new IllegalArgumentException("Construct query cannot be null");
         }
@@ -122,7 +90,7 @@ public class UpdateConstruct {
         }
     }
     
-    public UpdateConstruct(String deleteConstruct, String insertConstruct,String graph){
+    public UpdateExtractedData(String deleteConstruct, String insertConstruct,String graph){
         if(deleteConstruct == null || insertConstruct == null){
             throw new IllegalArgumentException("Construct query cannot be null");
         }
@@ -196,16 +164,6 @@ public class UpdateConstruct {
 	
 
 
-	public String getPrefix() {
-		return prefix;
-	}
-
-
-
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-	}
-
 	
 	public void removeBingingFromAddedList(Bindings bindings) {
 		if(this.added !=null) {
@@ -271,8 +229,8 @@ public class UpdateConstruct {
     	}
     	return ris;
     }
-    public UpdateConstruct clone() {
-    	return new UpdateConstruct(deleteConstruct,  insertConstruct,  prefix,  skipConstruct,
+    public UpdateExtractedData clone() {
+    	return new UpdateExtractedData(deleteConstruct,  insertConstruct,  skipConstruct,
     			new BindingsResults(added.toJson()),new BindingsResults(removed.toJson()) , addedGraph,  removedGraph) ;
     }
 }

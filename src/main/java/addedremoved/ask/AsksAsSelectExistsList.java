@@ -1,4 +1,4 @@
-package addedremoved;
+package addedremoved.ask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +12,8 @@ import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.syntax.ElementGroup;
 import org.apache.jena.sparql.syntax.ElementTriplesBlock;
 
+import addedremoved.BindingTag;
+import addedremoved.UpdateExtractedData;
 import connector.SparqlRequest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPASecurityException;
@@ -22,7 +24,7 @@ import model.EndPoint;
 import model.SparqlObj;
 import model.TestMetric;
 
-public class AsksAsSelectExistsList implements IAskAsSelect{
+public class AsksAsSelectExistsList implements IAsk{
 	
 	/*
 	 * Example:
@@ -42,15 +44,24 @@ public class AsksAsSelectExistsList implements IAskAsSelect{
 	private HashMap<Integer,BindingsWrapper> tripleList;
 	private HashMap<String,BindingsResults>  added=null;
 	private HashMap<String,BindingsResults>  removed=null;
+	private ArrayList<UpdateExtractedData> ueds = new ArrayList<UpdateExtractedData> ();
+	private SparqlObj sparql;
+	private EndPoint endPoint;
 	
+	public AsksAsSelectExistsList(ArrayList<UpdateExtractedData> ueds, SparqlObj sparql, EndPoint endPoint) {
+		this.ueds=ueds;
+		this.sparql=sparql;
+		this.endPoint=endPoint;
+		this.init();
+	}
 	
-	public AsksAsSelectExistsList(ArrayList<UpdateConstruct> constructsList,SparqlObj sparql, EndPoint ep) {
+	protected void init() {
 		int orderIndex = 0;
 		tripleList= new HashMap<Integer,BindingsWrapper>();	
 		removed= new HashMap<String,BindingsResults>();
 		added= new HashMap<String,BindingsResults>();
 		String values = "";
-		for (UpdateConstruct updateConstruct : constructsList) {
+		for (UpdateExtractedData updateConstruct : ueds) {
 			if(updateConstruct.needDelete()) {
 				String deleteGraph= updateConstruct.getRemovedGraph();
 				for (Bindings bind : updateConstruct.getRemoved().getBindings()) {
@@ -69,7 +80,7 @@ public class AsksAsSelectExistsList implements IAskAsSelect{
 			}
 		}
 		if(orderIndex>0) {
-			for (Bindings bind : getBindings(generateSelectExistsList(values),sparql,ep).getBindings()) {
+			for (Bindings bind : getBindings(generateSelect(values),sparql,endPoint).getBindings()) {
 				BindingsWrapper temp =tripleList.get(Integer.parseInt(bind.getValue("i")));
 				if(bind.getValue("x").compareTo("1")==0) {
 					if(temp.isAdded()) {
@@ -82,6 +93,8 @@ public class AsksAsSelectExistsList implements IAskAsSelect{
 			}
 		}
 	}
+	
+	
 
 	private void addToAdded(String graph, Bindings bind) {
 		if(added.containsKey(graph)) {
@@ -90,9 +103,9 @@ public class AsksAsSelectExistsList implements IAskAsSelect{
 			ArrayList<Bindings> bindList = new ArrayList<Bindings>();
 			bindList.add(bind);
 			ArrayList<String> vars = new ArrayList<String>();
-			vars.add("s");
-			vars.add("p");
-			vars.add("o");
+			vars.add(BindingTag.SUBJECT.toString());
+			vars.add(BindingTag.PREDICATE.toString());
+			vars.add(BindingTag.OBJECT.toString());
 			added.put(graph,new BindingsResults(vars, bindList));	
 		}
 	}
@@ -103,18 +116,27 @@ public class AsksAsSelectExistsList implements IAskAsSelect{
 			ArrayList<Bindings> bindList = new ArrayList<Bindings>();
 			bindList.add(bind);
 			ArrayList<String> vars = new ArrayList<String>();
-			vars.add("s");
-			vars.add("p");
-			vars.add("o");
+			vars.add(BindingTag.SUBJECT.toString());
+			vars.add(BindingTag.PREDICATE.toString());
+			vars.add(BindingTag.OBJECT.toString());
 			removed.put(graph,new BindingsResults(vars, bindList));	
 		}
 	}
-	private String generateSelectExistsList(String values) {
-		return "SELECT ?x ?i {VALUES (?g ?s ?p ?o ?i) { \n" + values+ "} BIND(EXISTS{GRAPH ?g {?s ?p ?o}} AS ?x)}";
+	protected String generateSelect(String values) {
+		return "SELECT ?x ?i {VALUES (?"+BindingTag.GRAPH.toString()
+			+" ?"+BindingTag.SUBJECT.toString()
+			+" ?"+BindingTag.PREDICATE.toString()
+			+" ?"+BindingTag.OBJECT.toString()
+			+" ?i) { \n" + values+ "} BIND(EXISTS{GRAPH ?"+BindingTag.GRAPH.toString()
+			+" {?"+BindingTag.SUBJECT.toString()
+			+" ?"+BindingTag.PREDICATE.toString()
+			+ "?"+BindingTag.OBJECT.toString()+"}} AS ?x)}";
 	}
 	
-	private String incapsulate(String graph,Bindings bind,int index ) {
-		return "(<"+graph+"><"+bind.getValue("s")+"><"+bind.getValue("p")+"><"+bind.getValue("o")+"> "+index+")\n";
+	protected String incapsulate(String graph,Bindings bind,int index ) {
+		return "(<"+graph+"><"+bind.getValue(BindingTag.SUBJECT.toString())
+				+"><"+bind.getValue(BindingTag.PREDICATE.toString())
+				+"><"+bind.getValue(BindingTag.OBJECT.toString())+"> "+index+")\n";
 	}
 	
 
@@ -127,6 +149,34 @@ public class AsksAsSelectExistsList implements IAskAsSelect{
 		SparqlRequest askquery = new SparqlRequest(askSparql,ep);
 		return ((QueryResponse)askquery.execute()).getBindingsResults();
 		
+	}
+	
+
+	public ArrayList<UpdateExtractedData> filter() throws SEPABindingsException {
+		HashMap<String,BindingsResults> alredyExist_E  = this.getReorganizedBindingsForAdded();
+		HashMap<String,BindingsResults> realRemoved_E = this.getReorganizedBindingsForRemoved();
+		for (UpdateExtractedData constructs : ueds) {
+			
+			String graph = constructs.getAddedGraph();
+			
+			if(constructs.needInsert() && alredyExist_E.containsKey(graph) ){
+				constructs.removeBingingFromAddedList(alredyExist_E.get(graph)); 
+
+				alredyExist_E.remove(graph);
+			}	
+			
+			graph = constructs.getRemovedGraph();
+			
+			if(realRemoved_E.containsKey(graph)) {
+				constructs.setRemoved(realRemoved_E.get(graph));
+				
+				realRemoved_E.remove(graph);
+			}else {
+				constructs.clearRemoved();
+			}
+			
+		}
+		return ueds;
 	}
 	
 	
@@ -164,6 +214,7 @@ public class AsksAsSelectExistsList implements IAskAsSelect{
 	public boolean needAskSelectForRemoved() {
 		return   removed!=null &&   removed.size()>0;
 	}
+
 
 	
 }

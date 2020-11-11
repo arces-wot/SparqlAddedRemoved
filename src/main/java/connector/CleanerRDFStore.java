@@ -4,14 +4,14 @@ package connector;
 import java.util.ArrayList;
 
 import factories.RequestFactory;
-import factories.RequestFactory.RequestName;
+import factories.RequestName;
 import model.EndPoint;
 import model.SparqlObj;
 
 public class CleanerRDFStore {
 
 	public static boolean clean() {
-		return !RequestFactory.getInstance().getRequestByName(RequestName.SIMPLE_DELETE.toString()).execute().isError();
+		return !RequestFactory.getInstance().getRequestByName(RequestName.SIMPLE_DELETE).execute().isError();
 	}
 	
 	public static boolean clean(ArrayList<String> graphs) {

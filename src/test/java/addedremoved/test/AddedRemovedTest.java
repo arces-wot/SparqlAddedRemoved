@@ -11,17 +11,16 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import addedremoved.AddedRemovedGenerator;
-import addedremoved.UpdateConstruct;
+import addedremoved.AddedRemovedManager;
+import addedremoved.UpdateExtractedData;
 import connector.SparqlRequest;
 import core.Inspector;
 import factories.IRequestFactory;
 import factories.RequestFactory;
-import factories.RequestFactory.RequestName;
+import factories.RequestName;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
-import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import model.TestMetric;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AddedRemovedTest {
@@ -37,9 +36,9 @@ public class AddedRemovedTest {
 	@Test // (timeout = 5000)
 	public void test_Q2() {
 		Inspector inspector = new Inspector();
-		SparqlRequest update_for_Q2=(SparqlRequest)factory.getRequestByName(RequestName.UPDATE_FOR_Q2.toString());
-		SparqlRequest query_Q2=(SparqlRequest)factory.getRequestByName(RequestName.QUERY2.toString());
-		SparqlRequest rollback_for_Q2=(SparqlRequest)factory.getRequestByName(RequestName.ROLLBACK_FOR_Q2.toString());
+		SparqlRequest update_for_Q2=(SparqlRequest)factory.getRequestByName(RequestName.UPDATE_FOR_Q2);
+		SparqlRequest query_Q2=(SparqlRequest)factory.getRequestByName(RequestName.QUERY2);
+		SparqlRequest rollback_for_Q2=(SparqlRequest)factory.getRequestByName(RequestName.ROLLBACK_FOR_Q2);
 		SparqlRequest deleteUpdate=null;	
 		SparqlRequest insertUpdate=null;
 		ArrayList<TestMetric> phases = new ArrayList<TestMetric>();
@@ -48,19 +47,27 @@ public class AddedRemovedTest {
 		TestMetric Phase1 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");		
 		
 		Phase1.start();
-		ArrayList<UpdateConstruct> constructs = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q2.clone(),phases);		
+		ArrayList<UpdateExtractedData> constructs=null;
 		try {
-			deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update_for_Q2.clone(),constructs);
-		} catch (Exception e) {
+			constructs = AddedRemovedManager.getAddedRemovedFrom(update_for_Q2.clone(),phases);
+		} catch (SEPABindingsException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update_for_Q2.clone(),constructs);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			e1.printStackTrace();
+		}		
+		if(constructs!=null) {
+			try {
+				deleteUpdate =AddedRemovedManager.generateDeleteUpdate(update_for_Q2.clone(),constructs);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				insertUpdate =AddedRemovedManager.generateInsertUpdate(update_for_Q2.clone(),constructs);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
 		Phase1.stop();
 		phases.add(Phase1);
 	    assertFalse("#)  Phase1",constructs==null || (deleteUpdate==null && insertUpdate==null) );
@@ -183,8 +190,8 @@ public class AddedRemovedTest {
 //	public void test_Q3() {
 //
 //		Inspector inspector = new Inspector();
-//		SparqlRequest update_for_Q3=(SparqlRequest)factory.getRequestByName(RequestName.UPDATE_FOR_Q3.toString());
-//		SparqlRequest query_Q3=(SparqlRequest)factory.getRequestByName(RequestName.QUERY3.toString());
+//		SparqlRequest update_for_Q3=(SparqlRequest)factory.getRequestByName(RequestName.UPDATE_FOR_Q3);
+//		SparqlRequest query_Q3=(SparqlRequest)factory.getRequestByName(RequestName.QUERY3);
 //		SparqlRequest deleteUpdate=null;	
 //		SparqlRequest insertUpdate=null;
 //		ArrayList<TestMetric> phases = new ArrayList<TestMetric>();
@@ -238,7 +245,7 @@ public class AddedRemovedTest {
 //		}
 //		SparqlRequest rollback_for_Q3=null;
 //		try {
-//			rollback_for_Q3 = (SparqlRequest)((RequestFactory)factory).buildRequestByName(RequestName.ROLLBACK_FOR_Q3.toString(),oldTriples);
+//			rollback_for_Q3 = (SparqlRequest)((RequestFactory)factory).buildRequestByName(RequestName.ROLLBACK_FOR_Q3,oldTriples);
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -378,15 +385,15 @@ public class AddedRemovedTest {
 		System.out.println("---------------------------------------------------------");
 		System.out.println("-------------------Query before update-------------------");
 		System.out.println("---------------------------------------------------------");
-		System.out.println(ris_pre_up_Query.getBindingsResults().toJson().toString());
+		System.out.println(ris_pre_up_Query.getBindingsResults().toJson());
 		System.out.println("---------------------------------------------------------");
 		System.out.println("------------Query after normal update result-------------");
 		System.out.println("---------------------------------------------------------");
-		System.out.println(ris_Query.getBindingsResults().toJson().toString());
+		System.out.println(ris_Query.getBindingsResults().toJson());
 		System.out.println("---------------------------------------------------------");
 		System.out.println("------------Query after insert delete updates------------");
 		System.out.println("---------------------------------------------------------");
-		System.out.println(ris_Query_2.getBindingsResults().toJson().toString());
+		System.out.println(ris_Query_2.getBindingsResults().toJson());
 		System.out.println("---------------------------------------------------------");
 		System.out.println("----------------------Phases Times-----------------------");
 		System.out.println("---------------------------------------------------------");
@@ -402,9 +409,9 @@ public class AddedRemovedTest {
 	@Test // (timeout = 5000)
 	public void test_Q4() {
 
-		SparqlRequest update_for_Q4=(SparqlRequest)factory.getRequestByName(RequestName.UPDATE_FOR_Q4.toString());
-		SparqlRequest rollback_for_Q4=(SparqlRequest)factory.getRequestByName(RequestName.ROLLBACK_FOR_Q4.toString());
-		SparqlRequest query_Q4=(SparqlRequest)factory.getRequestByName(RequestName.QUERY4.toString());
+		SparqlRequest update_for_Q4=(SparqlRequest)factory.getRequestByName(RequestName.UPDATE_FOR_Q4);
+		SparqlRequest rollback_for_Q4=(SparqlRequest)factory.getRequestByName(RequestName.ROLLBACK_FOR_Q4);
+		SparqlRequest query_Q4=(SparqlRequest)factory.getRequestByName(RequestName.QUERY4);
 		SparqlRequest deleteUpdate=null;	
 		SparqlRequest insertUpdate=null;
 		ArrayList<TestMetric> phases = new ArrayList<TestMetric>();
@@ -413,10 +420,16 @@ public class AddedRemovedTest {
 		TestMetric Phase1 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");		
 		
 		Phase1.start();
-		ArrayList<UpdateConstruct> constructs = AddedRemovedGenerator.getAddedRemovedFrom(update_for_Q4.clone(),phases);
-
+		ArrayList<UpdateExtractedData> constructs=null;
+		try {
+			constructs = AddedRemovedManager.getAddedRemovedFrom(update_for_Q4.clone(),phases);
+		} catch (SEPABindingsException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if(constructs!=null){
 			try {
-				deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update_for_Q4.clone(),constructs);
+				deleteUpdate =AddedRemovedManager.generateDeleteUpdate(update_for_Q4.clone(),constructs);
 			
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -424,11 +437,12 @@ public class AddedRemovedTest {
 			}
 		
 			try {
-				insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update_for_Q4.clone(),constructs);
+				insertUpdate =AddedRemovedManager.generateInsertUpdate(update_for_Q4.clone(),constructs);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}			
 		Phase1.stop();
 		phases.add(Phase1);
 	    assertFalse("#)  Phase1",constructs==null || (deleteUpdate==null && insertUpdate==null) );

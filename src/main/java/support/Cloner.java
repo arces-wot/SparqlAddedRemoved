@@ -6,7 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import addedremoved.UpdateConstruct;
+import addedremoved.UpdateExtractedData;
 
 public class Cloner {
 
@@ -26,9 +26,9 @@ public class Cloner {
 		   }
 	}
 	 
-	 public static ArrayList<UpdateConstruct> deepCopy(ArrayList<UpdateConstruct>  toClone){
-		 ArrayList<UpdateConstruct> ris = new ArrayList<UpdateConstruct>();
-		 for (UpdateConstruct updateConstruct : toClone) {
+	 public static ArrayList<UpdateExtractedData> deepCopy(ArrayList<UpdateExtractedData>  toClone){
+		 ArrayList<UpdateExtractedData> ris = new ArrayList<UpdateExtractedData>();
+		 for (UpdateExtractedData updateConstruct : toClone) {
 			 ris.add(updateConstruct.clone());
 		 }
 		 return ris;

@@ -69,6 +69,7 @@
             this.allMetricChart1 = new TestViewer.view.AllMetricChart();
             this.labelInfo = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.labelUnavailable = new System.Windows.Forms.Label();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -134,6 +135,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.labelUnavailable);
             this.tabPage5.Controls.Add(this.checkBox3);
             this.tabPage5.Controls.Add(this.checkBox2);
             this.tabPage5.Controls.Add(this.checkBox1);
@@ -505,6 +507,19 @@
             this.tabControl1.Size = new System.Drawing.Size(827, 499);
             this.tabControl1.TabIndex = 2;
             // 
+            // labelUnavailable
+            // 
+            this.labelUnavailable.BackColor = System.Drawing.Color.LightGray;
+            this.labelUnavailable.ForeColor = System.Drawing.Color.DarkRed;
+            this.labelUnavailable.Location = new System.Drawing.Point(359, 8);
+            this.labelUnavailable.Name = "labelUnavailable";
+            this.labelUnavailable.Size = new System.Drawing.Size(64, 16);
+            this.labelUnavailable.TabIndex = 13;
+            this.labelUnavailable.Text = "Unavailable... The following metrics are required to see this statistic:\r\n\r\nConst" +
+    "ructs\r\nASKs\r\nExecution insert and delete\r\nExecution normal update";
+            this.labelUnavailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelUnavailable.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -581,6 +596,7 @@
         private view.AllMetricChart allMetricChart1;
         private System.Windows.Forms.Label labelInfo;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.Label labelUnavailable;
     }
 }
 

@@ -10,7 +10,7 @@ import connector.ISparqlRequest;
 import core.Inspector;
 import factories.IRequestFactory;
 import factories.RequestFactory;
-import factories.RequestFactory.RequestName;
+import factories.RequestName;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 
 public class EndpointTest {
@@ -26,16 +26,16 @@ public class EndpointTest {
 	@Test // (timeout = 5000)
 	public void test() {
 		
-	    ISparqlRequest req=factory.getRequestByName(RequestName.SIMPLE_INSERT.toString());
+	    ISparqlRequest req=factory.getRequestByName(RequestName.SIMPLE_INSERT);
 	    assertFalse("#)  EndpointTest SIMPLE_INSERT",req.execute().isError());
 
-		req=factory.getRequestByName(RequestName.SIMPLE_QUERY.toString());
+		req=factory.getRequestByName(RequestName.SIMPLE_QUERY);
 		assertFalse("#)  EndpointTest SIMPLE_QUERY",Inspector.isVoid(((QueryResponse)req.execute()).getBindingsResults()));
 		
-		req=factory.getRequestByName(RequestName.SIMPLE_DELETE.toString());
+		req=factory.getRequestByName(RequestName.SIMPLE_DELETE);
 		assertFalse("#)  EndpointTest SIMPLE_DELETE",req.execute().isError());
 		
-		req=factory.getRequestByName(RequestName.SIMPLE_QUERY.toString());
+		req=factory.getRequestByName(RequestName.SIMPLE_QUERY);
 		assertTrue("#)  EndpointTest SIMPLE_QUERY (for confirm delete)",Inspector.isVoid(((QueryResponse)req.execute()).getBindingsResults()));
 		
 	}

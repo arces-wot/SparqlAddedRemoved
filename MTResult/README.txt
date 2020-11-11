@@ -85,3 +85,18 @@ VALUES (?g ?s ?p ?o ) {
 BIND(EXISTS{GRAPH ?g {?s ?p ?o}} AS ?x)
 }
 
+
+#################  AskVsBestSelect_5MT_16T.json
+solo ask confrontata con la best solution che dove sostituire le ask
+
+#################  FinalResultOnSingleGraph.json
+test con la best solution in sostituzione alle ask
+per confrontarla con l'update
+
+
+################ Select1VsSelect4_Blazegraph.json
+test per confrontare anche su Blazegraph le due tipologie (più gettonate) di Select che sostituiscono la ask.
+(Select1 e Select 4 su Virtuoso si possono vedere dal test:AskVs4SelectTypes.json)
+Risulta dunque che la differenza netta tra le due è solo su Virtuoso (dal test AskVsSelect.json) possiamo notare che
+su virtuoso questa tipologia di Select1 impiega svariati secondi, invece su Blazegraph impiega decine di ms
+risulta comunque più veloce la Select4

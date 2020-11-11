@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gson.JsonObject;
 
-import addedremoved.UpdateConstruct;
+import addedremoved.UpdateExtractedData;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
 import model.TestMetric;
@@ -17,21 +17,29 @@ public class Inspector {
 	}
 	
 	public static boolean areEq(BindingsResults res1,BindingsResults res2) {
-		if(res1.size()==res2.size()) {
-			for (Bindings bind : res1.getBindings()) {
-				if(!res2.contains(bind)) {
-					return false;
+		if(getCount(res1)==getCount(res2)) {
+			if(res1!=null && res2!=null){
+				for (Bindings bind : res1.getBindings()) {
+					if(!res2.contains(bind)) {
+						return false;
+					}
 				}
-			}
-			for (Bindings bind : res2.getBindings()) {
-				if(!res1.contains(bind)) {
-					return false;
+				for (Bindings bind : res2.getBindings()) {
+					if(!res1.contains(bind)) {
+						return false;
+					}
 				}
-			}
+			}			
 			return true;
 		}else {
 			return false;
 		}
+	}
+	private static int getCount(BindingsResults res) {
+			if(res==null) {
+				return 0;
+			}
+			return res.size();
 	}
 	
 	public static BindingsResults getOuterJoinA(BindingsResults A,BindingsResults B) {
@@ -121,22 +129,29 @@ public class Inspector {
 		this.askForDelete = askForDelete;
 	}
 
-	public void setAsks(ArrayList<UpdateConstruct> constructList) {
-		for (UpdateConstruct constructs : constructList) {
-			if(	this.askForDelete ==null) {
-				this.askForDelete = new BindingsResults(constructs.getRemoved());
-			}else {
-				for (Bindings bind : constructs.getRemoved().getBindings()) {
-					this.askForDelete.add(bind);	
+	public void setAsks(ArrayList<UpdateExtractedData> constructList) {
+		for (UpdateExtractedData constructs : constructList) {
+			
+			if(constructs.getRemoved()!=null) {
+				if(	this.askForDelete ==null) {
+					this.askForDelete = new BindingsResults(constructs.getRemoved());
+				}else {
+					for (Bindings bind : constructs.getRemoved().getBindings()) {
+						this.askForDelete.add(bind);	
+					}
 				}
 			}
-			if(	this.askForInsert ==null) {
-				this.askForInsert = new BindingsResults(constructs.getAdded());
-			}else {
-				for (Bindings bind : constructs.getAdded().getBindings()) {
-					this.askForInsert.add(bind);	
+		
+			if(constructs.getAdded()!=null) {
+				if(	this.askForInsert ==null) {
+					this.askForInsert = new BindingsResults(constructs.getAdded());
+				}else {
+					for (Bindings bind : constructs.getAdded().getBindings()) {
+						this.askForInsert.add(bind);	
+					}
 				}
 			}
+		
 		}
 	}
 

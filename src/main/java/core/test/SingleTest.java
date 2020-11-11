@@ -2,10 +2,11 @@ package core.test;
 
 import java.util.ArrayList;
 
-import addedremoved.AddedRemovedGenerator;
-import addedremoved.UpdateConstruct;
+import addedremoved.AddedRemovedManager;
+import addedremoved.UpdateExtractedData;
 import connector.SparqlRequest;
 import core.Inspector;
+import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
 import model.TestMetric;
@@ -65,22 +66,32 @@ public class SingleTest implements ITest {
 			TestMetric phase2 = new TestMetric("Added removed extraction and generation of updates (insert and delete)");				
 			phase2.start();
 			
-			ArrayList<UpdateConstruct> constructsList = AddedRemovedGenerator.getAddedRemovedFrom(update.clone(),phases);
+			ArrayList<UpdateExtractedData> constructsList=new ArrayList<UpdateExtractedData>();
 			boolean  pahes2Err = false;
 			try {
-				deleteUpdate =AddedRemovedGenerator.generateDeleteUpdate(update.clone(),constructsList);				
-			} catch (Exception e) {
+				constructsList = AddedRemovedManager.getAddedRemovedFrom(update.clone(),phases);
+			} catch (SEPABindingsException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 				pahes2Err=true;
 			}
-			try {
-				insertUpdate =AddedRemovedGenerator.generateInsertUpdate(update.clone(),constructsList);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				pahes2Err=true;
+			if(!pahes2Err) {
+				try {
+					deleteUpdate =AddedRemovedManager.generateDeleteUpdate(update.clone(),constructsList);				
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					pahes2Err=true;
+				}
+				try {
+					insertUpdate =AddedRemovedManager.generateInsertUpdate(update.clone(),constructsList);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					pahes2Err=true;
+				}
 			}
+		
 			
 			phase2.stop(pahes2Err);
 			phases.add(phase2);

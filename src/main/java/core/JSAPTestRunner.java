@@ -26,7 +26,7 @@ public class JSAPTestRunner {
 			MT1.execute();
 			System.out.println("Test "+testName+ " end.");			
 		}
-
+		System.out.println("All test done.");
 		//close 
 		monitor.close();
 	}

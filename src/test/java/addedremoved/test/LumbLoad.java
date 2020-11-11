@@ -6,14 +6,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import connector.ISparqlRequest;
-import core.Inspector;
 import edu.lehigh.swat.bench.uba.Generator;
 import edu.lehigh.swat.bench.uba.Ontology;
 import factories.IRequestFactory;
 import factories.RequestFactory;
-import factories.RequestFactory.RequestName;
-import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import support.Environment;
 
 public class LumbLoad {
