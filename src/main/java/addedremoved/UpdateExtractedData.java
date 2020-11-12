@@ -6,6 +6,8 @@ import org.apache.jena.graph.Triple;
 
 import com.google.gson.JsonObject;
 
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
 import it.unibo.arces.wot.sepa.commons.sparql.RDFTerm;
@@ -44,10 +46,8 @@ public class UpdateExtractedData {
 
 
 	public UpdateExtractedData(ArrayList<Triple> r,ArrayList<Triple> a, String graph) {
-		ArrayList<String> vars = new ArrayList<String>();
-		vars.add(BindingTag.SUBJECT.toString());
-		vars.add(BindingTag.PREDICATE.toString());
-		vars.add(BindingTag.OBJECT.toString());
+		ArrayList<String> vars = EpSpecFactory.getInstance().vars();
+		
 		this.added= new BindingsResults(vars,  new ArrayList<Bindings>());
 		if(a!=null) {
 			for (Triple triple : a) {

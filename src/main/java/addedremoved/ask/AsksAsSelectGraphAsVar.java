@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import addedremoved.BindingTag;
 import addedremoved.UpdateExtractedData;
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 import connector.SparqlRequest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
@@ -72,23 +73,24 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 	}
 
 	public String getAsksAsSelect(HashMap<String,ArrayList<Bindings>> allTriple) {
-		String select = "SELECT ?"+BindingTag.GRAPH.toString()
-		+" ?"+BindingTag.SUBJECT.toString()
-		+" ?"+BindingTag.PREDICATE.toString()
-		+" ?"+BindingTag.OBJECT.toString()
-		+" { GRAPH ?"+BindingTag.GRAPH.toString()
-		+" { ?"+BindingTag.SUBJECT.toString()
-		+" ?"+BindingTag.PREDICATE.toString()
-		+" ?"+BindingTag.OBJECT.toString()
-		+" }\n VALUES (?"+BindingTag.GRAPH.toString()
-		+" ?"+BindingTag.SUBJECT.toString()
-		+" ?"+BindingTag.PREDICATE.toString()
-		+" ?"+BindingTag.OBJECT.toString()+") { \n";
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		String select = "SELECT ?"+eps.g()
+		+" ?"+eps.s()
+		+" ?"+eps.p()
+		+" ?"+eps.o()
+		+" { GRAPH ?"+eps.g()
+		+" { ?"+eps.s()
+		+" ?"+eps.p()
+		+" ?"+eps.o()
+		+" }\n VALUES (?"+eps.g()
+		+" ?"+eps.s()
+		+" ?"+eps.p()
+		+" ?"+eps.o()+") { \n";
 		for (String graph : allTriple.keySet()) {
 			for (Bindings bind : allTriple.get(graph)) {
-				select+="(<"+graph+"><"+bind.getValue(BindingTag.SUBJECT.toString())+"><"
-						+bind.getValue(BindingTag.PREDICATE.toString())+"><"
-						+bind.getValue(BindingTag.OBJECT.toString())+">)\n";
+				select+="(<"+graph+"><"+bind.getValue(eps.s())+"><"
+						+bind.getValue(eps.p())+"><"
+						+bind.getValue(eps.o())+">)\n";
 			}
 		}
 		select+="}}";
@@ -96,24 +98,26 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 	}
 	
 	protected String generateSelect(String values) {
-		return "SELECT ?"+BindingTag.GRAPH.toString()
-				+" ?"+BindingTag.SUBJECT.toString()
-				+" ?"+BindingTag.PREDICATE.toString()
-				+" ?"+BindingTag.OBJECT.toString()
-				+" { GRAPH ?"+BindingTag.GRAPH.toString()
-				+" { ?"+BindingTag.SUBJECT.toString()
-				+" ?"+BindingTag.PREDICATE.toString()
-				+" ?"+BindingTag.OBJECT.toString()
-				+" }\n VALUES (?"+BindingTag.GRAPH.toString()
-				+" ?"+BindingTag.SUBJECT.toString()
-				+" ?"+BindingTag.PREDICATE.toString()
-				+" ?"+BindingTag.OBJECT.toString()+") { \n" + values+ "}}";
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		return "SELECT ?"+eps.g()
+				+" ?"+eps.s()
+				+" ?"+eps.p()
+				+" ?"+eps.o()
+				+" { GRAPH ?"+eps.g()
+				+" { ?"+eps.s()
+				+" ?"+eps.p()
+				+" ?"+eps.o()
+				+" }\n VALUES (?"+eps.g()
+				+" ?"+eps.s()
+				+" ?"+eps.p()
+				+" ?"+eps.o()+") { \n" + values+ "}}";
 	}
 	
 	protected String incapsulate(String graph,Bindings bind ) {
-		return "(<"+graph+"><"+bind.getValue(BindingTag.SUBJECT.toString())+"><"
-				+bind.getValue(BindingTag.PREDICATE.toString())+"><"
-				+bind.getValue(BindingTag.OBJECT.toString())+">)\n";
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		return "(<"+graph+"><"+bind.getValue(eps.s())+"><"
+				+bind.getValue(eps.p())+"><"
+				+bind.getValue(eps.o())+">)\n";
 	}
 	
 
@@ -142,13 +146,10 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 	
 	
 	protected HashMap<String,BindingsResults> getReorganizedBindingsForAdded() throws SEPABindingsException  {
-		
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
 		HashMap<String,BindingsResults>  list = new HashMap<String,BindingsResults>();
 		
-		ArrayList<String> vars = new ArrayList<String>();
-		vars.add(BindingTag.SUBJECT.toString());
-		vars.add(BindingTag.PREDICATE.toString());
-		vars.add(BindingTag.OBJECT.toString());
+		ArrayList<String> vars = eps.vars();
 		
 		if(needAskSelectForAdded()) {
 //			TestMetric t= new TestMetric("");
@@ -157,11 +158,11 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 //			t.stop();
 //			System.out.println("real call: "+t.getInterval());
 			for (Bindings bind : result.getBindings()) {
-				String graph = bind.getValue(BindingTag.GRAPH.toString());
+				String graph = bind.getValue(eps.g());
 				Bindings triple = new Bindings();
-				triple.addBinding(BindingTag.SUBJECT.toString(), bind.getRDFTerm(BindingTag.SUBJECT.toString()));
-				triple.addBinding(BindingTag.PREDICATE.toString(), bind.getRDFTerm(BindingTag.PREDICATE.toString()));
-				triple.addBinding(BindingTag.OBJECT.toString(), bind.getRDFTerm(BindingTag.OBJECT.toString()));
+				triple.addBinding(eps.s(), bind.getRDFTerm(eps.s()));
+				triple.addBinding(eps.p(), bind.getRDFTerm(eps.p()));
+				triple.addBinding(eps.o(), bind.getRDFTerm(eps.o()));
 				
 				if(list.containsKey(graph)) {
 					list.get(graph).add(triple);
@@ -178,22 +179,19 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 	
 	
 	protected  HashMap<String,BindingsResults> getReorganizedBindingsForRemoved() throws SEPABindingsException  {
-		
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
 		HashMap<String,BindingsResults>  list = new HashMap<String,BindingsResults>();
 		
-		ArrayList<String> vars = new ArrayList<String>();
-		vars.add(BindingTag.SUBJECT.toString());
-		vars.add(BindingTag.PREDICATE.toString());
-		vars.add(BindingTag.OBJECT.toString());
+		ArrayList<String> vars = eps.vars();
 		
 		if(needAskSelectForRemoved()) {
 			BindingsResults result = getBindingsForRemoved();
 			for (Bindings bind : result.getBindings()) {
-				String graph = bind.getValue(BindingTag.GRAPH.toString());
+				String graph = bind.getValue(eps.g());
 				Bindings triple = new Bindings();
-				triple.addBinding(BindingTag.SUBJECT.toString(), bind.getRDFTerm(BindingTag.SUBJECT.toString()));
-				triple.addBinding(BindingTag.PREDICATE.toString(), bind.getRDFTerm(BindingTag.PREDICATE.toString()));
-				triple.addBinding(BindingTag.OBJECT.toString(), bind.getRDFTerm(BindingTag.OBJECT.toString()));
+				triple.addBinding(eps.s(), bind.getRDFTerm(eps.s()));
+				triple.addBinding(eps.p(), bind.getRDFTerm(eps.p()));
+				triple.addBinding(eps.o(), bind.getRDFTerm(eps.o()));
 				
 				if(list.containsKey(graph)) {
 					list.get(graph).add(triple);

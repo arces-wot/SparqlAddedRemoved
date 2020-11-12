@@ -3,14 +3,14 @@ package addedremoved.ask;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import addedremoved.BindingTag;
 import addedremoved.UpdateExtractedData;
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 import connector.SparqlRequest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
-import it.unibo.arces.wot.sepa.commons.sparql.RDFTermURI;
 import model.EndPoint;
 import model.SparqlObj;
 
@@ -95,22 +95,24 @@ public class AsksAsSelectExplicitGraph implements IAsk{
 	}
 
 	private String generateSelect(String graph,String values) {
-		return "SELECT ?"+BindingTag.SUBJECT.toString()
-				+" ?"+BindingTag.PREDICATE.toString()
-				+" ?"+BindingTag.OBJECT.toString()
-				+" { GRAPH <"+graph+"> { ?"+BindingTag.SUBJECT.toString()
-				+" ?"+BindingTag.PREDICATE.toString()
-				+" ?"+BindingTag.OBJECT.toString()
-				+" }\n VALUES (?"+BindingTag.SUBJECT.toString()
-				+" ?"+BindingTag.PREDICATE.toString()
-				+" ?"+BindingTag.OBJECT.toString()
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		return "SELECT ?"+eps.s()
+				+" ?"+eps.p()
+				+" ?"+eps.o()
+				+" { GRAPH <"+graph+"> { ?"+eps.s()
+				+" ?"+eps.p()
+				+" ?"+eps.o()
+				+" }\n VALUES (?"+eps.s()
+				+" ?"+eps.p()
+				+" ?"+eps.o()
 				+") { \n" + values+ "}}";
 	}
 	
 	private String incapsulate(Bindings bind ) {
-		return "(<"+bind.getValue(BindingTag.SUBJECT.toString())+"><"
-				+bind.getValue(BindingTag.PREDICATE.toString())+"><"
-				+bind.getValue(BindingTag.OBJECT.toString())+">)\n";
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		return "(<"+bind.getValue(eps.s())+"><"
+				+bind.getValue(eps.p())+"><"
+				+bind.getValue(eps.o())+">)\n";
 	}
 
 	
@@ -143,13 +145,12 @@ public class AsksAsSelectExplicitGraph implements IAsk{
 	
 	
 	public HashMap<String,BindingsResults> getReorganizedBindingsForAdded() throws SEPABindingsException  {
+
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
 		
 		HashMap<String,BindingsResults>  list = new HashMap<String,BindingsResults>();
 		
-		ArrayList<String> vars = new ArrayList<String>();
-		vars.add(BindingTag.SUBJECT.toString());
-		vars.add(BindingTag.PREDICATE.toString());
-		vars.add(BindingTag.OBJECT.toString());
+		ArrayList<String> vars = eps.vars();
 		
 		if(needAskSelectForAdded()) {
 //			TestMetric t= new TestMetric("");
@@ -160,9 +161,9 @@ public class AsksAsSelectExplicitGraph implements IAsk{
 			for(String graph : result.keySet() ) {
 				for (Bindings bind : result.get(graph).getBindings()) {
 					Bindings triple = new Bindings();
-					triple.addBinding(BindingTag.SUBJECT.toString(), bind.getRDFTerm(BindingTag.SUBJECT.toString()));
-					triple.addBinding(BindingTag.PREDICATE.toString(), bind.getRDFTerm(BindingTag.PREDICATE.toString()));
-					triple.addBinding(BindingTag.OBJECT.toString(), bind.getRDFTerm(BindingTag.OBJECT.toString()));
+					triple.addBinding(eps.s(), bind.getRDFTerm(eps.s()));
+					triple.addBinding(eps.p(), bind.getRDFTerm(eps.p()));
+					triple.addBinding(eps.o(), bind.getRDFTerm(eps.o()));
 					if(list.containsKey(graph)) {
 						list.get(graph).add(triple);
 					}else {
@@ -180,22 +181,19 @@ public class AsksAsSelectExplicitGraph implements IAsk{
 	
 	
 	public HashMap<String,BindingsResults> getReorganizedBindingsForRemoved() throws SEPABindingsException  {
-		
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
 		HashMap<String,BindingsResults>  list = new HashMap<String,BindingsResults>();
 		
-		ArrayList<String> vars = new ArrayList<String>();
-		vars.add(BindingTag.SUBJECT.toString());
-		vars.add(BindingTag.PREDICATE.toString());
-		vars.add(BindingTag.OBJECT.toString());
+		ArrayList<String> vars = eps.vars();
 		
 		if(needAskSelectForRemoved()) {
 			HashMap<String,BindingsResults> result = getBindingsForRemoved();
 			for(String graph : result.keySet() ) {
 				for (Bindings bind : result.get(graph).getBindings()) {
 					Bindings triple = new Bindings();
-					triple.addBinding(BindingTag.SUBJECT.toString(), bind.getRDFTerm(BindingTag.SUBJECT.toString()));
-					triple.addBinding(BindingTag.PREDICATE.toString(), bind.getRDFTerm(BindingTag.PREDICATE.toString()));
-					triple.addBinding(BindingTag.OBJECT.toString(), bind.getRDFTerm(BindingTag.OBJECT.toString()));
+					triple.addBinding(eps.s(), bind.getRDFTerm(eps.s()));
+					triple.addBinding(eps.p(), bind.getRDFTerm(eps.p()));
+					triple.addBinding(eps.o(), bind.getRDFTerm(eps.o()));
 					
 					if(list.containsKey(graph)) {
 						list.get(graph).add(triple);

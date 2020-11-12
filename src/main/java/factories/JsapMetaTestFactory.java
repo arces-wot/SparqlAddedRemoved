@@ -7,6 +7,8 @@ import java.util.Set;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 import connector.SparqlRequest;
 import core.request.JsapMetaSparqlRequest;
 import core.test.MetaTest;
@@ -60,6 +62,8 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		_ontology=jsap.getNamespaces().get("ub");
 		_graph=jsap.getNamespaces().get("test");
 		
+		EpSpecFactory.setInstance(jsap.getExtendedData().get("eps").toString());
+		
 		
 		HashMap<String, JsapMetaSparqlRequest> requestMap =getRequestsFromJsap(jsap);
 		for (Entry<String, JsonElement> test : 	jsap.getExtendedData().get("tests").getAsJsonObject().entrySet()) {
@@ -102,7 +106,7 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		}
 
 		for (String  id : jsap.getUpdateIds()) {
-			String sparqlStr = prefixs+jsap.getSPARQLUpdate(id);
+			String sparqlStr = prefixs+(jsap.getSPARQLUpdate(id));
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
 			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");	
 			HashMap<String,TripleBase> forceBinds = new HashMap<String,TripleBase>();
@@ -127,6 +131,7 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		}
 		return requestMap;
 	}
+	
 	
 	//-------------------------------------GETTERS and SETTERS
 	

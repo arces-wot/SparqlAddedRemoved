@@ -10,8 +10,8 @@ import org.apache.jena.shacl.engine.constraint.SparqlComponent;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.syntax.ElementGroup;
 import org.apache.jena.sparql.syntax.ElementTriplesBlock;
-
-import addedremoved.BindingTag;
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 
 public class ConstructGenerator {
 	
@@ -63,7 +63,7 @@ public class ConstructGenerator {
 	
 	
 	public String getConstruct(String graph,ArrayList<Triple> triples,boolean strict) {
-		
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
 		String sparql = "CONSTRUCT ";
 		ElementTriplesBlock list = new ElementTriplesBlock(); //Solution1 
 		String stringList = "";
@@ -77,13 +77,13 @@ public class ConstructGenerator {
 		if(strict){
 			where+="GRAPH <"+ graph + "> "+stringList +"\n";
 		}else{
-			where+="GRAPH <"+ graph + "> {?"+BindingTag.SUBJECT.toString()
-				+" ?"+BindingTag.PREDICATE.toString()
-				+" ?"+BindingTag.OBJECT.toString()+"}\n";
+			where+="GRAPH <"+ graph + "> {?"+eps.s()
+				+" ?"+eps.p()
+				+" ?"+eps.o()+"}\n";
 		}
 		sparql+=stringList+ where +"}";
 
-		//System.out.println("construct:\n"+sparql);
+		//System.out.println("construct A:\n"+sparql);
 		return sparql;
 	}
 	
@@ -100,7 +100,7 @@ public class ConstructGenerator {
 
 		sparql+=stringList+  " WHERE "+ where;
 
-		//System.out.println("construct:\n"+sparql);
+		//System.out.println("construct B:\n"+sparql);
 		return sparql;
 	}
 

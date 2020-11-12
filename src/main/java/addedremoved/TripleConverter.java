@@ -4,6 +4,8 @@ import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
 
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.RDFTermBNode;
@@ -27,10 +29,11 @@ public class TripleConverter {
 	} 
 	
 	public static String tripleToString(Bindings triple) throws SEPABindingsException {
-		if(triple.getVariables().contains("s") && triple.getVariables().contains("p")  && triple.getVariables().contains("o") ) {
-			String s =triple.isURI("s")? "<"+triple.getValue("s")+">": "\""+triple.getValue("s")+"\"";
-			String p =triple.isURI("p")? "<"+triple.getValue("p")+">": "\""+triple.getValue("p")+"\"";
-			String o =triple.isURI("o")? "<"+triple.getValue("o")+">": "\""+triple.getValue("o")+"\"";
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		if(triple.getVariables().contains(eps.s()) && triple.getVariables().contains(eps.p())  && triple.getVariables().contains(eps.o()) ) {
+			String s =triple.isURI(eps.s())? "<"+triple.getValue(eps.s())+">": "\""+triple.getValue(eps.s())+"\"";
+			String p =triple.isURI(eps.p())? "<"+triple.getValue(eps.p())+">": "\""+triple.getValue(eps.p())+"\"";
+			String o =triple.isURI(eps.o())? "<"+triple.getValue(eps.o())+">": "\""+triple.getValue(eps.o())+"\"";
 			return s+ " "+ p + " " + o+ " .";
 		}else {
 			return null;
@@ -39,16 +42,17 @@ public class TripleConverter {
 	} 
 	
 	public static Triple bindingToTriple(Bindings bindings) throws SEPABindingsException{
-		String subject = bindings.getValue(BindingTag.SUBJECT.toString());
-		String predicate = bindings.getValue(BindingTag.PREDICATE.toString());
-		String object = bindings.getValue(BindingTag.OBJECT.toString());			
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		String subject = bindings.getValue(eps.s());
+		String predicate = bindings.getValue(eps.p());
+		String object = bindings.getValue(eps.o());			
 		
-		Node s = bindings.isBNode(BindingTag.SUBJECT.toString()) ? NodeFactory.createBlankNode(subject) : NodeFactory.createURI(subject);
-		Node p = bindings.isBNode(BindingTag.PREDICATE.toString()) ? NodeFactory.createBlankNode(predicate) : NodeFactory.createURI(predicate);
+		Node s = bindings.isBNode(eps.s()) ? NodeFactory.createBlankNode(subject) : NodeFactory.createURI(subject);
+		Node p = bindings.isBNode(eps.p()) ? NodeFactory.createBlankNode(predicate) : NodeFactory.createURI(predicate);
 
 		Node o = null;
-		if(!bindings.isBNode(BindingTag.OBJECT.toString())){
-			o = bindings.isURI(BindingTag.OBJECT.toString()) ? NodeFactory.createURI(object) : NodeFactory.createLiteral(object);
+		if(!bindings.isBNode(eps.o())){
+			o = bindings.isURI(eps.o()) ? NodeFactory.createURI(object) : NodeFactory.createLiteral(object);
 		}else{
 			o = NodeFactory.createBlankNode(object);
 		}
@@ -57,31 +61,32 @@ public class TripleConverter {
 	}
 
 	public static Bindings convertTripleToBindings(Triple t) {
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
 		Bindings temp = new Bindings();
 		if(t.getSubject().isLiteral()){
-			temp.addBinding(BindingTag.SUBJECT.toString(), new RDFTermLiteral(t.getSubject().toString()));
+			temp.addBinding(eps.s(), new RDFTermLiteral(t.getSubject().toString()));
 		}else if(t.getSubject().isURI()) {
-			temp.addBinding(BindingTag.SUBJECT.toString(), new RDFTermURI(t.getSubject().getURI()));			
+			temp.addBinding(eps.s(), new RDFTermURI(t.getSubject().getURI()));			
 		}else if(t.getSubject().isBlank()) {
-			temp.addBinding(BindingTag.SUBJECT.toString(), new RDFTermBNode(t.getSubject().toString()));		
+			temp.addBinding(eps.s(), new RDFTermBNode(t.getSubject().toString()));		
 		}else {
 			System.out.println("Warning, cannot convert Subject of Triple to Bindings, for triple: "+t.toString());
 		}
 		if(t.getPredicate().isLiteral()){
-			temp.addBinding(BindingTag.PREDICATE.toString(), new RDFTermLiteral(t.getPredicate().toString()));
+			temp.addBinding(eps.p(), new RDFTermLiteral(t.getPredicate().toString()));
 		}else if(t.getPredicate().isURI()) {
-			temp.addBinding(BindingTag.PREDICATE.toString(), new RDFTermURI(t.getPredicate().getURI()));			
+			temp.addBinding(eps.p(), new RDFTermURI(t.getPredicate().getURI()));			
 		}else if(t.getPredicate().isBlank()) {
-			temp.addBinding(BindingTag.PREDICATE.toString(), new RDFTermBNode(t.getPredicate().toString()));		
+			temp.addBinding(eps.p(), new RDFTermBNode(t.getPredicate().toString()));		
 		}else {
 			System.out.println("Warning, cannot convert Predicate of Triple to Bindings, for triple: "+t.toString());
 		}
 		if(t.getObject().isLiteral()){
-			temp.addBinding(BindingTag.OBJECT.toString(), new RDFTermLiteral(t.getObject().toString()));
+			temp.addBinding(eps.o(), new RDFTermLiteral(t.getObject().toString()));
 		}else if(t.getObject().isURI()) {
-			temp.addBinding(BindingTag.OBJECT.toString(), new RDFTermURI(t.getObject().getURI()));			
+			temp.addBinding(eps.o(), new RDFTermURI(t.getObject().getURI()));			
 		}else if(t.getObject().isBlank()) {
-			temp.addBinding(BindingTag.OBJECT.toString(), new RDFTermBNode(t.getObject().toString()));		
+			temp.addBinding(eps.o(), new RDFTermBNode(t.getObject().toString()));		
 		}else {
 			System.out.println("Warning, cannot convert Object of Triple to Bindings, for triple: "+t.toString());
 		}

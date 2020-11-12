@@ -12,8 +12,9 @@ import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.syntax.ElementGroup;
 import org.apache.jena.sparql.syntax.ElementTriplesBlock;
 
-import addedremoved.BindingTag;
 import addedremoved.UpdateExtractedData;
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 import connector.SparqlRequest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPASecurityException;
@@ -82,7 +83,7 @@ public class AsksAsSelectExistsList implements IAsk{
 		if(orderIndex>0) {
 			for (Bindings bind : getBindings(generateSelect(values),sparql,endPoint).getBindings()) {
 				BindingsWrapper temp =tripleList.get(Integer.parseInt(bind.getValue("i")));
-				if(bind.getValue("x").compareTo("1")==0) {
+				if(EpSpecFactory.getInstance().asksAsSelectExistListCompare(bind.getValue("x"))) {
 					if(temp.isAdded()) {
 						addToAdded(temp.getGraph(), temp.getBind());
 					}else {
@@ -102,48 +103,44 @@ public class AsksAsSelectExistsList implements IAsk{
 		}else {
 			ArrayList<Bindings> bindList = new ArrayList<Bindings>();
 			bindList.add(bind);
-			ArrayList<String> vars = new ArrayList<String>();
-			vars.add(BindingTag.SUBJECT.toString());
-			vars.add(BindingTag.PREDICATE.toString());
-			vars.add(BindingTag.OBJECT.toString());
+			ArrayList<String> vars = EpSpecFactory.getInstance().vars();
 			added.put(graph,new BindingsResults(vars, bindList));	
 		}
 	}
+	
 	private void addToRemoved(String graph, Bindings bind) {	
 		if(removed.containsKey(graph)) {
 			removed.get(graph).add(bind);
 		}else {
 			ArrayList<Bindings> bindList = new ArrayList<Bindings>();
 			bindList.add(bind);
-			ArrayList<String> vars = new ArrayList<String>();
-			vars.add(BindingTag.SUBJECT.toString());
-			vars.add(BindingTag.PREDICATE.toString());
-			vars.add(BindingTag.OBJECT.toString());
+			ArrayList<String> vars =EpSpecFactory.getInstance().vars();
 			removed.put(graph,new BindingsResults(vars, bindList));	
 		}
 	}
+	
 	protected String generateSelect(String values) {
-		return "SELECT ?x ?i {VALUES (?"+BindingTag.GRAPH.toString()
-			+" ?"+BindingTag.SUBJECT.toString()
-			+" ?"+BindingTag.PREDICATE.toString()
-			+" ?"+BindingTag.OBJECT.toString()
-			+" ?i) { \n" + values+ "} BIND(EXISTS{GRAPH ?"+BindingTag.GRAPH.toString()
-			+" {?"+BindingTag.SUBJECT.toString()
-			+" ?"+BindingTag.PREDICATE.toString()
-			+ "?"+BindingTag.OBJECT.toString()+"}} AS ?x)}";
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		return "SELECT ?x ?i {VALUES (?"+eps.g()
+			+" ?"+eps.s()
+			+" ?"+eps.p()
+			+" ?"+eps.o()
+			+" ?i) { \n" + values+ "} BIND(EXISTS{GRAPH ?"+eps.g()
+			+" {?"+eps.s()
+			+" ?"+eps.p()
+			+ "?"+eps.o()+"}} AS ?x)}";
 	}
 	
 	protected String incapsulate(String graph,Bindings bind,int index ) {
-		return "(<"+graph+"><"+bind.getValue(BindingTag.SUBJECT.toString())
-				+"><"+bind.getValue(BindingTag.PREDICATE.toString())
-				+"><"+bind.getValue(BindingTag.OBJECT.toString())+"> "+index+")\n";
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		return "(<"+graph+"><"+bind.getValue(eps.s())
+				+"><"+bind.getValue(eps.p())
+				+"><"+bind.getValue(eps.o())+"> "+index+")\n";
 	}
 	
 
 	
-	public BindingsResults getBindings(String query, SparqlObj sparql, EndPoint ep)  {
-		
-		
+	public BindingsResults getBindings(String query, SparqlObj sparql, EndPoint ep)  {	
 		SparqlObj askSparql= sparql;
 		askSparql.setSparql(query);
 		SparqlRequest askquery = new SparqlRequest(askSparql,ep);

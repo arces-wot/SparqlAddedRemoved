@@ -2,6 +2,8 @@ package core.request;
 
 import java.util.HashMap;
 
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 import connector.SparqlRequest;
 import model.TripleBase;
 
@@ -14,9 +16,7 @@ public class JsapMetaSparqlRequest implements IMetaSparqlRequest {
 		String ris = sparql;
 		
 		
-		//La delete DEVE stare prima della insert
-		//dato che il numero aggiuntivo per la generazione delle triple non viene resettato
-		//e in caso di delete con preparazione, tali triple devono fare mach
+		
 		if(needInjeption && triple!=null) {
 			triple.reset();
 			String triples = "";
@@ -49,10 +49,14 @@ public class JsapMetaSparqlRequest implements IMetaSparqlRequest {
 		for (String key : forceBinds.keySet()) {
 			sparql=insertTripleToSparql(sparql,forceBinds.get(key),key,triples);
 		}
-		reqClone.setSparqlStr(sparql);
+		reqClone.setSparqlStr(convertVars(sparql));
 		return reqClone;
 	}
 	
+	private String convertVars(String sparql) {			
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		return sparql.replace("?s","?"+eps.s()).replace("?p","?"+eps.p()).replace("?o","?"+eps.o()).replace("?g","?"+eps.g());
+	}
 	
 	//---------------------------------------GETTERS and SETTERS
 	

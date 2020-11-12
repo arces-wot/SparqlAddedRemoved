@@ -8,8 +8,9 @@ import org.apache.jena.update.UpdateRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import addedremoved.BindingTag;
 import addedremoved.UpdateExtractedData;
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class SPARQLAnalyzer {
 
 	class ToConstructUpdateVisitor extends UpdateVisitorBase {
 		private ArrayList<UpdateExtractedData> results = new ArrayList<UpdateExtractedData>();
-
+		private IEndPointSpecification eps = EpSpecFactory.getInstance();
 		@Override
 		public void visit(UpdateDataInsert updateDataInsert) {//----------------REWORKED
 			//Esempio di update che passa qui: Update del test MT1
@@ -130,14 +131,13 @@ public class SPARQLAnalyzer {
 			HashMap<String,String> deleteStrings=null;
 			
 			if (updateModify.hasDeleteClause() && !updateModify.getDeleteAcc().getQuads().isEmpty()) {				
-				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads());
-				
+				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads());				
 				deleteStrings=cg.getConstructsWithGraphs(updateModify.getWherePattern().toString());				
 			}
 
 			if (updateModify.hasInsertClause() && !updateModify.getInsertAcc().getQuads().isEmpty()) {
 				ConstructGenerator cg = new ConstructGenerator(updateModify.getInsertAcc().getQuads());	
-				insertStrings=cg.getConstructsWithGraphs(updateModify.getWherePattern().toString());		
+				insertStrings=cg.getConstructsWithGraphs("{}");		
 			}
 			
 			if(insertStrings!=null && deleteStrings!=null) {
@@ -169,13 +169,13 @@ public class SPARQLAnalyzer {
 
 		@Override
 		public void visit(UpdateClear update) {
-			String deleteConstruct = "CONSTRUCT { ?"+BindingTag.SUBJECT.toString()
-					+" ?"+BindingTag.PREDICATE.toString()
-					+" ?"+BindingTag.OBJECT.toString()
+			String deleteConstruct = "CONSTRUCT { ?"+eps.s()
+					+" ?"+eps.p()
+					+" ?"+eps.o()
 					+" } WHERE { GRAPH <" + update.getGraph().getURI()
-					+ "> { ?"+BindingTag.SUBJECT.toString()
-					+" ?"+BindingTag.PREDICATE.toString()
-					+" ?"+BindingTag.OBJECT.toString()+" } . }";
+					+ "> { ?"+eps.s()
+					+" ?"+eps.p()
+					+" ?"+eps.o()+" } . }";
 			results.add(new UpdateExtractedData(deleteConstruct, "",update.getGraph().getURI(),""));
 //			result.setRemovedGraph(update.getGraph().getURI());
 //
@@ -184,13 +184,13 @@ public class SPARQLAnalyzer {
 
 		@Override
 		public void visit(UpdateDrop update) {
-			String deleteConstruct = "CONSTRUCT { ?"+BindingTag.SUBJECT.toString()
-					+" ?"+BindingTag.PREDICATE.toString()
-					+" ?"+BindingTag.OBJECT.toString()
+			String deleteConstruct = "CONSTRUCT { ?"+eps.s()
+					+" ?"+eps.p()
+					+" ?"+eps.o()
 					+" } WHERE { GRAPH <" + update.getGraph().getURI()
-					+ "> { ?"+BindingTag.SUBJECT.toString()
-					+" ?"+BindingTag.PREDICATE.toString()
-					+" ?"+BindingTag.OBJECT.toString()+" } . }";
+					+ "> { ?"+eps.s()
+					+" ?"+eps.p()
+					+" ?"+eps.o()+" } . }";
 			results.add(new UpdateExtractedData(deleteConstruct, "",update.getGraph().getURI(),""));
 //			result.setRemovedGraph(update.getGraph().getURI());
 //
@@ -199,10 +199,10 @@ public class SPARQLAnalyzer {
 
 		@Override
 		public void visit(UpdateCopy update) {
-			String deleteConstruct = "CONSTRUCT { ?"+BindingTag.SUBJECT.toString()+" ?"+BindingTag.PREDICATE.toString()+" ?"+BindingTag.OBJECT.toString()+" } WHERE { GRAPH <" + update.getDest().getGraph().getURI()
-					+ "> { ?"+BindingTag.SUBJECT.toString()+" ?"+BindingTag.PREDICATE.toString()+" ?"+BindingTag.OBJECT.toString()+" } . }";
-			String insertConstruct = "CONSTRUCT { ?"+BindingTag.SUBJECT.toString()+" ?"+BindingTag.PREDICATE.toString()+" ?"+BindingTag.OBJECT.toString()+" } WHERE { GRAPH <" + update.getSrc().getGraph().getURI()
-					+ "> { ?"+BindingTag.SUBJECT.toString()+" ?"+BindingTag.PREDICATE.toString()+" ?"+BindingTag.OBJECT.toString()+" } . }";
+			String deleteConstruct = "CONSTRUCT { ?"+eps.s()+" ?"+eps.p()+" ?"+eps.o()+" } WHERE { GRAPH <" + update.getDest().getGraph().getURI()
+					+ "> { ?"+eps.s()+" ?"+eps.p()+" ?"+eps.o()+" } . }";
+			String insertConstruct = "CONSTRUCT { ?"+eps.s()+" ?"+eps.p()+" ?"+eps.o()+" } WHERE { GRAPH <" + update.getSrc().getGraph().getURI()
+					+ "> { ?"+eps.s()+" ?"+eps.p()+" ?"+eps.o()+" } . }";
 			results.add(new UpdateExtractedData(deleteConstruct, insertConstruct,update.getDest().getGraph().getURI(),update.getSrc().getGraph().getURI()));
 //			result.setGraph(update.getDest().getGraph().getURI());
 //
@@ -211,10 +211,10 @@ public class SPARQLAnalyzer {
 
 		@Override
 		public void visit(UpdateAdd update) {
-			String insertConstruct = "CONSTRUCT { ?"+BindingTag.SUBJECT.toString()+" ?"+BindingTag.PREDICATE.toString()+" ?"+BindingTag.OBJECT.toString()+" } WHERE { GRAPH <" + update.getDest().getGraph().getURI()
-					+ "> { ?"+BindingTag.SUBJECT.toString()+" ?"+BindingTag.PREDICATE.toString()+" ?"+BindingTag.OBJECT.toString()+" } . }";
+			String insertConstruct = "CONSTRUCT { ?"+eps.s()+" ?"+eps.p()+" ?"+eps.o()+" } WHERE { GRAPH <" + update.getDest().getGraph().getURI()
+					+ "> { ?"+eps.s()+" ?"+eps.p()+" ?"+eps.o()+" } . }";
 			results.add(new UpdateExtractedData("", insertConstruct,"",update.getDest().getGraph().getURI()));
-//			result.setAddedGraph(update.getDest().getGraph()?"+BindingTag.PREDICATE.toString()+"etURI());
+//			result.setAddedGraph(update.getDest().getGraph()?"+eps.p()+"etURI());
 //
 			System.out.println("8");
 		}

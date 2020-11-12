@@ -31,7 +31,8 @@
 			}
 		}
 	},
-	"extended": {
+	"extended": {	
+		eps: VIRTUOSO,
 		"tests": {
 			"UpdateDataInsert" : {
 				"PreUpdateLink": "INSERT_DATA_1",

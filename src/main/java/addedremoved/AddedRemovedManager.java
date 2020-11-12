@@ -13,6 +13,7 @@ import org.apache.jena.sparql.syntax.ElementTriplesBlock;
 import com.google.gson.JsonObject;
 
 import addedremoved.ask.AsksAsSelectExistsList;
+import addedremoved.ask.AsksAsSelectGraphAsVar;
 import addedremoved.ask.IAsk;
 import addedremoved.construct.SPARQLAnalyzer;
 import connector.SparqlRequest;
@@ -175,8 +176,20 @@ public class AddedRemovedManager {
 				}			
 				tm1.stop();	
 				
-				TestMetric tm2 = new TestMetric("ASKs");
+	
+//				TestMetric tm3 = new TestMetric("ASKsAsSelectGraphAsVar");				
+//				tm3.start();
+//				IAsk asks2= new AsksAsSelectGraphAsVar(Cloner.deepCopy(constructsList), sparql, ep);
+//				constructsList=asks2.filter();
+//				tm3.stop();
+//				
+//				TestMetric tm2 = new TestMetric("ASKsAsSelectExistsList");
+//				tm2.start();
+//				IAsk asks= new AsksAsSelectExistsList(constructsList, sparql, ep);
+//				constructsList=asks.filter();
+//				tm2.stop();
 				
+				TestMetric tm2 = new TestMetric("ASKs");
 				tm2.start();
 				IAsk asks= new AsksAsSelectExistsList(constructsList, sparql, ep);
 				constructsList=asks.filter();
@@ -184,6 +197,7 @@ public class AddedRemovedManager {
 				
 				m.add(tm1);
 				m.add(tm2);
+//				m.add(tm3);
 				return constructsList;
 			}
 			

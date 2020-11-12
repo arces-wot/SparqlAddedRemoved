@@ -100,3 +100,13 @@ test per confrontare anche su Blazegraph le due tipologie (più gettonate) di Se
 Risulta dunque che la differenza netta tra le due è solo su Virtuoso (dal test AskVsSelect.json) possiamo notare che
 su virtuoso questa tipologia di Select1 impiega svariati secondi, invece su Blazegraph impiega decine di ms
 risulta comunque più veloce la Select4
+
+
+################ 5MT_Select4_T512_blazegraph.json
+test su blazegraph (tramite post) con 512Triple su tutti e 5 i meta test su singolo grafo, usando la tipologia di ask "SelectExistsList"
+
+################ output.blazegraph ed output.virtuoso.json
+due test identici effettuati su virtuoso e su blazegraph per confrontare i due entpoint,
+differenze tra i due: alcuni tipi di AsksAsSelect funzionano bene su blazegraph (<50ms) quando su virtuoso no (>3s)
+vi sono dettagli sulla sintassi di sparql che danno fastidio a blazegraph e non a virtuoso e viceversa
+(ancora non è stata fixata la post su virtuoso, dunque i test hanno poche triple)
