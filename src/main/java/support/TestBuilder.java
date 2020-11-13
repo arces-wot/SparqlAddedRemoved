@@ -9,7 +9,7 @@ import model.TripleBase;
 
 public class TestBuilder {
 
-	public static SingleTest build(MetaTest meta,int triplesNumber) {
+	public static SingleTest build(MetaTest meta,int triplesNumber) throws CloneNotSupportedException {
 		
 		SparqlRequest update = meta.getUpdate().generate(triplesNumber);
 		

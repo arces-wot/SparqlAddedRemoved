@@ -21,7 +21,7 @@ public class ConstructGenerator {
 	public ConstructGenerator(List<Quad> quadList) {
 		for(Quad q :quadList) {
 			this.add(q.getGraph().getURI(),q.asTriple());
-		}
+		}		
 	}
 	
 	public void add(String graph,Triple t) {

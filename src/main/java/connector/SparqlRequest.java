@@ -55,10 +55,12 @@ public class SparqlRequest implements ISparqlRequest{
 	}
 
 
-	public SparqlRequest clone() {
-		return new SparqlRequest(sparql.clone(),endPointHost.clone());
-	}
-	
+	public SparqlRequest clone() throws CloneNotSupportedException{  
+		SparqlRequest clone = new SparqlRequest(sparql.clone(),endPointHost.clone());
+		clone.setTimeOut(timeOut);
+		return clone;  
+	}  
+		  
 
 	
 	public Response execute() {	

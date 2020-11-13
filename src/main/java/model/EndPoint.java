@@ -1,7 +1,6 @@
 package model;
-import java.util.Set;
 
-public class EndPoint {
+public class EndPoint implements Cloneable{
 
 	private  String host;
 	private int port;
@@ -58,8 +57,9 @@ public class EndPoint {
 		this.authorization = authorization;
 	}
 	
-	public EndPoint clone() {
-		return new EndPoint(scheme,host,port, path,authorization);
-	}
+	public EndPoint clone()throws CloneNotSupportedException{  
+		return (EndPoint)super.clone();  
+	}  
+		  
 	
 }

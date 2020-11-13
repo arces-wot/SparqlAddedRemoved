@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import com.google.gson.JsonObject;
 
 import addedremoved.UpdateExtractedData;
+import addedremoved.epspec.EpSpecFactory;
+import addedremoved.epspec.IEndPointSpecification;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
+import it.unibo.arces.wot.sepa.commons.sparql.RDFTermURI;
 import model.TestMetric;
 import model.TestResult;
 
@@ -17,24 +20,69 @@ public class Inspector {
 	}
 	
 	public static boolean areEq(BindingsResults res1,BindingsResults res2) {
-		if(getCount(res1)==getCount(res2)) {
+		if(getCount(res1)==getCount(res2)) {			
 			if(res1!=null && res2!=null){
-				for (Bindings bind : res1.getBindings()) {
-					if(!res2.contains(bind)) {
-						return false;
+				IEndPointSpecification eps = EpSpecFactory.getInstance();
+				if(res1.getVariables().contains(eps.g()) && res2.getVariables().contains(eps.g())){
+					//hanno la var g entrambi
+					for (Bindings bind : res1.getBindings()) {
+						if(!res2.contains(bind)) {
+							return false;
+						}
 					}
-				}
-				for (Bindings bind : res2.getBindings()) {
-					if(!res1.contains(bind)) {
-						return false;
+					for (Bindings bind : res2.getBindings()) {
+						if(!res1.contains(bind)) {
+							return false;
+						}
 					}
-				}
+				}else {
+					for (Bindings bind1 : res1.getBindings()) {
+						boolean found=false;
+						for (Bindings bind2 : res2.getBindings()) {								
+								if(
+										bind1.getValue(eps.s()).compareTo(bind2.getValue(eps.s()))==0 
+										&& bind1.getValue(eps.p()).compareTo(bind2.getValue(eps.p()))==0 
+										&& bind1.getValue(eps.o()).compareTo(bind2.getValue(eps.o()))==0
+									) {
+									
+									found=true;
+									break;
+									
+								}
+						}
+						if(!found) {
+							return false;
+						}
+					}		
+					for (Bindings bind1 : res2.getBindings()) {
+						boolean found=false;
+						for (Bindings bind2 : res1.getBindings()) {								
+								if(
+										bind1.getValue(eps.s()).compareTo(bind2.getValue(eps.s()))==0 
+										&& bind1.getValue(eps.p()).compareTo(bind2.getValue(eps.p()))==0 
+										&& bind1.getValue(eps.o()).compareTo(bind2.getValue(eps.o()))==0
+									) {
+									
+									found=true;
+									break;
+									
+								}
+						}
+						if(!found) {
+							return false;
+						}
+					}	
+				}				
 			}			
 			return true;
 		}else {
 			return false;
 		}
 	}
+	
+
+
+	
 	private static int getCount(BindingsResults res) {
 			if(res==null) {
 				return 0;
@@ -51,7 +99,6 @@ public class Inspector {
 		//System.out.println("getOuterJoinA size: "+ris.size());
 		return ris;
 	}
-	
 	
 	private BindingsResults askForDelete; 	//removed
 	private BindingsResults askForInsert;	//added
@@ -134,9 +181,9 @@ public class Inspector {
 			
 			if(constructs.getRemoved()!=null) {
 				if(	this.askForDelete ==null) {
-					this.askForDelete = new BindingsResults(constructs.getRemoved());
+					this.askForDelete = new BindingsResults(constructs.addRemovedGraphVar());
 				}else {
-					for (Bindings bind : constructs.getRemoved().getBindings()) {
+					for (Bindings bind : constructs.addRemovedGraphVar().getBindings()) {
 						this.askForDelete.add(bind);	
 					}
 				}
@@ -144,9 +191,9 @@ public class Inspector {
 		
 			if(constructs.getAdded()!=null) {
 				if(	this.askForInsert ==null) {
-					this.askForInsert = new BindingsResults(constructs.getAdded());
+					this.askForInsert = new BindingsResults(constructs.addAddedGraphVar());
 				}else {
-					for (Bindings bind : constructs.getAdded().getBindings()) {
+					for (Bindings bind : constructs.addAddedGraphVar().getBindings()) {
 						this.askForInsert.add(bind);	
 					}
 				}
@@ -177,17 +224,11 @@ public class Inspector {
 		return queryAfterNormalUpdate;
 	}
 
-	public void setQueryAfterNormalUpdate(BindingsResults queryAfterNormalUpdate) {
+	public void setQueryAfterNormalUpdate(BindingsResults queryAfterNormalUpdate) {		
 		this.queryAfterNormalUpdate = queryAfterNormalUpdate;
+		
 	}
 
-//	public BindingsResults getQueryAfterFirstRollBack() {
-//		return queryAfterFirstRollBack;
-//	}
-//
-//	public void setQueryAfterFirstRollBack(BindingsResults queryAfterFirstRollBack) {
-//		this.queryAfterFirstRollBack = queryAfterFirstRollBack;
-//	}
 
 	public BindingsResults getQueryAfterInsertDell() {
 		return queryAfterInsertDell;
@@ -195,6 +236,10 @@ public class Inspector {
 
 	public void setQueryAfterInsertDell(BindingsResults queryAfterInsertDell) {
 		this.queryAfterInsertDell = queryAfterInsertDell;
+	
 	}
+
+
+	
 	
 }

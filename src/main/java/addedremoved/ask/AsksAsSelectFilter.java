@@ -212,19 +212,20 @@ public class AsksAsSelectFilter implements IAsk{
 			
 			if(constructs.needInsert() && alredyExistFilter.containsKey(graph) ){
 				constructs.removeBingingFromAddedList(alredyExistFilter.get(graph)); 
-
 				alredyExistFilter.remove(graph);
 			}	
 			
 			graph = constructs.getRemovedGraph();
 			
-			if(realRemovedEGFilter.containsKey(graph)) {
-				constructs.setRemoved(realRemovedEGFilter.get(graph));
-				
-				realRemovedEGFilter.remove(graph);
-			}else {
-				constructs.clearRemoved();
+			if(constructs.needDelete()) {
+				if(realRemovedEGFilter.containsKey(graph)) {
+					constructs.setRemoved(realRemovedEGFilter.get(graph));				
+					realRemovedEGFilter.remove(graph);
+				}else {
+					constructs.clearRemoved();
+				}
 			}
+		
 			
 		}
 

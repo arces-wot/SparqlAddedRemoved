@@ -218,19 +218,20 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 			
 			if(constructs.needInsert() && alredyExist.containsKey(graph) ){
 				constructs.removeBingingFromAddedList(alredyExist.get(graph)); 
-
 				alredyExist.remove(graph);
 			}	
 			
 			graph = constructs.getRemovedGraph();
 			
-			if(realRemoved.containsKey(graph)) {
-				constructs.setRemoved(realRemoved.get(graph));
-				
-				realRemoved.remove(graph);
-			}else {
-				constructs.clearRemoved();
+			if(constructs.needDelete()) {
+				if(realRemoved.containsKey(graph)) {
+					constructs.setRemoved(realRemoved.get(graph));				
+					realRemoved.remove(graph);
+				}else {
+					constructs.clearRemoved();
+				}
 			}
+			
 			
 		}
 		

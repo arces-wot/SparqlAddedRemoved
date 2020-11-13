@@ -31,8 +31,8 @@
 			}
 		}
 	},
-	"extended": {	
-		eps: BLAZEGRAPH,
+	"extended": {
+		eps: VIRTUOSO,
 		"tests": {
 			"UpdateDataInsert" : {
 				"PreUpdateLink": "INSERT_DATA_1",
@@ -40,10 +40,54 @@
 				"UpdateLink" : "INSERT_DATA_1",
 				"RollbackLink" : "DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 4,
-				"Reiteration": 3,
+				"Pot" : 6,
+				"Reiteration": 0,
 				"AskTestEnable": true,
 				"PreparationPercentage":0
+				},	
+			"UpdateDeleteWhere" : {
+				"PreUpdateLink": "INSERT_DATA_1",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "DELETE_WHERE_1",
+				"RollbackLink" : "INSERT_DATA_1",
+				"QueryLink": "QUERY_1",
+				"Pot" : 6,
+				"Reiteration": 0,
+				"AskTestEnable": true,
+				"PreparationPercentage":100
+				},	
+			"UpdateModify" : {
+				"PreUpdateLink": "INSERT_DATA_2",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "INSERT_DELETE_1",
+				"RollbackLink" : "INSERT_DELETE_2",
+				"QueryLink": "QUERY_1",
+				"Pot" : 6,
+				"Reiteration": 0,
+				"AskTestEnable": true,
+				"PreparationPercentage":100 
+				},
+			"UpdateDataDelete" : {
+				"PreUpdateLink": "INSERT_DATA_1",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "DELETE_DATA_1",
+				"RollbackLink" : "INSERT_DATA_1",
+				"QueryLink": "QUERY_1",
+				"Pot" : 6,
+				"Reiteration": 0,
+				"AskTestEnable": true,
+				"PreparationPercentage":100 
+				},
+			"UpdateModify2" : {
+				"PreUpdateLink": "INSERT_DATA_2",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "INSERT_DELETE_WHERE_2",
+				"RollbackLink" : "INSERT_DELETE_WHERE_1",
+				"QueryLink": "QUERY_1",
+				"Pot" : 6,
+				"Reiteration": 1,
+				"AskTestEnable": true,
+				"PreparationPercentage":100 
 				}
 		}
 	},
@@ -58,21 +102,14 @@
 			"sparql":"
 					INSERT DATA  {  
 						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> { 
-							?tripleBaseInsert0
-						}
-						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph1> { 
-							?tripleBaseInsert1
+							?tripleBaseInsert
 						}
 					}					
 				",
 				"forcedBindings": {
-					"tripleBaseInsert0": {
+					"tripleBaseInsert": {
 						"type": "literal",
-						"value": "<http://www.unibo.it/Student0__X__> ub:memberOf <http://www.unibo.it>"
-					},
-					"tripleBaseInsert1": {
-						"type": "literal",
-						"value": "<http://www.unibo.it/Student1__X__> ub:memberOf <http://www.unibo.it>"
+						"value": "<http://www.unibo.it/Student__X__> ub:memberOf <http://www.unibo.it>"
 					}
 				}
 		},
@@ -80,25 +117,129 @@
 			"sparql":"
 					DELETE WHERE {
 						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> { 
-							?s1 ub:memberOf <http://www.unibo.it>
-						} 
-						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph1> { 
-							?s2 ub:memberOf <http://www.unibo.it>
+							?s ub:memberOf <http://www.unibo.it>
 						} 
 					}					
 				"
+		},
+		"INSERT_DATA_2": {			
+			"sparql":"
+					INSERT DATA  {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> { 
+							?tripleBaseInsert
+						}
+					}					
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_A__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"INSERT_DELETE_1": {			
+			"sparql":"
+					DELETE {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+						?tripleBaseDelete
+					} } INSERT {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+						?tripleBaseInsert
+					} }	WHERE {}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_B__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseDelete": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_A__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"INSERT_DELETE_2": {			
+			"sparql":"
+					DELETE {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+						?tripleBaseDelete
+					} } INSERT {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+						?tripleBaseInsert
+					} } WHERE {}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_A__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseDelete": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_B__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"DELETE_DATA_1": {			
+			"sparql":"
+					DELETE DATA { GRAPH  <http://lumb/for.sepa.test/workspace/defaultgraph0> { 
+						?tripleBaseDelete
+					} }				
+				",
+				"forcedBindings": {
+					"tripleBaseDelete": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"INSERT_DELETE_WHERE_1": {			
+			"sparql":"
+					DELETE { 
+					 	GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+							?s ?p ?o
+						} 
+					} INSERT {
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+							?tripleBaseInsert
+						} 
+					} WHERE {		
+						?s ?p ?o .
+						?s ub:memberOf <http://www.unibo.it>
+					}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_A__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"INSERT_DELETE_WHERE_2": {			
+			"sparql":"
+					DELETE {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+							?s ?p ?o
+						} 
+					} INSERT {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+							?tripleBaseInsert
+						} 
+					} WHERE {
+						?s ?p ?o .
+						?s ub:memberOf <http://www.unibo.it>
+					}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_B__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
 		}
 	},
 	"queries": {
 		"QUERY_1": {
 			"sparql": "
-					SELECT ?g ?s ?p ?o
-					FROM NAMED <http://lumb/for.sepa.test/workspace/defaultgraph1>
+					SELECT ?s ?p ?o
 					FROM <http://lumb/for.sepa.test/workspace/defaultgraph0> WHERE {
-						GRAPH ?g {
-							?s ?p ?o .
-							?s ub:memberOf <http://www.unibo.it> .
-						}
+						?s ?p ?o .
+						?s ub:memberOf <http://www.unibo.it> .
 					}		
 					"
 			}

@@ -118,7 +118,7 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 			requestMap.put(id, new JsapMetaSparqlRequest(new SparqlRequest(sparql,endPointHost),forceBinds));
 		}
 		for (String  id : jsap.getQueryIds()) {
-			String sparqlStr = prefixs+jsap.getSPARQLQuery(id);
+			String sparqlStr = prefixs+covnertVar(jsap.getSPARQLQuery(id),id);
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
 			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/query");	
 			HashMap<String,TripleBase> forceBinds = new HashMap<String,TripleBase>();
@@ -132,6 +132,21 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		return requestMap;
 	}
 	
+	
+	private String covnertVar(String sparqlStr, String id) {
+		boolean sFound = sparqlStr.contains("?s");
+		boolean pFound = sparqlStr.contains("?p");
+		boolean oFound = sparqlStr.contains("?o");
+		if((!sFound || !pFound || !oFound)) {
+			System.out.println("Warning on query id["+id+"], JSAP query need have ?s, ?p and ?o variables.");
+			return sparqlStr;
+		}else {
+			IEndPointSpecification eps = EpSpecFactory.getInstance();
+			return sparqlStr.replace("?s", "?"+eps.s()).replace("?p", "?"+eps.p()).replace("?o", "?"+eps.o());
+		}
+		
+		
+	}
 	
 	//-------------------------------------GETTERS and SETTERS
 	

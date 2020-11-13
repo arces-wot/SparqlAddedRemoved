@@ -67,7 +67,8 @@ public class Asks implements IAsk{
 				if(!isPresent){
 					constructs.removeBingingFromRemovedList(bindings);
 				}
-			}		
+			}	
+			
 		}
 		return ueds;
 	}

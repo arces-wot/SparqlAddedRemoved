@@ -11,6 +11,7 @@ import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.response.Response;
 import model.TestMetric;
 import model.TestResult;
+import support.Environment;
 
 public class SingleTest implements ITest {
 
@@ -74,6 +75,9 @@ public class SingleTest implements ITest {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				pahes2Err=true;
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			if(!pahes2Err) {
 				try {
@@ -138,7 +142,7 @@ public class SingleTest implements ITest {
 			Response ris_Query =query.execute();
 			phase5.stop(ris_Query.isError());
 			phases.add(phase5);			
-			inspector.setQueryAfterNormalUpdate(((QueryResponse)ris_Query).getBindingsResults());
+			inspector.setQueryAfterInsertDell(((QueryResponse)ris_Query).getBindingsResults());
 		
 			//------------------------------------------------------------Phase 6
 			//-----------ROLLBACK
@@ -163,7 +167,7 @@ public class SingleTest implements ITest {
 			Response ris_Query_2 = query.execute();
 			phase8.stop(ris_Query_2.isError());
 			phases.add(phase8);			
-			inspector.setQueryAfterInsertDell(((QueryResponse)ris_Query_2).getBindingsResults());
+			inspector.setQueryAfterNormalUpdate(((QueryResponse)ris_Query_2).getBindingsResults());
 			
 			//------------------------------------------------------------Phase 9
 			//-----------ROLLBACK

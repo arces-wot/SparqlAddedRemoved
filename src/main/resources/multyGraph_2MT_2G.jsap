@@ -40,10 +40,10 @@
 				"UpdateLink" : "INSERT_DATA_1",
 				"RollbackLink" : "DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 0,
+				"Pot" : 4,
+				"Reiteration": 5,
 				"AskTestEnable": true,
-				"PreparationPercentage":0
+				"PreparationPercentage":100
 				},	
 			"UpdateDeleteWhere" : {
 				"PreUpdateLink": "INSERT_DATA_1",
@@ -51,8 +51,8 @@
 				"UpdateLink" : "DELETE_WHERE_1",
 				"RollbackLink" : "INSERT_DATA_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 0,
+				"Pot" : 4,
+				"Reiteration": 5,
 				"AskTestEnable": true,
 				"PreparationPercentage":100
 				},	
@@ -62,8 +62,8 @@
 				"UpdateLink" : "INSERT_DELETE_1",
 				"RollbackLink" : "INSERT_DELETE_2",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 0,
+				"Pot" : 4,
+				"Reiteration": 5,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				},
@@ -73,8 +73,8 @@
 				"UpdateLink" : "DELETE_DATA_1",
 				"RollbackLink" : "INSERT_DATA_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 0,
+				"Pot" : 4,
+				"Reiteration": 5,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				},
@@ -84,8 +84,8 @@
 				"UpdateLink" : "INSERT_DELETE_WHERE_2",
 				"RollbackLink" : "INSERT_DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 1,
+				"Pot" : 4,
+				"Reiteration": 5,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				}
@@ -190,16 +190,11 @@
 		},
 		"INSERT_DELETE_WHERE_1": {			
 			"sparql":"
-					DELETE { 
-					 	GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
-							?s ?p ?o
-						} 
-					} INSERT {
-						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
-							?tripleBaseInsert
-						} 
-					} WHERE {		
-						?s ?p ?o .
+					DELETE {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+						?s ?p ?o
+					} } INSERT {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+						?tripleBaseInsert
+					} } WHERE {
 						?s ub:memberOf <http://www.unibo.it>
 					}
 				",
@@ -212,16 +207,11 @@
 		},
 		"INSERT_DELETE_WHERE_2": {			
 			"sparql":"
-					DELETE {  
-						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
-							?s ?p ?o
-						} 
-					} INSERT {  
-						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
-							?tripleBaseInsert
-						} 
-					} WHERE {
-						?s ?p ?o .
+					DELETE {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+						?s ?p ?o
+					} } INSERT {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+						?tripleBaseInsert
+					} } WHERE {
 						?s ub:memberOf <http://www.unibo.it>
 					}
 				",

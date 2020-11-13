@@ -130,8 +130,18 @@ public class UpdateExtractedData {
 	public void setRemoved(BindingsResults removed) {
 		this.removed = removed;
 	}
-
-
+	
+	
+	public BindingsResults addRemovedGraphVar() {
+		if(this.removed==null) {
+			return null;
+		}
+		for(Bindings bind : this.removed.getBindings()) {
+			bind.addBinding(EpSpecFactory.getInstance().g(), new RDFTermURI(this.removedGraph));	
+		}
+		return this.removed;
+	}
+	
 	public String getAddedGraph() {
 		return addedGraph;
 	}
@@ -186,12 +196,23 @@ public class UpdateExtractedData {
 		if(this.added !=null) {
 			for (Bindings b : bindings.getBindings()) {
 				this.added.remove(b);
-			}
+			}			
 		}else {
 			System.out.println("Warning: added BindingResult is null");
 		}
 	}
 	
+	
+	
+	public BindingsResults addAddedGraphVar() {
+		if(this.added==null) {
+			return null;
+		}
+		for(Bindings bind : this.added.getBindings()) {
+			bind.addBinding(EpSpecFactory.getInstance().g(), new RDFTermURI(this.addedGraph));	
+		}
+		return this.added;
+	}
 	
 	public void clearRemoved() {
 		removed=null;

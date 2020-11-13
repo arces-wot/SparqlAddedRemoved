@@ -43,9 +43,9 @@ public class JsapMetaSparqlRequest implements IMetaSparqlRequest {
 	}
 	
 	
-	public SparqlRequest generate(int triples) {
+	public SparqlRequest generate(int triples) throws CloneNotSupportedException {
 		SparqlRequest reqClone=req.clone();
-		String sparql = req.getSparql().getSparqlString();
+		String sparql = reqClone.getSparql().getSparqlString();
 		for (String key : forceBinds.keySet()) {
 			sparql=insertTripleToSparql(sparql,forceBinds.get(key),key,triples);
 		}

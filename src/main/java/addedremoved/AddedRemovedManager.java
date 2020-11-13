@@ -69,9 +69,11 @@ public class AddedRemovedManager {
 				insert+="}";
 				
 				if(needInsert) {
-					SparqlObj sparql= originalUpdate.getSparql();	
+					SparqlObj sparql= originalUpdate.getSparql().clone();	
 					sparql.setSparql(insert);			
-					return new SparqlRequest(sparql,originalUpdate.getEndPointHost());
+					EndPoint ep =originalUpdate.getEndPointHost().clone();
+					ep.setPath("/update");
+					return new SparqlRequest(sparql,ep);
 				}else {
 					return null;
 				}
@@ -116,9 +118,11 @@ public class AddedRemovedManager {
 				delete+="}";
 				
 				if(needDelete) {
-					SparqlObj sparql= originalUpdate.getSparql();
-					sparql.setSparql(delete);				
-					return new SparqlRequest(sparql,originalUpdate.getEndPointHost());
+					SparqlObj sparql= originalUpdate.getSparql().clone();
+					sparql.setSparql(delete);		
+					EndPoint ep =originalUpdate.getEndPointHost().clone();
+					ep.setPath("/update");
+					return new SparqlRequest(sparql,ep);
 				}else {
 					return null;
 				}
@@ -129,16 +133,16 @@ public class AddedRemovedManager {
 			
 		
 			
-			public static ArrayList<UpdateExtractedData> getAddedRemovedFrom(SparqlRequest req,ArrayList<TestMetric> m) throws SEPABindingsException {
+			public static ArrayList<UpdateExtractedData> getAddedRemovedFrom(SparqlRequest req,ArrayList<TestMetric> m) throws SEPABindingsException, CloneNotSupportedException {
 				
-					EndPoint endPointforQuery= req.getEndPointHost();
+					EndPoint endPointforQuery= req.getEndPointHost().clone();
 					endPointforQuery.setPath("/query");
-					return getAddedRemovedFrom(req.getSparql(),endPointforQuery, m);	
+					return getAddedRemovedFrom(req.getSparql().clone(),endPointforQuery, m);	
 			
 			}
 	
 			
-			public static ArrayList<UpdateExtractedData>  getAddedRemovedFrom(SparqlObj sparql, EndPoint ep, ArrayList<TestMetric> m) throws SEPABindingsException {
+			private static ArrayList<UpdateExtractedData>  getAddedRemovedFrom(SparqlObj sparql, EndPoint ep, ArrayList<TestMetric> m) throws SEPABindingsException, CloneNotSupportedException {
 				TestMetric tm1 = new TestMetric("Constructs");	
 				
 				tm1.start();
@@ -154,7 +158,7 @@ public class AddedRemovedManager {
 						String dc = constructs.getDeleteConstruct();
 						if (dc.length() > 0) {		
 							//System.out.println("DC-->"+dc+"\n\n");		
-							SparqlObj getRemovedSparql =sparql; // sparql.clone();
+							SparqlObj getRemovedSparql = sparql.clone();
 							getRemovedSparql.setSparql(dc);
 							constructs.setRemoved(((QueryResponse) new SparqlRequest(getRemovedSparql,ep).execute()).getBindingsResults());
 						}else {
@@ -164,7 +168,7 @@ public class AddedRemovedManager {
 						String ac = constructs.getInsertConstruct();
 						if (ac.length() > 0) {
 							//System.out.println("AC-->"+ac+"\n\n");
-							SparqlObj getAddedSparql =sparql ;// sparql.clone();
+							SparqlObj getAddedSparql = sparql.clone();
 							getAddedSparql.setSparql(ac);
 							// System.out.println("-->"+new SparqlRequest(getAddedSparql,ep).execute().toString());
 							constructs.setAdded(((QueryResponse) new SparqlRequest(getAddedSparql,ep).execute()).getBindingsResults());							
@@ -191,7 +195,7 @@ public class AddedRemovedManager {
 				
 				TestMetric tm2 = new TestMetric("ASKs");
 				tm2.start();
-				IAsk asks= new AsksAsSelectExistsList(constructsList, sparql, ep);
+				IAsk asks= new AsksAsSelectExistsList(constructsList, sparql.clone(), ep);
 				constructsList=asks.filter();
 				tm2.stop();
 				

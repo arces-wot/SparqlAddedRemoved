@@ -59,9 +59,9 @@ public class MetaSparqlRequest implements IMetaSparqlRequest {
 	}
 	
 	
-	public SparqlRequest generate(int triples) {
+	public SparqlRequest generate(int triples) throws CloneNotSupportedException {
 		SparqlRequest reqClone=req.clone();
-		reqClone.setSparqlStr(insertTripleToSparql(req.getSparql().getSparqlString(),tripleInsert,tripleDelete,triples));
+		reqClone.setSparqlStr(insertTripleToSparql(reqClone.getSparql().getSparqlString(),tripleInsert,tripleDelete,triples));
 		return reqClone;
 	}
 	

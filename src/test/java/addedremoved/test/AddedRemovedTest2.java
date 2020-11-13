@@ -54,6 +54,9 @@ public class AddedRemovedTest2 {
 		} catch (SEPABindingsException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		if(constructs!=null) {
 			try {
@@ -426,6 +429,9 @@ public class AddedRemovedTest2 {
 		} catch (SEPABindingsException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		if(constructs!=null) {
 			try {

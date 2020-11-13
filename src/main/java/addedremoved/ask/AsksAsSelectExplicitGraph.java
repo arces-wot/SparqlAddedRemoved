@@ -233,12 +233,15 @@ public class AsksAsSelectExplicitGraph implements IAsk{
 			
 			graph = constructs.getRemovedGraph();
 			
-			if(realRemovedEG.containsKey(graph)) {
-				constructs.setRemoved(realRemovedEG.get(graph));				
-				realRemovedEG.remove(graph);
-			}else {
-				constructs.clearRemoved();
+			if(constructs.needDelete()) {				
+				if(realRemovedEG.containsKey(graph)) {
+					constructs.setRemoved(realRemovedEG.get(graph));				
+					realRemovedEG.remove(graph);
+				}else {
+					constructs.clearRemoved();
+				}
 			}
+		
 			
 		}
 		return ueds;

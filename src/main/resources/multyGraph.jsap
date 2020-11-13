@@ -32,7 +32,7 @@
 		}
 	},
 	"extended": {	
-		eps: VIRTUOSO,
+		eps: BLAZEGRAPH,
 		"tests": {
 			"UpdateDataInsert" : {
 				"PreUpdateLink": "INSERT_DATA_1",
@@ -40,11 +40,22 @@
 				"UpdateLink" : "INSERT_DATA_1",
 				"RollbackLink" : "DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 4,
+				"Pot" : 8,
 				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":0
-				}
+			},
+			"UpdateModify" : {
+				"PreUpdateLink": "INSERT_DATA_1",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "INSERT_DATA_1",
+				"RollbackLink" : "DELETE_WHERE_1",
+				"QueryLink": "QUERY_1",
+				"Pot" : 8,
+				"Reiteration": 3,
+				"AskTestEnable": true,
+				"PreparationPercentage":0
+			}
 		}
 	},
 	"graphs": {
@@ -76,6 +87,102 @@
 					}
 				}
 		},
+		"INSERT_DATA_2": {			
+			"sparql":"
+					INSERT DATA  {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> { 
+							?tripleBaseInsert0
+						},
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph1> { 
+							?tripleBaseInsert1
+						}
+					}					
+				",
+				"forcedBindings": {
+					"tripleBaseInsert0": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student0_A__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseInsert1": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student1_A__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}		
+		},		
+		"INSERT_DELETE_1": {			
+			"sparql":"
+					DELETE {  	
+								GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+									?tripleBaseDelete0
+								},
+								GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph1>  {
+									?tripleBaseDelete1
+								} 
+					}INSERT {  
+								GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+									?tripleBaseInsert0
+								},
+								GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph1> {
+									?tripleBaseInsert1
+								} 
+					}WHERE {}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert0": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student0_B__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseDelete0": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student0_A__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseInsert1": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student1_B__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseDelete1": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student1_A__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"INSERT_DELETE_2": {			
+			"sparql":"
+					DELETE {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+							?tripleBaseDelete0
+						},
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph1>  {
+							?tripleBaseDelete1
+						}  
+					}INSERT {
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+							?tripleBaseInsert0
+						},
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph1> {
+							?tripleBaseInsert1
+						}
+					}WHERE {}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert0": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student0_A__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseDelete0": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student0_B__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseInsert1": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student1_A__X__> ub:memberOf <http://www.unibo.it>"
+					},
+					"tripleBaseDelete1": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student1_B__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
 		"DELETE_WHERE_1": {			
 			"sparql":"
 					DELETE WHERE {
@@ -94,7 +201,7 @@
 			"sparql": "
 					SELECT ?g ?s ?p ?o
 					FROM NAMED <http://lumb/for.sepa.test/workspace/defaultgraph1>
-					FROM <http://lumb/for.sepa.test/workspace/defaultgraph0> WHERE {
+					FROM NAMED <http://lumb/for.sepa.test/workspace/defaultgraph0> WHERE {
 						GRAPH ?g {
 							?s ?p ?o .
 							?s ub:memberOf <http://www.unibo.it> .

@@ -158,19 +158,19 @@ public class AsksAsSelectExistsList implements IAsk{
 			
 			if(constructs.needInsert() && alredyExist_E.containsKey(graph) ){
 				constructs.removeBingingFromAddedList(alredyExist_E.get(graph)); 
-
 				alredyExist_E.remove(graph);
 			}	
 			
 			graph = constructs.getRemovedGraph();
-			
-			if(realRemoved_E.containsKey(graph)) {
-				constructs.setRemoved(realRemoved_E.get(graph));
-				
-				realRemoved_E.remove(graph);
-			}else {
-				constructs.clearRemoved();
+			if(constructs.needDelete()) {
+				if(realRemoved_E.containsKey(graph)) {
+					constructs.setRemoved(realRemoved_E.get(graph));				
+					realRemoved_E.remove(graph);
+				}else {
+					constructs.clearRemoved();
+				}
 			}
+		
 			
 		}
 		return ueds;

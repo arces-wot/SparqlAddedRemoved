@@ -1,9 +1,8 @@
 package model;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SparqlObj {
+public class SparqlObj implements Cloneable {
 	private String sparql;
 	private Set<String> default_graph_uri;
 	private Set<String> named_graph_uri;
@@ -44,7 +43,9 @@ public class SparqlObj {
 		this.named_graph_uri = named_graph_uri;
 	}
 	
-	public SparqlObj clone() {
-		return new SparqlObj( sparql,  default_graph_uri,  named_graph_uri);
-	}
+	public SparqlObj clone()throws CloneNotSupportedException{  
+		return (SparqlObj)super.clone();  
+	}  
+		  
+
 }

@@ -70,30 +70,40 @@ public class MetaTest implements ITest {
 			if(monitor!=null) {
 				monitor.start(n,reiteration,metaTestName,preparationPercentage);
 			}
-			//-------------build Test
-			SingleTest actualTest =TestBuilder.build(this, n);
-			//-------------execute Test
-			MetricsAvarage metricAvarage = null;
-			TestMetric general = new TestMetric("Test with " + n + " Triples and " + reiteration + " reiteration.");
-			general.start();
-			for(int x=0;x<reiteration;x++) {
-				TestResult partialResult = actualTest.execute();
-				if(metricAvarage==null){
-					metricAvarage=new MetricsAvarage(partialResult.getPhases());
-				}else{
-					metricAvarage.add(partialResult.getPhases());
+		
+			TestMetric general = new TestMetric("Test with " + n + " Triples and " + reiteration + " reiteration.");			
+			SingleTest actualTest;
+			try {
+				//-------------build Test
+				actualTest = TestBuilder.build(this, n);
+				MetricsAvarage metricAvarage = null;
+				general.start();
+				for(int x=0;x<reiteration;x++) {
+					TestResult partialResult = actualTest.execute();
+					if(metricAvarage==null){
+						metricAvarage=new MetricsAvarage(partialResult.getPhases());
+					}else{
+						metricAvarage.add(partialResult.getPhases());
+					}
+					if(monitor!=null) {
+						monitor.visit(partialResult);
+					}
 				}
+				general.stop();
 				if(monitor!=null) {
-					monitor.visit(partialResult);
+					monitor.visit(metricAvarage.finalizeAndGetAvarage());
+					monitor.end();
 				}
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				general.setError(true);
 			}
-			general.stop();
-			singleTestsTime.add(general);
-			if(monitor!=null) {
-				monitor.visit(metricAvarage.finalizeAndGetAvarage());
-				monitor.end();
-			}
+
 			actualPot++;
+			singleTestsTime.add(general);
+			//-------------execute Test
+		
 		}	
 	
 		return new TestResult(singleTestsTime);
