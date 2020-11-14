@@ -78,7 +78,7 @@ namespace TestViewer
                         + "\nError count: " + count + "\nWarnings count: " + warnings;
                     labelLoadedTest.Text = "Loaded: " + openFileDialog1.SafeFileName;
                     allMetricChart1.loadMetaTest(dictionary.Values.ToList<MetaTestGroup>());
-                    ipotesi1(dictionary);
+                    popolateDataGrid(dictionary);
                 }
                 catch (Exception ex) {
                     Console.WriteLine("Not valid json file: " + ex.Message);
@@ -142,11 +142,11 @@ namespace TestViewer
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            ipotesi1(dictionary);
+            popolateDataGrid(dictionary);
             plotComparison(sender, e);
         }
 
-        private void ipotesi1(Dictionary<String, MetaTestGroup> metaTests)
+        private void popolateDataGrid(Dictionary<String, MetaTestGroup> metaTests)
         {
             dataGridView1.Rows.Clear();
             longName_name = new Dictionary<String, String>();     
@@ -181,9 +181,10 @@ namespace TestViewer
                             if (radioButton1.Checked)
                             {
                                 int med = index / 2;
-                                double temp = construct[med] + asks[med] + insertDelete[med];
-                                double temp2 = construct[med] + asks[med] + update[med];
-                                dataGridView1.Rows.Add(mtr.Name + "_T" + mtr.TripleNumber, update[med], temp, temp2);
+                                double up = update[med];
+                                double cai = construct[med] + asks[med] + insertDelete[med];
+                                double up2 = construct[med] + asks[med] + up;
+                                addRowRounded(mtr.Name + "_T" + mtr.TripleNumber, up, cai, up2);
                             }
                             else
                             {
@@ -196,7 +197,11 @@ namespace TestViewer
                                     cai += construct[x] + asks[x] + insertDelete[x];
                                     up2 += construct[x] + asks[x] + update[x];
                                 }
-                                dataGridView1.Rows.Add(mtr.Name + "_T" + mtr.TripleNumber, up / index, cai / index, up2 / index);
+                                up /= index; //UPDATE
+                                cai /= index; //construct + asks + insert + delte
+                                up2 /= index;//construct + asks + update
+                                addRowRounded(mtr.Name + "_T" + mtr.TripleNumber, up, cai, up2);
+                              
                             }
                             longName_name.Add(mtr.Name + "_T" + mtr.TripleNumber, mtr.Name);
                         }
@@ -216,6 +221,16 @@ namespace TestViewer
             enableComparisonZone(thereAreAllMetricsNeeded);
         }
 
+        private void addRowRounded(String name, double up, double cai, double up2) {
+            dataGridView1.Rows.Add(name,
+                Math.Round(up, 2, MidpointRounding.AwayFromZero),
+                Math.Round(cai, 2, MidpointRounding.AwayFromZero),
+                Math.Round(cai / up, 2, MidpointRounding.AwayFromZero),
+                Math.Round(up2, 2, MidpointRounding.AwayFromZero),
+                Math.Round(up2 / up, 2, MidpointRounding.AwayFromZero)
+                );
+            
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "jsap files (*.jsap)|*.jsap|All files (*.*)|*.*";
@@ -360,6 +375,12 @@ namespace TestViewer
                dataGridView1.Rows[e.RowIndex].Selected = true;
             }
          
+        }
+
+        private void checkBoxOverhead_CheckedChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Columns["OverheadID"].Visible = checkBoxOverhead.Checked;
+            dataGridView1.Columns["OverheadU"].Visible = checkBoxOverhead.Checked;
         }
     }
 }

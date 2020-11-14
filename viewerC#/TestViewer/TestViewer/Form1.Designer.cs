@@ -38,15 +38,13 @@
             this.labelLoadedJsap = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.checkBoxOverhead = new System.Windows.Forms.CheckBox();
+            this.labelUnavailable = new System.Windows.Forms.Label();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.MetaTest = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.update = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.other = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.C4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -69,7 +67,12 @@
             this.allMetricChart1 = new TestViewer.view.AllMetricChart();
             this.labelInfo = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.labelUnavailable = new System.Windows.Forms.Label();
+            this.MetaTest = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.update = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.other = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.overheadID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.C4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OverheadU = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -142,6 +145,7 @@
             this.tabPage5.Controls.Add(this.splitContainer2);
             this.tabPage5.Controls.Add(this.radioButton2);
             this.tabPage5.Controls.Add(this.radioButton1);
+            this.tabPage5.Controls.Add(this.checkBoxOverhead);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -149,6 +153,30 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Comparisons";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverhead
+            // 
+            this.checkBoxOverhead.AutoSize = true;
+            this.checkBoxOverhead.Location = new System.Drawing.Point(90, 7);
+            this.checkBoxOverhead.Name = "checkBoxOverhead";
+            this.checkBoxOverhead.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxOverhead.TabIndex = 14;
+            this.checkBoxOverhead.Text = "Overhead";
+            this.checkBoxOverhead.UseVisualStyleBackColor = true;
+            this.checkBoxOverhead.CheckedChanged += new System.EventHandler(this.checkBoxOverhead_CheckedChanged);
+            // 
+            // labelUnavailable
+            // 
+            this.labelUnavailable.BackColor = System.Drawing.Color.LightGray;
+            this.labelUnavailable.ForeColor = System.Drawing.Color.DarkRed;
+            this.labelUnavailable.Location = new System.Drawing.Point(359, 8);
+            this.labelUnavailable.Name = "labelUnavailable";
+            this.labelUnavailable.Size = new System.Drawing.Size(64, 16);
+            this.labelUnavailable.TabIndex = 13;
+            this.labelUnavailable.Text = "Unavailable... The following metrics are required to see this statistic:\r\n\r\nConst" +
+    "ructs\r\nASKs\r\nExecution insert and delete\r\nExecution normal update";
+            this.labelUnavailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelUnavailable.Visible = false;
             // 
             // checkBox3
             // 
@@ -215,7 +243,9 @@
             this.MetaTest,
             this.update,
             this.other,
-            this.C4});
+            this.overheadID,
+            this.C4,
+            this.OverheadU});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.MultiSelect = false;
@@ -224,30 +254,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(446, 418);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // MetaTest
-            // 
-            this.MetaTest.HeaderText = "MetaTest";
-            this.MetaTest.MinimumWidth = 10;
-            this.MetaTest.Name = "MetaTest";
-            // 
-            // update
-            // 
-            this.update.HeaderText = "t(Update)";
-            this.update.MinimumWidth = 10;
-            this.update.Name = "update";
-            // 
-            // other
-            // 
-            this.other.HeaderText = "t(Constrcut)+t(asks)+t(insert)+t(delete)";
-            this.other.MinimumWidth = 10;
-            this.other.Name = "other";
-            // 
-            // C4
-            // 
-            this.C4.HeaderText = "t(Constrcut)+t(asks)+t(update)";
-            this.C4.MinimumWidth = 10;
-            this.C4.Name = "C4";
             // 
             // chart1
             // 
@@ -507,18 +513,41 @@
             this.tabControl1.Size = new System.Drawing.Size(827, 499);
             this.tabControl1.TabIndex = 2;
             // 
-            // labelUnavailable
+            // MetaTest
             // 
-            this.labelUnavailable.BackColor = System.Drawing.Color.LightGray;
-            this.labelUnavailable.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelUnavailable.Location = new System.Drawing.Point(359, 8);
-            this.labelUnavailable.Name = "labelUnavailable";
-            this.labelUnavailable.Size = new System.Drawing.Size(64, 16);
-            this.labelUnavailable.TabIndex = 13;
-            this.labelUnavailable.Text = "Unavailable... The following metrics are required to see this statistic:\r\n\r\nConst" +
-    "ructs\r\nASKs\r\nExecution insert and delete\r\nExecution normal update";
-            this.labelUnavailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelUnavailable.Visible = false;
+            this.MetaTest.HeaderText = "MetaTest";
+            this.MetaTest.MinimumWidth = 10;
+            this.MetaTest.Name = "MetaTest";
+            // 
+            // update
+            // 
+            this.update.HeaderText = "t(Update)";
+            this.update.MinimumWidth = 10;
+            this.update.Name = "update";
+            // 
+            // other
+            // 
+            this.other.HeaderText = "t(Constrcut)+t(asks)+t(insert)+t(delete)";
+            this.other.MinimumWidth = 10;
+            this.other.Name = "other";
+            // 
+            // overheadID
+            // 
+            this.overheadID.HeaderText = "Overhead S1";
+            this.overheadID.Name = "overheadID";
+            this.overheadID.Visible = false;
+            // 
+            // C4
+            // 
+            this.C4.HeaderText = "t(Constrcut)+t(asks)+t(update)";
+            this.C4.MinimumWidth = 10;
+            this.C4.Name = "C4";
+            // 
+            // OverheadU
+            // 
+            this.OverheadU.HeaderText = "Oerhead S2";
+            this.OverheadU.Name = "OverheadU";
+            this.OverheadU.Visible = false;
             // 
             // Form1
             // 
@@ -570,10 +599,6 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MetaTest;
-        private System.Windows.Forms.DataGridViewTextBoxColumn update;
-        private System.Windows.Forms.DataGridViewTextBoxColumn other;
-        private System.Windows.Forms.DataGridViewTextBoxColumn C4;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
@@ -597,6 +622,13 @@
         private System.Windows.Forms.Label labelInfo;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Label labelUnavailable;
+        private System.Windows.Forms.CheckBox checkBoxOverhead;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MetaTest;
+        private System.Windows.Forms.DataGridViewTextBoxColumn update;
+        private System.Windows.Forms.DataGridViewTextBoxColumn other;
+        private System.Windows.Forms.DataGridViewTextBoxColumn overheadID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn C4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OverheadU;
     }
 }
 
