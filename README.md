@@ -15,6 +15,6 @@ https://github.com/arces-wot/SparqlAddedRemoved/blob/master/TestExplanation.md
 
 https://github.com/arces-wot/SparqlAddedRemoved/blob/master/MTResult/better_ask/README.md
 
-## Test - Estration update data
+## Test - Extraction update data
 
 https://github.com/arces-wot/SparqlAddedRemoved/blob/master/MTResult/README.md
