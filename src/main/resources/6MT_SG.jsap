@@ -40,8 +40,8 @@
 				"UpdateLink" : "INSERT_DATA_1",
 				"RollbackLink" : "DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 0,
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":0
 				},	
@@ -51,8 +51,8 @@
 				"UpdateLink" : "DELETE_WHERE_1",
 				"RollbackLink" : "INSERT_DATA_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 0,
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100
 				},	
@@ -62,8 +62,8 @@
 				"UpdateLink" : "INSERT_DELETE_1",
 				"RollbackLink" : "INSERT_DELETE_2",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 0,
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				},
@@ -73,8 +73,8 @@
 				"UpdateLink" : "DELETE_DATA_1",
 				"RollbackLink" : "INSERT_DATA_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 0,
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				},
@@ -84,8 +84,19 @@
 				"UpdateLink" : "INSERT_DELETE_WHERE_2",
 				"RollbackLink" : "INSERT_DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 6,
-				"Reiteration": 1,
+				"Pot" : 9,
+				"Reiteration": 3,
+				"AskTestEnable": true,
+				"PreparationPercentage":100 
+				},
+			"UpdateModify2_R" : {
+				"PreUpdateLink": "INSERT_DATA_2",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "INSERT_DELETE_WHERE_2_R",
+				"RollbackLink" : "INSERT_DELETE_WHERE_1",
+				"QueryLink": "QUERY_1",
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				}
@@ -223,6 +234,28 @@
 					} WHERE {
 						?s ?p ?o .
 						?s ub:memberOf <http://www.unibo.it>
+					}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_B__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"INSERT_DELETE_WHERE_2_R": {			
+			"sparql":"
+					DELETE {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+							?s ?p ?o
+						} 
+					} INSERT {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+							?tripleBaseInsert
+						} 
+					} WHERE {					
+						?s ub:memberOf <http://www.unibo.it> .
+						?s ?p ?o 
 					}
 				",
 				"forcedBindings": {

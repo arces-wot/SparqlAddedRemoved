@@ -49,14 +49,11 @@ public class JsapMetaSparqlRequest implements IMetaSparqlRequest {
 		for (String key : forceBinds.keySet()) {
 			sparql=insertTripleToSparql(sparql,forceBinds.get(key),key,triples);
 		}
-		reqClone.setSparqlStr(convertVars(sparql));
+		reqClone.setSparqlStr(sparql);
 		return reqClone;
 	}
 	
-	private String convertVars(String sparql) {			
-		IEndPointSpecification eps = EpSpecFactory.getInstance();
-		return sparql.replace("?s","?"+eps.s()).replace("?p","?"+eps.p()).replace("?o","?"+eps.o()).replace("?g","?"+eps.g());
-	}
+
 	
 	//---------------------------------------GETTERS and SETTERS
 	

@@ -17,7 +17,7 @@ public class JSAPProvider {
 	
 
 	public JSAPProvider() throws SEPAPropertiesException, SEPASecurityException {
-		String jsapFileName = "allTests.jsap";
+		String jsapFileName = "current.jsap";
 
 	
 		String path = getClass().getClassLoader().getResource(jsapFileName).getPath();

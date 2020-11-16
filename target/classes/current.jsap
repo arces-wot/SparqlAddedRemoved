@@ -32,7 +32,7 @@
 		}
 	},
 	"extended": {
-		eps: VIRTUOSO,
+		eps: BLAZEGRAPH,
 		"tests": {
 			"UpdateDataInsert" : {
 				"PreUpdateLink": "INSERT_DATA_1",
@@ -40,10 +40,10 @@
 				"UpdateLink" : "INSERT_DATA_1",
 				"RollbackLink" : "DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 4,
-				"Reiteration": 5,
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
-				"PreparationPercentage":100
+				"PreparationPercentage":0
 				},	
 			"UpdateDeleteWhere" : {
 				"PreUpdateLink": "INSERT_DATA_1",
@@ -51,8 +51,8 @@
 				"UpdateLink" : "DELETE_WHERE_1",
 				"RollbackLink" : "INSERT_DATA_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 4,
-				"Reiteration": 5,
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100
 				},	
@@ -62,8 +62,8 @@
 				"UpdateLink" : "INSERT_DELETE_1",
 				"RollbackLink" : "INSERT_DELETE_2",
 				"QueryLink": "QUERY_1",
-				"Pot" : 4,
-				"Reiteration": 5,
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				},
@@ -73,8 +73,8 @@
 				"UpdateLink" : "DELETE_DATA_1",
 				"RollbackLink" : "INSERT_DATA_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 4,
-				"Reiteration": 5,
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				},
@@ -84,8 +84,19 @@
 				"UpdateLink" : "INSERT_DELETE_WHERE_2",
 				"RollbackLink" : "INSERT_DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
-				"Pot" : 4,
-				"Reiteration": 5,
+				"Pot" : 9,
+				"Reiteration": 3,
+				"AskTestEnable": true,
+				"PreparationPercentage":100 
+				},
+			"UpdateModify2_R" : {
+				"PreUpdateLink": "INSERT_DATA_2",
+				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "INSERT_DELETE_WHERE_2_R",
+				"RollbackLink" : "INSERT_DELETE_WHERE_1",
+				"QueryLink": "QUERY_1",
+				"Pot" : 9,
+				"Reiteration": 3,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				}
@@ -190,11 +201,16 @@
 		},
 		"INSERT_DELETE_WHERE_1": {			
 			"sparql":"
-					DELETE {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
-						?s ?p ?o
-					} } INSERT {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
-						?tripleBaseInsert
-					} } WHERE {
+					DELETE { 
+					 	GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+							?s ?p ?o
+						} 
+					} INSERT {
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+							?tripleBaseInsert
+						} 
+					} WHERE {		
+						?s ?p ?o .
 						?s ub:memberOf <http://www.unibo.it>
 					}
 				",
@@ -207,12 +223,39 @@
 		},
 		"INSERT_DELETE_WHERE_2": {			
 			"sparql":"
-					DELETE {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
-						?s ?p ?o
-					} } INSERT {  GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
-						?tripleBaseInsert
-					} } WHERE {
+					DELETE {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+							?s ?p ?o
+						} 
+					} INSERT {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+							?tripleBaseInsert
+						} 
+					} WHERE {
+						?s ?p ?o .
 						?s ub:memberOf <http://www.unibo.it>
+					}
+				",
+				"forcedBindings": {
+					"tripleBaseInsert": {
+						"type": "literal",
+						"value": "<http://www.unibo.it/Student_B__X__> ub:memberOf <http://www.unibo.it>"
+					}
+				}
+		},
+		"INSERT_DELETE_WHERE_2_R": {			
+			"sparql":"
+					DELETE {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0>  {
+							?s ?p ?o
+						} 
+					} INSERT {  
+						GRAPH <http://lumb/for.sepa.test/workspace/defaultgraph0> {
+							?tripleBaseInsert
+						} 
+					} WHERE {					
+						?s ub:memberOf <http://www.unibo.it> .
+						?s ?p ?o 
 					}
 				",
 				"forcedBindings": {

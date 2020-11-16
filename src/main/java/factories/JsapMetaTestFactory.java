@@ -106,13 +106,13 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		}
 
 		for (String  id : jsap.getUpdateIds()) {
-			String sparqlStr = prefixs+(jsap.getSPARQLUpdate(id));
+			String sparqlStr = prefixs+covnertVar(jsap.getSPARQLUpdate(id));
 			SparqlObj sparql= new SparqlObj(sparqlStr) ;
 			EndPoint endPointHost= new EndPoint(_protocol,_host,_port,"/update");	
 			HashMap<String,TripleBase> forceBinds = new HashMap<String,TripleBase>();
 			if(jsap.getUpdateBindings(id).getVariables().size()>0) {
 				for (String bindVar : jsap.getUpdateBindings(id).getVariables()) {	
-					forceBinds.put("?"+bindVar, new TripleBase( jsap.getUpdateBindings(id).getValue(bindVar)));
+					forceBinds.put("?"+bindVar, new TripleBase( covnertVar(jsap.getUpdateBindings(id).getValue(bindVar))));
 				}
 			}
 			requestMap.put(id, new JsapMetaSparqlRequest(new SparqlRequest(sparql,endPointHost),forceBinds));
@@ -124,7 +124,7 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 			HashMap<String,TripleBase> forceBinds = new HashMap<String,TripleBase>();
 			if(jsap.getQueryBindings(id).getVariables().size()>0) {
 				for (String bindVar : jsap.getQueryBindings(id).getVariables()) {
-					forceBinds.put("?"+bindVar, new TripleBase( jsap.getUpdateBindings(id).getValue(bindVar)));
+					forceBinds.put("?"+bindVar, new TripleBase( covnertVar(jsap.getUpdateBindings(id).getValue(bindVar))));
 				}
 			}
 			requestMap.put(id,  new JsapMetaSparqlRequest(new SparqlRequest(sparql,endPointHost),forceBinds));
@@ -132,8 +132,8 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		return requestMap;
 	}
 	
-	
 	private String covnertVar(String sparqlStr, String id) {
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
 		boolean sFound = sparqlStr.contains("?s");
 		boolean pFound = sparqlStr.contains("?p");
 		boolean oFound = sparqlStr.contains("?o");
@@ -141,11 +141,12 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 			System.out.println("Warning on query id["+id+"], JSAP query need have ?s, ?p and ?o variables.");
 			return sparqlStr;
 		}else {
-			IEndPointSpecification eps = EpSpecFactory.getInstance();
 			return sparqlStr.replace("?s", "?"+eps.s()).replace("?p", "?"+eps.p()).replace("?o", "?"+eps.o());
-		}
-		
-		
+		}	
+	}
+	private String covnertVar(String sparqlStr) {
+		IEndPointSpecification eps = EpSpecFactory.getInstance();
+		return sparqlStr.replace(" ?s ", " ?"+eps.s()+" ").replace(" ?p ", " ?"+eps.p()+" ").replace(" ?o ", " ?"+eps.o()+" ");
 	}
 	
 	//-------------------------------------GETTERS and SETTERS
