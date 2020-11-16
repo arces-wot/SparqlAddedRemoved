@@ -5,7 +5,7 @@ Dato che gli sparql1.1 non prevede la possibilita di concatenare più **ASK**,
 Questi test mostrano i risultati di varie query che cercano di ottenere lo stesso risultato di una catena
 di ASK, ma in un unica query.
 
-## RISULTATO MIGLIORE
+## Best result
 
 AskVsBestSelect_5MT_16T.json
 
