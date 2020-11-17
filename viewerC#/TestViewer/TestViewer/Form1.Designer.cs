@@ -38,16 +38,22 @@
             this.labelLoadedJsap = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.checkBoxOverhead = new System.Windows.Forms.CheckBox();
             this.labelUnavailable = new System.Windows.Forms.Label();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.MetaTest = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.update = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.other = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.overheadID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.C4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OverheadU = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.checkBoxOverhead = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -67,12 +73,6 @@
             this.allMetricChart1 = new TestViewer.view.AllMetricChart();
             this.labelInfo = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.MetaTest = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.update = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.other = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.overheadID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.C4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OverheadU = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -153,17 +153,6 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Comparisons";
             this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxOverhead
-            // 
-            this.checkBoxOverhead.AutoSize = true;
-            this.checkBoxOverhead.Location = new System.Drawing.Point(90, 7);
-            this.checkBoxOverhead.Name = "checkBoxOverhead";
-            this.checkBoxOverhead.Size = new System.Drawing.Size(73, 17);
-            this.checkBoxOverhead.TabIndex = 14;
-            this.checkBoxOverhead.Text = "Overhead";
-            this.checkBoxOverhead.UseVisualStyleBackColor = true;
-            this.checkBoxOverhead.CheckedChanged += new System.EventHandler(this.checkBoxOverhead_CheckedChanged);
             // 
             // labelUnavailable
             // 
@@ -255,10 +244,49 @@
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
+            // MetaTest
+            // 
+            this.MetaTest.HeaderText = "MetaTest";
+            this.MetaTest.MinimumWidth = 10;
+            this.MetaTest.Name = "MetaTest";
+            // 
+            // update
+            // 
+            this.update.HeaderText = "t(Update)";
+            this.update.MinimumWidth = 10;
+            this.update.Name = "update";
+            // 
+            // other
+            // 
+            this.other.HeaderText = "t(Constrcut)+t(asks)+t(insert)+t(delete)";
+            this.other.MinimumWidth = 10;
+            this.other.Name = "other";
+            // 
+            // overheadID
+            // 
+            this.overheadID.HeaderText = "Overhead S1";
+            this.overheadID.Name = "overheadID";
+            this.overheadID.Visible = false;
+            // 
+            // C4
+            // 
+            this.C4.HeaderText = "t(Constrcut)+t(asks)+t(update)";
+            this.C4.MinimumWidth = 10;
+            this.C4.Name = "C4";
+            // 
+            // OverheadU
+            // 
+            this.OverheadU.HeaderText = "Oerhead S2";
+            this.OverheadU.Name = "OverheadU";
+            this.OverheadU.Visible = false;
+            // 
             // chart1
             // 
             chartArea1.AxisX.Title = "Triple";
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.AxisX2.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chartArea1.AxisY.Title = "ms";
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -298,6 +326,17 @@
             this.radioButton1.Text = "Median";
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // checkBoxOverhead
+            // 
+            this.checkBoxOverhead.AutoSize = true;
+            this.checkBoxOverhead.Location = new System.Drawing.Point(90, 7);
+            this.checkBoxOverhead.Name = "checkBoxOverhead";
+            this.checkBoxOverhead.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxOverhead.TabIndex = 14;
+            this.checkBoxOverhead.Text = "Overhead";
+            this.checkBoxOverhead.UseVisualStyleBackColor = true;
+            this.checkBoxOverhead.CheckedChanged += new System.EventHandler(this.checkBoxOverhead_CheckedChanged);
             // 
             // tabPage4
             // 
@@ -512,42 +551,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(827, 499);
             this.tabControl1.TabIndex = 2;
-            // 
-            // MetaTest
-            // 
-            this.MetaTest.HeaderText = "MetaTest";
-            this.MetaTest.MinimumWidth = 10;
-            this.MetaTest.Name = "MetaTest";
-            // 
-            // update
-            // 
-            this.update.HeaderText = "t(Update)";
-            this.update.MinimumWidth = 10;
-            this.update.Name = "update";
-            // 
-            // other
-            // 
-            this.other.HeaderText = "t(Constrcut)+t(asks)+t(insert)+t(delete)";
-            this.other.MinimumWidth = 10;
-            this.other.Name = "other";
-            // 
-            // overheadID
-            // 
-            this.overheadID.HeaderText = "Overhead S1";
-            this.overheadID.Name = "overheadID";
-            this.overheadID.Visible = false;
-            // 
-            // C4
-            // 
-            this.C4.HeaderText = "t(Constrcut)+t(asks)+t(update)";
-            this.C4.MinimumWidth = 10;
-            this.C4.Name = "C4";
-            // 
-            // OverheadU
-            // 
-            this.OverheadU.HeaderText = "Oerhead S2";
-            this.OverheadU.Name = "OverheadU";
-            this.OverheadU.Visible = false;
             // 
             // Form1
             // 

@@ -26,3 +26,12 @@ Ogni Meta Test rappresenta un tipo di **UPDATE** diversa:
 - UpdateModify2R
 
 Ogni test è stato effettuato (tramite POST) su due endpoint: Virtuoso e Blazegraph
+
+
+## Immagine riassuntiva test su singolo grafo
+
+<div align="center">
+<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/SG">
+  <img src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/SG.png">
+</a>
+</div>
