@@ -30,6 +30,8 @@ Ogni test è stato effettuato (tramite POST) su due endpoint: Virtuoso e Blazegr
 
 ## Immagine riassuntiva test su singolo grafo
 
+Per l'asse delle X, i campioni sono di 1, 2, 4, 8 ,16, 32, 64, 128, 256, 512 triple.
+
 <div align="center">
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/SG">
   <img src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/SG.png">
