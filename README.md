@@ -9,12 +9,15 @@ Analysis:
 
 ## Viewer explanation
 
-https://github.com/arces-wot/SparqlAddedRemoved/blob/master/TestExplanation.md
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/TestExplanation.md">Viewer explanation</a></div>
+
 
 ## Test - ASK 
 
-https://github.com/arces-wot/SparqlAddedRemoved/blob/master/MTResult/better_ask/README.md
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/MTResult/better_ask/README.md">Test Ask results</a></div>
+
 
 ## Test - Extraction update data
 
-https://github.com/arces-wot/SparqlAddedRemoved/blob/master/MTResult/README.md
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/MTResult/README.md">Test results</a></div>
+
