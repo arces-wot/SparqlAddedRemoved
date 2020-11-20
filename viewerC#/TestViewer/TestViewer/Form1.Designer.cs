@@ -73,6 +73,9 @@
             this.allMetricChart1 = new TestViewer.view.AllMetricChart();
             this.labelInfo = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.numericUpDownMaxY = new System.Windows.Forms.NumericUpDown();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -89,6 +92,8 @@
             this.splitContainer1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxY)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -546,11 +551,48 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Location = new System.Drawing.Point(12, 41);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(827, 499);
             this.tabControl1.TabIndex = 2;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.numericUpDownMaxY);
+            this.tabPage6.Controls.Add(this.label5);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(819, 473);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Settings";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 19);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(253, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Maximum value for the y-axis in graphs (0->unlimited)";
+            // 
+            // numericUpDownMaxY
+            // 
+            this.numericUpDownMaxY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownMaxY.Location = new System.Drawing.Point(279, 17);
+            this.numericUpDownMaxY.Maximum = new decimal(new int[] {
+            40000,
+            0,
+            0,
+            0});
+            this.numericUpDownMaxY.Name = "numericUpDownMaxY";
+            this.numericUpDownMaxY.Size = new System.Drawing.Size(534, 20);
+            this.numericUpDownMaxY.TabIndex = 1;
+            this.numericUpDownMaxY.ValueChanged += new System.EventHandler(this.numericUpDownMaxY_ValueChanged);
             // 
             // Form1
             // 
@@ -584,6 +626,9 @@
             this.splitContainer1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxY)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -632,6 +677,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn overheadID;
         private System.Windows.Forms.DataGridViewTextBoxColumn C4;
         private System.Windows.Forms.DataGridViewTextBoxColumn OverheadU;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.NumericUpDown numericUpDownMaxY;
+        private System.Windows.Forms.Label label5;
     }
 }
 

@@ -1,11 +1,11 @@
 ## Introduction
 Analysis:
 
--SPARQL Update and Query timing
--Triple extraction from update via Contstruct and Ask
--SPARQL Update vs Insert and Delete
--Research for the best strategy for query as ASK
--Endpoint Virtuoso vs Blazegraph
+- SPARQL Update and Query timing
+- Triple extraction from update via Contstruct and Ask
+- SPARQL Update vs Insert and Delete
+- Research for the best strategy for query as ASK
+- Endpoint Virtuoso vs Blazegraph
 
 ## Viewer explanation
 

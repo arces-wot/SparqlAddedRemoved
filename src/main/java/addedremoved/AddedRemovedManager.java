@@ -12,6 +12,7 @@ import org.apache.jena.sparql.syntax.ElementTriplesBlock;
 
 import com.google.gson.JsonObject;
 
+import addedremoved.ask.Asks;
 import addedremoved.ask.AsksAsSelectExistsList;
 import addedremoved.ask.AsksAsSelectGraphAsVar;
 import addedremoved.ask.IAsk;
@@ -179,29 +180,35 @@ public class AddedRemovedManager {
 					}
 				}			
 				tm1.stop();	
+				m.add(tm1);
 				
 	
-//				TestMetric tm3 = new TestMetric("ASKsAsSelectGraphAsVar");				
-//				tm3.start();
+				
+				TestMetric tm5 =new TestMetric("ASKs"); // new TestMetric("ASKsAsSelectExistsList");
+				tm5.start();
+				IAsk asks3= new AsksAsSelectExistsList(Cloner.deepCopy(constructsList), sparql, ep);
+				asks3.filter();
+				tm5.stop();
+				m.add(tm5);
+				
+				
+//				TestMetric tm4 = new TestMetric("ASKsAsSelectGraphAsVar");				
+//				tm4.start();
 //				IAsk asks2= new AsksAsSelectGraphAsVar(Cloner.deepCopy(constructsList), sparql, ep);
-//				constructsList=asks2.filter();
-//				tm3.stop();
-//				
-//				TestMetric tm2 = new TestMetric("ASKsAsSelectExistsList");
+//				asks2.filter();
+//				tm4.stop();
+//				m.add(tm4);
+				
+				
+//				TestMetric tm2 = new TestMetric("ASKs");
 //				tm2.start();
-//				IAsk asks= new AsksAsSelectExistsList(constructsList, sparql, ep);
+//				IAsk asks= new Asks(constructsList, sparql.clone(), ep);
 //				constructsList=asks.filter();
 //				tm2.stop();
+//				m.add(tm2);
 				
-				TestMetric tm2 = new TestMetric("ASKs");
-				tm2.start();
-				IAsk asks= new AsksAsSelectExistsList(constructsList, sparql.clone(), ep);
-				constructsList=asks.filter();
-				tm2.stop();
-				
-				m.add(tm1);
-				m.add(tm2);
-//				m.add(tm3);
+			
+			
 				return constructsList;
 			}
 			

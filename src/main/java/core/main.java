@@ -23,8 +23,8 @@ public class main {
     private static boolean ONTOLOGY = true;
     private static boolean POPOLATE = true;
     private static boolean RUN = false;
-    private static boolean CLEAN = true;//non rimuove l'ontologia
-    private static int graphsNumber = 2;
+    private static boolean CLEAN = false;//non rimuove l'ontologia
+    private static int graphsNumber = 1;
     
 	public static void main (String[] args) {
 

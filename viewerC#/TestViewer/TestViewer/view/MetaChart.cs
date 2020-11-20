@@ -41,6 +41,18 @@ namespace TestViewer.view
             checkedListBox1.ItemCheck += checkedListBox1_Changed;
         }
 
+        public void setMaxY(int max) {
+            if (max > 0)
+            {
+                chart1.ChartAreas[0].AxisY.Maximum = max;
+            }
+            else
+            {
+                chart1.ChartAreas[0].AxisY.Maximum = double.NaN;
+                chart1.ChartAreas[0].RecalculateAxesScale();
+            }
+        }
+
         private void checkedListBox1_Changed(object sender, ItemCheckEventArgs e)
         {
             String pName = (String)checkedListBox1.Items[e.Index];

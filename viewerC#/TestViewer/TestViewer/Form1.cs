@@ -382,5 +382,19 @@ namespace TestViewer
             dataGridView1.Columns["OverheadID"].Visible = checkBoxOverhead.Checked;
             dataGridView1.Columns["OverheadU"].Visible = checkBoxOverhead.Checked;
         }
+
+        private void numericUpDownMaxY_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDownMaxY.Value > 0) {
+                chart1.ChartAreas[0].AxisY.Maximum = (int)numericUpDownMaxY.Value;
+            }
+            else
+            {
+                chart1.ChartAreas[0].AxisY.Maximum = double.NaN;
+                chart1.ChartAreas[0].RecalculateAxesScale();
+            }
+            metaChart1.setMaxY((int)numericUpDownMaxY.Value);
+            allMetricChart1.setMaxY((int)numericUpDownMaxY.Value);
+        }
     }
 }
