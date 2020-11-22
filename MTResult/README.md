@@ -37,3 +37,21 @@ Per l'asse delle X, i campioni sono di 1, 2, 4, 8 ,16, 32, 64, 128, 256, 512 tri
   <img src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/SG.png">
 </a>
 </div>
+
+
+## Immagine riassuntiva test su più grafi
+
+Al crescere del numero dei grafi cresce anche il numero di triple complessivo,
+dato che in ogni test, il numero di triple di ogni grafo varia da 2^0 a 2^6,
+quindi ogni grafo avrà 64 triple nell'ultimo tentativo del test.
+
+
+
+<div align="center">
+<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/MG">
+  <img src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/MG.png">
+</a>
+</div>
+
+
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/MTResult/better_ask/README.md">Per conoscere i dettagli sulla **ASKsAsSelectExistList** clicca qui</a></div>

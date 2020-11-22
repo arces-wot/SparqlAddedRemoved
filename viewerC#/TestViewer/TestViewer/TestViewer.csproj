@@ -72,6 +72,8 @@
     <Compile Include="model\TestResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="utils\SpecialMetric.cs" />
+    <Compile Include="utils\SpecialMetricSum.cs" />
     <Compile Include="view\AllMetricChart.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -8,12 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestViewer.model;
+using TestViewer.utils;
 
 namespace TestViewer.view
 {
     public partial class AllMetricChart : UserControl
     {
         private List<MetaTestGroup> groups;
+        private int lineSize = 2;
+
+        public int LineSize { get => lineSize; set => lineSize = value; }
+
         public AllMetricChart()
         {
             InitializeComponent();
@@ -30,10 +35,44 @@ namespace TestViewer.view
                 && groups.ElementAt(0).List.ElementAt(0).Tests.Count > 0
             )
             {
-                    foreach (Metric m in groups.ElementAt(0).List.ElementAt(0).Tests.ElementAt(0).Phases)
-                    {
-                        comboBox1.Items.Add(m.Name);
+                bool askPresent = false;
+                bool updatePresent = false;
+                bool constructPresent = false;
+                bool insDelPresent = false;
+                foreach (Metric m in groups.ElementAt(0).List.ElementAt(0).Tests.ElementAt(0).Phases)
+                {
+                    comboBox1.Items.Add(m.Name);              
+                    if (m.Name== "Constructs") {
+                        constructPresent = true;
                     }
+                    if (m.Name == "ASKs") {
+                        askPresent = true;
+                    }
+                    if (m.Name == "Execution insert and delete")
+                    {
+                        insDelPresent = true;
+                    }
+                    if (m.Name == "Execution normal update")
+                    {
+                        updatePresent = true;
+                    }
+                }
+                if (askPresent && constructPresent ) {
+                    if (updatePresent) {
+                         List<string> mNames=new List<string>();
+                        mNames.Add("Constructs");
+                        mNames.Add("ASKs");
+                        mNames.Add("Execution normal update");
+                        comboBox1.Items.Add(new SpecialMetricSum("Construct+Ask+Update", mNames));
+                    }
+                    if (insDelPresent) {
+                        List<string> mNames = new List<string>();
+                        mNames.Add("Constructs");
+                        mNames.Add("ASKs");
+                        mNames.Add("Execution insert and delete");
+                        comboBox1.Items.Add(new SpecialMetricSum("Construct+Ask+Insert+Delete", mNames));
+                    }
+                }
             }
             if (comboBox1.Items.Count>=0) {
                 comboBox1.SelectedIndex = 0;
@@ -72,6 +111,10 @@ namespace TestViewer.view
             plot();
 
         }
+
+        public void refreshPlot() {
+            plot();
+        }
         private void plot() {
             if (comboBox1.SelectedItem != null)
             {
@@ -88,14 +131,23 @@ namespace TestViewer.view
                         double avarage = 0;
                         foreach (TestResult tr in mtr.Tests)
                         {
-
-                            Metric m = tr.getMetricByName((String)comboBox1.SelectedItem);
-                            if (m != null)
+                            if (comboBox1.SelectedItem is SpecialMetric)
                             {
-                                temp[index] = m.Value;
+                               double specialMetricValue = ((SpecialMetric)comboBox1.SelectedItem).getValue(tr);                              
+                                temp[index] = specialMetricValue;
                                 index++;
-                                avarage+= m.Value;
-                            }//esle ignore
+                                avarage += specialMetricValue;
+                            }
+                            else {
+                                Metric m = tr.getMetricByName((String)comboBox1.SelectedItem);
+                                if (m != null)
+                                {
+                                    temp[index] = m.Value;
+                                    index++;
+                                    avarage += m.Value;
+                                }//esle ignore
+                            }
+                           
                         }
                         if (radioButton1.Checked)
                         {
@@ -107,7 +159,8 @@ namespace TestViewer.view
                         }
                     }
                     chart1.Series[name].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                    chart1.Series[name].BorderWidth = 2;
+                    chart1.Series[name].BorderWidth = lineSize;
+                    chart1.Series[name].MarkerSize = 10;
                 }
 
             }

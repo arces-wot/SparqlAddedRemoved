@@ -292,19 +292,19 @@ namespace TestViewer
                             {
                                 chart1.Series.Add(upSerie);
                                 chart1.Series[upSerie].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                                chart1.Series[upSerie].BorderWidth = 2;
+                                chart1.Series[upSerie].BorderWidth = trackBar1.Value;
                             }
                             if (checkBox2.Checked)
                             {
                                 chart1.Series.Add(caInsdelSerie);
                                 chart1.Series[caInsdelSerie].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                                chart1.Series[caInsdelSerie].BorderWidth = 2;
+                                chart1.Series[caInsdelSerie].BorderWidth = trackBar1.Value;
                             }
                             if (checkBox3.Checked)
                             {
                                 chart1.Series.Add(caUpSerie);
                                 chart1.Series[caUpSerie].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                                chart1.Series[caUpSerie].BorderWidth = 2;
+                                chart1.Series[caUpSerie].BorderWidth = trackBar1.Value;
                             }
                             foreach (MetaTestResult mtr in mtg.List)
                             {
@@ -395,6 +395,14 @@ namespace TestViewer
             }
             metaChart1.setMaxY((int)numericUpDownMaxY.Value);
             allMetricChart1.setMaxY((int)numericUpDownMaxY.Value);
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            labelLineSIze.Text = "Line size ( "+trackBar1.Value+" px )";
+            plotComparison(sender, e);
+            allMetricChart1.LineSize = trackBar1.Value;
+            metaChart1.LineSize = trackBar1.Value;
         }
     }
 }

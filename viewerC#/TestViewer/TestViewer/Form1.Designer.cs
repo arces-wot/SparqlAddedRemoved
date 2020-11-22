@@ -57,25 +57,27 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.testResultView1 = new TestViewer.view.TestResultView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.singleTestView1 = new TestViewer.view.SingleTestView();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.metaChart1 = new TestViewer.view.MetaChart();
-            this.sparqlView1 = new TestViewer.view.SparqlView();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.allMetricChart1 = new TestViewer.view.AllMetricChart();
             this.labelInfo = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.label5 = new System.Windows.Forms.Label();
             this.numericUpDownMaxY = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.labelLineSIze = new System.Windows.Forms.Label();
+            this.allMetricChart1 = new TestViewer.view.AllMetricChart();
+            this.metaChart1 = new TestViewer.view.MetaChart();
+            this.sparqlView1 = new TestViewer.view.SparqlView();
+            this.singleTestView1 = new TestViewer.view.SingleTestView();
+            this.testResultView1 = new TestViewer.view.TestResultView();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -94,6 +96,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -376,17 +379,6 @@
             this.label4.Text = "Select execution:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // testResultView1
-            // 
-            this.testResultView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.testResultView1.Location = new System.Drawing.Point(6, 36);
-            this.testResultView1.Margin = new System.Windows.Forms.Padding(6);
-            this.testResultView1.Name = "testResultView1";
-            this.testResultView1.Size = new System.Drawing.Size(808, 434);
-            this.testResultView1.TabIndex = 0;
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.singleTestView1);
@@ -399,16 +391,6 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "SingleTest";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // singleTestView1
-            // 
-            this.singleTestView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.singleTestView1.Location = new System.Drawing.Point(9, 51);
-            this.singleTestView1.Name = "singleTestView1";
-            this.singleTestView1.Size = new System.Drawing.Size(804, 416);
-            this.singleTestView1.TabIndex = 2;
             // 
             // comboBox2
             // 
@@ -464,22 +446,6 @@
             this.splitContainer1.SplitterDistance = 359;
             this.splitContainer1.TabIndex = 4;
             // 
-            // metaChart1
-            // 
-            this.metaChart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metaChart1.Location = new System.Drawing.Point(0, 0);
-            this.metaChart1.Name = "metaChart1";
-            this.metaChart1.Size = new System.Drawing.Size(359, 385);
-            this.metaChart1.TabIndex = 3;
-            // 
-            // sparqlView1
-            // 
-            this.sparqlView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sparqlView1.Location = new System.Drawing.Point(0, 0);
-            this.sparqlView1.Name = "sparqlView1";
-            this.sparqlView1.Size = new System.Drawing.Size(441, 385);
-            this.sparqlView1.TabIndex = 0;
-            // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -522,16 +488,6 @@
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // allMetricChart1
-            // 
-            this.allMetricChart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.allMetricChart1.Location = new System.Drawing.Point(12, 64);
-            this.allMetricChart1.Name = "allMetricChart1";
-            this.allMetricChart1.Size = new System.Drawing.Size(797, 403);
-            this.allMetricChart1.TabIndex = 1;
-            // 
             // labelInfo
             // 
             this.labelInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -560,6 +516,8 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.labelLineSIze);
+            this.tabPage6.Controls.Add(this.trackBar1);
             this.tabPage6.Controls.Add(this.numericUpDownMaxY);
             this.tabPage6.Controls.Add(this.label5);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
@@ -569,15 +527,6 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Settings";
             this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 19);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(253, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Maximum value for the y-axis in graphs (0->unlimited)";
             // 
             // numericUpDownMaxY
             // 
@@ -593,6 +542,86 @@
             this.numericUpDownMaxY.Size = new System.Drawing.Size(534, 20);
             this.numericUpDownMaxY.TabIndex = 1;
             this.numericUpDownMaxY.ValueChanged += new System.EventHandler(this.numericUpDownMaxY_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 19);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(253, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Maximum value for the y-axis in graphs (0->unlimited)";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBar1.Location = new System.Drawing.Point(279, 58);
+            this.trackBar1.Maximum = 20;
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(534, 45);
+            this.trackBar1.TabIndex = 2;
+            this.trackBar1.Value = 2;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // labelLineSIze
+            // 
+            this.labelLineSIze.AutoSize = true;
+            this.labelLineSIze.Location = new System.Drawing.Point(20, 73);
+            this.labelLineSIze.Name = "labelLineSIze";
+            this.labelLineSIze.Size = new System.Drawing.Size(80, 13);
+            this.labelLineSIze.TabIndex = 3;
+            this.labelLineSIze.Text = "Line size (px: 2)";
+            // 
+            // allMetricChart1
+            // 
+            this.allMetricChart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.allMetricChart1.LineSize = 2;
+            this.allMetricChart1.Location = new System.Drawing.Point(12, 64);
+            this.allMetricChart1.Name = "allMetricChart1";
+            this.allMetricChart1.Size = new System.Drawing.Size(797, 403);
+            this.allMetricChart1.TabIndex = 1;
+            // 
+            // metaChart1
+            // 
+            this.metaChart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metaChart1.LineSize = 2;
+            this.metaChart1.Location = new System.Drawing.Point(0, 0);
+            this.metaChart1.Name = "metaChart1";
+            this.metaChart1.Size = new System.Drawing.Size(359, 385);
+            this.metaChart1.TabIndex = 3;
+            // 
+            // sparqlView1
+            // 
+            this.sparqlView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sparqlView1.Location = new System.Drawing.Point(0, 0);
+            this.sparqlView1.Name = "sparqlView1";
+            this.sparqlView1.Size = new System.Drawing.Size(441, 385);
+            this.sparqlView1.TabIndex = 0;
+            // 
+            // singleTestView1
+            // 
+            this.singleTestView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.singleTestView1.Location = new System.Drawing.Point(9, 51);
+            this.singleTestView1.Name = "singleTestView1";
+            this.singleTestView1.Size = new System.Drawing.Size(804, 416);
+            this.singleTestView1.TabIndex = 2;
+            // 
+            // testResultView1
+            // 
+            this.testResultView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.testResultView1.Location = new System.Drawing.Point(6, 36);
+            this.testResultView1.Margin = new System.Windows.Forms.Padding(6);
+            this.testResultView1.Name = "testResultView1";
+            this.testResultView1.Size = new System.Drawing.Size(808, 434);
+            this.testResultView1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -629,6 +658,7 @@
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -680,6 +710,8 @@
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.NumericUpDown numericUpDownMaxY;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelLineSIze;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
 

@@ -14,6 +14,11 @@ namespace TestViewer.view
     public partial class MetaChart : UserControl
     {
         private MetaTestGroup group;
+
+
+        private int lineSize = 2;
+        public int LineSize { get => lineSize; set => lineSize = value; }
+
         public MetaChart()
         {
             InitializeComponent();
@@ -52,7 +57,7 @@ namespace TestViewer.view
                 chart1.ChartAreas[0].RecalculateAxesScale();
             }
         }
-
+      
         private void checkedListBox1_Changed(object sender, ItemCheckEventArgs e)
         {
             String pName = (String)checkedListBox1.Items[e.Index];
@@ -77,7 +82,7 @@ namespace TestViewer.view
                     chart1.Series[pName].Points.AddXY(mtr.TripleNumber, avarage / n);
                 }
                 chart1.Series[pName].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                chart1.Series[pName].BorderWidth = 2;
+                chart1.Series[pName].BorderWidth = lineSize;
             }
             else {
                 chart1.Series.Remove(chart1.Series[pName]);

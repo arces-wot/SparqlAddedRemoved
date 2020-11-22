@@ -55,10 +55,11 @@ SELECT ?x {
 ## Info
 
 I risultati completi dei test qui illustrati:
-"\MTResult\better_ask\ultimate_test_blazegraph.json"
-"\MTResult\better_ask\ultimate_test_virtuoso.json"
+- "\MTResult\better_ask\ultimate_test_blazegraph.json"
+- "\MTResult\better_ask\ultimate_test_virtuoso.json"
 
-Per replicare i test usare "\MTResult\better_ask\6MT_SG.jsap"
+Per replicare i test usare:
+- "\MTResult\better_ask\6MT_SG.jsap"
 
 
 
