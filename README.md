@@ -7,17 +7,30 @@ Analysis:
 - Research for the best strategy for query as ASK
 - Endpoint Virtuoso vs Blazegraph
 
+## KB
+In these tests is used the lumb ontology and kb generator
+
+<div><a href="http://swat.cse.lehigh.edu/onto/univ-bench.owl">Ontology</a></div>
+
+<div><a href="http://swat.cse.lehigh.edu/projects/lubm/">Original generator</a></div>
+
+For our test, are genereted more than 100K Triples for each graph.
+
+## Meta-Test Update
+
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/Doc/MTResult/MetaTest.md">Meta test Update sparql</a></div>
+
 ## Viewer explanation
 
-<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/TestExplanation.md">Viewer explanation</a></div>
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/Doc/TestExplanation.md">Viewer explanation</a></div>
 
 
 ## Test - ASK 
 
-<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/MTResult/better_ask/README.md">Test Ask results</a></div>
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/Doc/MTResult/better_ask/README.md">Test Ask results</a></div>
 
 
 ## Test - Extraction update data
 
-<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/MTResult/README.md">Test results</a></div>
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/Doc/MTResult/README.md">Test results</a></div>
 

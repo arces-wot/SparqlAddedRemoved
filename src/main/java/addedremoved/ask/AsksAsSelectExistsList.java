@@ -31,11 +31,11 @@ public class AsksAsSelectExistsList implements IAsk{
 	 * Example:
 	 * 
 			
-		SELECT ?x {
-			VALUES (?g ?s ?p ?o ) {
-				(<prova3><s> <p> <o> )
-				(<prova3><s1> <P> <o1> )
-				(<prova2><s2> <P> <o2> )
+		SELECT ?x ?i {
+			VALUES (?g ?s ?p ?o ?i) {
+				(<prova3><s> <p> <o>  0)
+				(<prova3><s1> <P> <o1> 1)
+				(<prova2><s2> <P> <o2> 2)
 			}
 			BIND(EXISTS{GRAPH ?g {?s ?p ?o}} AS ?x)
 		}

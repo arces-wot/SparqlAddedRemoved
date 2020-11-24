@@ -47,8 +47,7 @@ public class SingleTest implements ITest {
 		
 		public TestResult execute() {
 			ArrayList<TestMetric> phases = new ArrayList<TestMetric> ();
-			SparqlRequest deleteUpdate=null;
-			SparqlRequest insertUpdate=null;
+			SparqlRequest insertDeleteUpdate=null;
 			Inspector inspector = new Inspector();
 			//------------------------------------------------------------Phase 1
 			//-----------Prepare
@@ -80,17 +79,25 @@ public class SingleTest implements ITest {
 				e.printStackTrace();
 			}
 			if(!pahes2Err) {
+				//--------------------DEPRECATE
+//				try {
+//					deleteUpdate =AddedRemovedManager.generateDeleteUpdate(update.clone(),constructsList);				
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					pahes2Err=true;
+//				}
+//				try {
+//					insertUpdate =AddedRemovedManager.generateInsertUpdate(update.clone(),constructsList);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					pahes2Err=true;
+//				}
+				
 				try {
-					deleteUpdate =AddedRemovedManager.generateDeleteUpdate(update.clone(),constructsList);				
+					insertDeleteUpdate=AddedRemovedManager.genereteInsertDeleteUpdate(update.clone(), constructsList);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					pahes2Err=true;
-				}
-				try {
-					insertUpdate =AddedRemovedManager.generateInsertUpdate(update.clone(),constructsList);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					pahes2Err=true;
 				}
@@ -115,24 +122,26 @@ public class SingleTest implements ITest {
 			//------------------------------------------------------------Phase 4
 			//-----------INSERT + DELETE 	
 			TestMetric phase4 = new TestMetric("Execution insert and delete");
-			Response ris_insert =null;
-			Response ris_delete =null;
-			
 			phase4.start();
-			boolean insertDellErro = false;
-			if(deleteUpdate!=null) {
-				ris_delete =deleteUpdate.execute();
-				if(ris_delete.isError()) {
-					insertDellErro=true;
-				}
-			}
-			if(insertUpdate!=null) {
-				ris_insert =insertUpdate.execute();
-				if(ris_insert.isError()) {
-					insertDellErro=true;
-				}
-			}
-			phase4.stop(insertDellErro);
+			//------------------------------------DEPRECATED
+//			Response ris_insert =null;
+//			Response ris_delete =null;
+//			if(deleteUpdate!=null) {
+//				ris_delete =deleteUpdate.execute();
+//				if(ris_delete.isError()) {
+//					insertDellErro=true;
+//				}
+//			}
+//			if(insertUpdate!=null) {
+//				ris_insert =insertUpdate.execute();
+//				if(ris_insert.isError()) {
+//					insertDellErro=true;
+//				}
+//			}
+			
+			if(insertDeleteUpdate!=null) {
+				phase4.stop(insertDeleteUpdate.execute().isError());
+			}		
 			phases.add(phase4);
 			
 			//------------------------------------------------------------Phase 5

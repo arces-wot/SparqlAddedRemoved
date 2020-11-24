@@ -21,14 +21,14 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 	 * Example:
 	 * 
 			SELECT ?g ?s ?p ?o {
+					VALUES (?g ?s ?p ?o) {
+						  (<prova3><s> <p> <o>)
+						  (<prova3><s1>	<P> <o1>)
+						  (<prova2><s2> <P> <o2>)
+					}
 					GRAPH ?g {  
 						?s ?p ?o.
-					}
-				VALUES (?g ?s ?p ?o) {
-					  (<prova3><s> <p> <o>)
-					  (<prova3><s1>	<P> <o1>)
-					  (<prova2><s2> <P> <o2>)
-				}
+					}			
 			}
 
 	 */
@@ -78,14 +78,12 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 		+" ?"+eps.s()
 		+" ?"+eps.p()
 		+" ?"+eps.o()
-		+" { GRAPH ?"+eps.g()
-		+" { ?"+eps.s()
-		+" ?"+eps.p()
-		+" ?"+eps.o()
-		+" }\n VALUES (?"+eps.g()
+		+" {"
+		
+		+" VALUES (?"+eps.g()
 		+" ?"+eps.s()
 		+" ?"+eps.p()
-		+" ?"+eps.o()+") { \n";
+		+" ?"+eps.o()+") { \n";		
 		for (String graph : allTriple.keySet()) {
 			for (Bindings bind : allTriple.get(graph)) {
 				select+="(<"+graph+"><"+bind.getValue(eps.s())+"><"
@@ -93,7 +91,16 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 						+bind.getValue(eps.o())+">)\n";
 			}
 		}
-		select+="}}";
+		select+="}";
+		
+		select+=" GRAPH ?"+eps.g()
+		+" { ?"+eps.s()
+		+" ?"+eps.p()
+		+" ?"+eps.o()
+		+" }";		
+	
+		
+		select+="}";
 		return select;
 	}
 	
@@ -103,14 +110,21 @@ public class AsksAsSelectGraphAsVar implements IAsk{
 				+" ?"+eps.s()
 				+" ?"+eps.p()
 				+" ?"+eps.o()
-				+" { GRAPH ?"+eps.g()
+				+" { "
+				
+				+" VALUES (?"+eps.g()
+				+" ?"+eps.s()
+				+" ?"+eps.p()
+				+" ?"+eps.o()+") { \n" + values+ "}"
+				
+				+" GRAPH ?"+eps.g()
 				+" { ?"+eps.s()
 				+" ?"+eps.p()
 				+" ?"+eps.o()
-				+" }\n VALUES (?"+eps.g()
-				+" ?"+eps.s()
-				+" ?"+eps.p()
-				+" ?"+eps.o()+") { \n" + values+ "}}";
+				+" }"
+						
+				
+				+"}";
 	}
 	
 	protected String incapsulate(String graph,Bindings bind ) {

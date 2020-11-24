@@ -39,6 +39,7 @@ namespace TestViewer.view
                 bool updatePresent = false;
                 bool constructPresent = false;
                 bool insDelPresent = false;
+                bool allPresent = false;
                 foreach (Metric m in groups.ElementAt(0).List.ElementAt(0).Tests.ElementAt(0).Phases)
                 {
                     comboBox1.Items.Add(m.Name);              
@@ -56,10 +57,14 @@ namespace TestViewer.view
                     {
                         updatePresent = true;
                     }
+                    if (m.Name == "Added removed extraction and generation of updates (insert and delete)")
+                    {
+                        allPresent = true;
+                    }
                 }
                 if (askPresent && constructPresent ) {
                     if (updatePresent) {
-                         List<string> mNames=new List<string>();
+                        List<string> mNames=new List<string>();
                         mNames.Add("Constructs");
                         mNames.Add("ASKs");
                         mNames.Add("Execution normal update");
@@ -70,8 +75,17 @@ namespace TestViewer.view
                         mNames.Add("Constructs");
                         mNames.Add("ASKs");
                         mNames.Add("Execution insert and delete");
-                        comboBox1.Items.Add(new SpecialMetricSum("Construct+Ask+Insert+Delete", mNames));
+                        comboBox1.Items.Add(new SpecialMetricSum("Construct+Ask+Insert+Delete", mNames));                       
                     }
+                    if (allPresent)
+                    {
+                        Dictionary<string, Op> mOpDictionary = new Dictionary<string, Op>();
+                        mOpDictionary.Add("Added removed extraction and generation of updates (insert and delete)", Op.ADD);
+                        mOpDictionary.Add("Constructs", Op.SUB);
+                        mOpDictionary.Add("ASKs", Op.SUB);
+                        comboBox1.Items.Add(new SpecialMetricMath("Construction of Insert and Delete", mOpDictionary));
+                    }
+
                 }
             }
             if (comboBox1.Items.Count>=0) {

@@ -19,8 +19,8 @@ import it.unibo.arces.wot.sepa.commons.sparql.RDFTermURI;
 public class UpdateExtractedData {
 
 	//---------------------------------Construct data
-    private String deleteConstruct;
-    private String insertConstruct;
+    private String deleteConstruct=null;
+    private String insertConstruct=null;
     private boolean skipConstruct=false;
     
     //---------------------------------ASK data
@@ -254,4 +254,6 @@ public class UpdateExtractedData {
     	return new UpdateExtractedData(deleteConstruct,  insertConstruct,  skipConstruct,
     			new BindingsResults(added.toJson()),new BindingsResults(removed.toJson()) , addedGraph,  removedGraph) ;
     }
+    
+   
 }
