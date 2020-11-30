@@ -16,13 +16,14 @@ In these tests is used the lumb ontology and kb generator
 
 For our test, are genereted more than 100K Triples for each graph.
 
-## Meta-Test Update
+## Meta-Test and Viewer explanation
 
-<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/Doc/MTResult/MetaTest.md">Meta test Update sparql</a></div>
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/Doc/Explanations.md">Viewer and Meta-Test</a></div>
 
-## Viewer explanation
 
-<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/Doc/TestExplanation.md">Viewer explanation</a></div>
+## Meta-Test Updates
+
+<div><a href="https://github.com/arces-wot/SparqlAddedRemoved/blob/master/Doc/MTResult/MetaTestUpdate.md">Meta-Test SPARQL Updates</a></div>
 
 
 ## Test - ASK 
