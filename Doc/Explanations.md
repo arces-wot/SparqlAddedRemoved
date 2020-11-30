@@ -38,11 +38,10 @@ Phase1) Preparation
 
 Phase2)Added removed triples extraction and generation of **Insert Delete Update**
 	Extraction, build, and execution of the Construct from the Update of the test and Ask from the Construct result.
-	Phase2.1) Construct  
-		Execution of the **Construct** query.
-  
-	Phase2.2) ASKs
-		Execution of the **Ask** query.
+Phase2.1) Construct  
+	Execution of the **Construct** query.  
+Phase2.2) ASKs
+	Execution of the **Ask** query.
   
 Phase3) Pre-Query
 	Relative test **Query** execution, to get the kb state before the update or the analogous insert-delete.
@@ -112,7 +111,7 @@ In this tab it's possible to plot a graph representing the median or the average
 
 <div align="center">
 	<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img1">
-	  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img1.png">
+	  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/Doc/Doc/img/img1.png">
 	</a>
 </div>
 
@@ -125,7 +124,7 @@ it is possible to plot a graph of selected phases of the **Meta-Test** (average 
  
 <div align="center">
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img2">
-  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img2.png">
+  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/Doc/img/img2.png">
 </a>  
 </div>
 
@@ -134,7 +133,7 @@ Here you can select a **Single-Test** result, which is referred to selected **Me
 
 <div align="center">
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img3">
-  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img3.png">
+  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/Doc/img/img3.png">
 </a>
 </div>
 
@@ -150,6 +149,6 @@ This tab allows to study the time metrics of the more important phases, for comp
 
 <div align="center">
 <a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img4">
-  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/img/img4.png">
+  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/Doc/img/img4.png">
 </a>
 </div>
