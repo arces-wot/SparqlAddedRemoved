@@ -110,8 +110,8 @@ In this tab it's possible to plot a graph representing the median or the average
 
 
 <div align="center">
-	<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img1">
-	  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/Doc/Doc/img/img1.png">
+	<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/Doc/img/img1.png">
+	  <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/Doc/img/img1.png">
 	</a>
 </div>
 
@@ -123,7 +123,7 @@ it is possible to plot a graph of selected phases of the **Meta-Test** (average 
 
  
 <div align="center">
-<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img2">
+<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/Doc/img/img2.png">
   <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/Doc/img/img2.png">
 </a>  
 </div>
@@ -132,7 +132,7 @@ it is possible to plot a graph of selected phases of the **Meta-Test** (average 
 Here you can select a **Single-Test** result, which is referred to selected **Meta-Test** in the MetaTest Tab, and get an overview of the test.
 
 <div align="center">
-<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img3">
+<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/Doc/img/img3.png">
   <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/Doc/img/img3.png">
 </a>
 </div>
@@ -148,7 +148,7 @@ This tab allows to study the time metrics of the more important phases, for comp
 
 
 <div align="center">
-<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/img/img4">
+<a href="https://github.com/FerrariAndrea/SparqlAddedRemoved/edit/master/Doc/img/img4.png">
   <img width="300px" src="https://raw.githubusercontent.com/FerrariAndrea/SparqlAddedRemoved/master/Doc/img/img4.png">
 </a>
 </div>
