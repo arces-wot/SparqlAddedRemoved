@@ -61,7 +61,6 @@ public class JsapMetaTestFactory implements IMetaTestFactory{
 		_protocol=jsap.getProtocolScheme();
 		_ontology=jsap.getNamespaces().get("ub");
 		_graph=jsap.getNamespaces().get("test");
-		
 		EpSpecFactory.setInstance(jsap.getExtendedData().get("eps").toString());
 		
 		

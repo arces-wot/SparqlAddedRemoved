@@ -55,8 +55,12 @@ public class ConstructGenerator {
 	
 	public HashMap<String,String> getConstructsWithGraphs(String where) {
 		HashMap<String,String> constructs = new HashMap<String,String>();
+		String whereFixed="{}";
+		if(where!=null && where.trim().length()>0) {
+			whereFixed=where;
+		}
 		for (String graph : allTriple.keySet()) {
-			constructs.put(graph,getConstruct(graph,allTriple.get(graph),where));
+			constructs.put(graph,getConstruct(graph,allTriple.get(graph),whereFixed));
 		}
 		return constructs;
 	}

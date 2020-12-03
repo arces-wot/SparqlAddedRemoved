@@ -266,30 +266,30 @@ public class AddedRemovedManager {
 				
 	
 				
-				TestMetric tm4 = new TestMetric("ASKsAsSelectGraphAsVar");				
-				tm4.start();
-				IAsk asks2= new AsksAsSelectGraphAsVar(Cloner.deepCopy(constructsList), sparql, ep);
-				asks2.filter();
-				tm4.stop();
-				m.add(tm4);
+//				TestMetric tm4 = new TestMetric("ASKsAsSelectGraphAsVar");				
+//				tm4.start();
+//				IAsk asks2= new AsksAsSelectGraphAsVar(Cloner.deepCopy(constructsList), sparql, ep);
+//				asks2.filter();
+//				tm4.stop();
+//				m.add(tm4);
 				
 				
-				TestMetric tm5 = new TestMetric("ASKsAsSelectExistsList");//new TestMetric("ASKs"); 
+				TestMetric tm5 = new TestMetric("ASKs"); //new TestMetric("ASKsAsSelectExistsList");
 				tm5.start();
-				IAsk asks3= new AsksAsSelectExistsList(Cloner.deepCopy(constructsList), sparql, ep);
+				IAsk asks3= new AsksAsSelectExistsList(constructsList, sparql, ep);
 				asks3.filter();
 				tm5.stop();
 				m.add(tm5);
 				
 				
 								
-				
-				TestMetric tm2 = new TestMetric("ASKs");
-				tm2.start();
-				IAsk asks= new Asks(constructsList, sparql.clone(), ep);
-				constructsList=asks.filter();
-				tm2.stop();
-				m.add(tm2);
+//				
+//				TestMetric tm2 = new TestMetric("ASKs");
+//				tm2.start();
+//				IAsk asks= new Asks(constructsList, sparql.clone(), ep);
+//				constructsList=asks.filter();
+//				tm2.stop();
+//				m.add(tm2);
 				
 			
 			

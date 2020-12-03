@@ -1,0 +1,120 @@
+{
+	"host": "localhost",
+	"oauth": {
+		"enable": false
+	},
+	"sparql11protocol": {
+		"protocol": "http",
+		"port": 8000,
+		"query": {
+			"path": "/query",
+			"method": "POST",
+			"format": "JSON"
+		},
+		"update": {
+			"path": "/update",
+			"method": "POST",
+			"format": "JSON"
+		}
+	},
+	"sparql11seprotocol": {
+		"protocol": "ws",
+		"reconnect" : true,
+		"availableProtocols": {
+			"ws": {
+				"port": 9000,
+				"path": "/subscribe"
+			},
+			"wss": {
+				"port": 9443,
+				"path": "/secure/subscribe"
+			}
+		}
+	},
+	"extended": {
+		eps: "VIRTUOSO",
+		"tests": {
+			"ChatTest" : {
+				"PreUpdateLink": "REGISTER_USERS",
+				"PreUpdateRollbackLink" : "UNREGISTER_USERS",
+				"UpdateLink" : "SEND",
+				"RollbackLink" : "REMOVE",
+				"QueryLink": "SENT",
+				"Pot" : 1,
+				"Reiteration": 1,
+				"AskTestEnable": false,
+				"PreparationPercentage":100
+				}
+		}
+	},
+	"graphs": {
+	},
+	"namespaces": {
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"ub": "http://swat.cse.lehigh.edu/onto/univ-bench.owl#",
+		"schema": "http://schema.org/",
+		"chat": "http://wot.arces.unibo.it/chat#"
+	},
+	"updates": {
+		"SEND": {			
+			"sparql":"
+				WITH <http://wot.arces.unibo.it/chat/> INSERT {
+						?message rdf:type schema:Message ;
+						schema:text \"CIAO\";
+						schema:sender <sender.unibo.it> ;
+						schema:toRecipient <recipient.unibo.it>;
+						schema:dateSent ?time
+					} WHERE    {
+						BIND(IRI(CONCAT(CONCAT(\"http://wot.arces.unibo.it/chat/\",\"/message_\"),STRUUID())) AS ?message) .
+						BIND(STR(now()) AS ?time) .
+						GRAPH <http://wot.arces.unibo.it/chat> {
+							<sender.unibo.it> rdf:type schema:Person .
+							<receiver.unibo.it> rdf:type schema:Person 
+						}
+					}	
+				"
+		},
+		"REMOVE": {			
+			"sparql":"
+				WITH <http://wot.arces.unibo.it/chat/> DELETE {
+						?message ?p ?o 
+					} WHERE    {
+						?message rdf:type schema:Message ;
+						?p ?o.
+					}	
+				"
+		},
+		"REGISTER_USERS": {			
+			"sparql":"
+				WITH <http://wot.arces.unibo.it/chat/> INSERT {
+						<sender.unibo.it> rdf:type schema:Person .
+						<receiver.unibo.it> rdf:type schema:Person 
+					} 	
+				"
+		},
+		"UNREGISTER_USERS": {			
+			"sparql":"
+				WITH <http://wot.arces.unibo.it/chat/> DELETE {
+						?user rdf:type schema:Person
+					} WHERE    {
+						?user rdf:type schema:Person;
+						?p ?o.
+					}	
+				"
+		}
+	},
+	"queries": {
+		"SENT": {
+			"sparql": "
+					SELECT ?recipient ?message ?time FROM
+					<http://wot.arces.unibo.it/chat/> WHERE
+					{
+						?message schema:sender <sender.unibo.it>;
+						schema:toRecipient ?recipient;
+						schema:dateReceived ?time;
+						rdf:type schema:Message
+					}	
+					"
+			}
+		}
+	}

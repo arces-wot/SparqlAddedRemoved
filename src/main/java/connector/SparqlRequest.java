@@ -1,4 +1,5 @@
 package connector;
+import it.unibo.arces.wot.sepa.commons.exceptions.SEPASecurityException;
 import it.unibo.arces.wot.sepa.commons.protocol.SPARQL11Properties.HTTPMethod;
 
 import java.util.Set;
@@ -13,7 +14,7 @@ import model.SparqlObj;
 
 public class SparqlRequest implements ISparqlRequest{
 
-	private SPARQL11Protocol client;
+	private SPARQL11Protocol client=null;
 	private SparqlObj sparql;
 	private EndPoint endPointHost;
 	private int timeOut =60000;
@@ -22,7 +23,12 @@ public class SparqlRequest implements ISparqlRequest{
 		super();
 		this.sparql = sparql;
 		this.endPointHost =endPointHost;
-		client = new SPARQL11Protocol();//client security manager not implemented yes (as argument)
+		try {
+			client = new SPARQL11Protocol();
+		} catch (SEPASecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//client security manager not implemented yes (as argument)
 	}
 
 	public SparqlObj getSparql() {

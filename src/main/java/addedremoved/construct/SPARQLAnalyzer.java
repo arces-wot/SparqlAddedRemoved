@@ -137,7 +137,7 @@ public class SPARQLAnalyzer {
 
 			if (updateModify.hasInsertClause() && !updateModify.getInsertAcc().getQuads().isEmpty()) {
 				ConstructGenerator cg = new ConstructGenerator(updateModify.getInsertAcc().getQuads());	
-				insertStrings=cg.getConstructsWithGraphs("{}");		
+				insertStrings=cg.getConstructsWithGraphs(updateModify.getWherePattern().toString());		
 			}
 			
 			if(insertStrings!=null && deleteStrings!=null) {
