@@ -1,6 +1,9 @@
-package addedremoved.epspec;
+package it.unibo.arces.wot.sepa.engine.scheduling.updateprocessing.epspec;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
+import com.google.gson.JsonParser;
 
 public class EpSpecFactory {
 
@@ -41,8 +44,24 @@ public class EpSpecFactory {
 		String fixed = eps.trim().toUpperCase().replace("\"", "");
 		if(fixed.compareTo(EndPointSpec.BLAZEGRAPH.toString())==0) {
 			instance = new BlazegraphSpecification();
-		}else{// default--> (eps==EndPointSpec.VIRTUOSO) {
+		}else if(fixed.compareTo(EndPointSpec.VIRTUOSO.toString())==0){
 			instance = new VirtuosoSpecification();
+		}else {
+			//default + warning
+			instance = new VirtuosoSpecification();
+			System.out.println("Warning: end point name not found for "+ eps+ ", EpSpecification setted as defualt (VIRTUOSO).");
 		}
-}
+	}
+	
+	public static void setInstanceFromFile(String endpointJpar)  {
+		String name = "VIRTUOSO";
+		try {
+			FileReader in = new FileReader(endpointJpar);
+			name= new JsonParser().parse(in).getAsJsonObject().get("endpointname").getAsString();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		setInstance(name);
+	}
 }
