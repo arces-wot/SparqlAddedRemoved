@@ -12,6 +12,7 @@ import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.syntax.ElementGroup;
 import org.apache.jena.sparql.syntax.ElementTriplesBlock;
 
+import addedremoved.TripleConverter;
 import addedremoved.UpdateExtractedData;
 import addedremoved.epspec.EpSpecFactory;
 import addedremoved.epspec.IEndPointSpecification;
@@ -49,14 +50,14 @@ public class AsksAsSelectExistsList implements IAsk{
 	private SparqlObj sparql;
 	private EndPoint endPoint;
 	
-	public AsksAsSelectExistsList(ArrayList<UpdateExtractedData> ueds, SparqlObj sparql, EndPoint endPoint) {
+	public AsksAsSelectExistsList(ArrayList<UpdateExtractedData> ueds, SparqlObj sparql, EndPoint endPoint) throws SEPABindingsException {
 		this.ueds=ueds;
 		this.sparql=sparql;
 		this.endPoint=endPoint;
 		this.init();
 	}
 	
-	protected void init() {
+	protected void init() throws SEPABindingsException {
 		int orderIndex = 0;
 		tripleList= new HashMap<Integer,BindingsWrapper>();	
 		removed= new HashMap<String,BindingsResults>();
@@ -131,11 +132,12 @@ public class AsksAsSelectExistsList implements IAsk{
 			+ "?"+eps.o()+"}} AS ?x)}";
 	}
 	
-	protected String incapsulate(String graph,Bindings bind,int index ) {
-		IEndPointSpecification eps = EpSpecFactory.getInstance();
-		return "(<"+graph+"><"+bind.getValue(eps.s())
-				+"><"+bind.getValue(eps.p())
-				+"><"+bind.getValue(eps.o())+"> "+index+")\n";
+	protected String incapsulate(String graph,Bindings bind,int index ) throws SEPABindingsException {
+		String t = TripleConverter.tripleToString(bind);
+		if(t==null) {
+			throw new SEPABindingsException("Not valid bind to incapsulate.");
+		}
+		return "(<"+graph+">"+t+" "+index+")\n";
 	}
 	
 

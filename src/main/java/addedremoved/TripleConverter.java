@@ -31,15 +31,15 @@ public class TripleConverter {
 	public static String tripleToString(Bindings triple) throws SEPABindingsException {
 		IEndPointSpecification eps = EpSpecFactory.getInstance();
 		if(triple.getVariables().contains(eps.s()) && triple.getVariables().contains(eps.p())  && triple.getVariables().contains(eps.o()) ) {
-			String s =triple.isURI(eps.s())? "<"+triple.getValue(eps.s())+">": "\""+triple.getValue(eps.s())+"\"";
+			String s =triple.isURI(eps.s())? "<"+triple.getValue(eps.s())+">": "\""+triple.getValue(eps.s())+"\"";			
 			String p =triple.isURI(eps.p())? "<"+triple.getValue(eps.p())+">": "\""+triple.getValue(eps.p())+"\"";
 			String o =triple.isURI(eps.o())? "<"+triple.getValue(eps.o())+">": "\""+triple.getValue(eps.o())+"\"";
-			return s+ " "+ p + " " + o+ " .";
+			return s+ " "+ p + " " + o;
 		}else {
 			return null;
-		}
-		
+		}		
 	} 
+
 	
 	public static Triple bindingToTriple(Bindings bindings) throws SEPABindingsException{
 		IEndPointSpecification eps = EpSpecFactory.getInstance();

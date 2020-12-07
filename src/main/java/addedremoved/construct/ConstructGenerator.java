@@ -24,6 +24,25 @@ public class ConstructGenerator {
 		}		
 	}
 	
+	public ConstructGenerator(List<Quad> quadList, String withGraph) {
+		if(withGraph==null) {
+			for(Quad q :quadList) {
+				this.add(q.getGraph().getURI(),q.asTriple());
+			}
+		}else {
+			for(Quad q :quadList) {
+				//la clausola WITH vince solo sul default graph, ma non sulla clausola GRAPH
+				if(q.getGraph().getURI().compareTo(Quad.defaultGraphNodeGenerated.getURI())==0) {
+					this.add(withGraph,q.asTriple());
+				}else {
+					this.add(q.getGraph().getURI(),q.asTriple());
+				}
+				
+			}
+		}
+		
+	}
+	
 	public void add(String graph,Triple t) {
 		if(allTriple.containsKey(graph)) {
 			allTriple.get(graph).add(t);

@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import addedremoved.UpdateExtractedData;
 import addedremoved.epspec.EpSpecFactory;
 import addedremoved.epspec.IEndPointSpecification;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -130,15 +129,18 @@ public class SPARQLAnalyzer {
 			HashMap<String,String> insertStrings=null;
 			HashMap<String,String> deleteStrings=null;
 			
+//			updateModify.getUsingNamed()
+//			updateModify.getUsing()
 			if (updateModify.hasDeleteClause() && !updateModify.getDeleteAcc().getQuads().isEmpty()) {				
-				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads());				
+				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads(),updateModify.getWithIRI().getURI());				
 				deleteStrings=cg.getConstructsWithGraphs(updateModify.getWherePattern().toString());				
 			}
 
 			if (updateModify.hasInsertClause() && !updateModify.getInsertAcc().getQuads().isEmpty()) {
-				ConstructGenerator cg = new ConstructGenerator(updateModify.getInsertAcc().getQuads());	
+				ConstructGenerator cg = new ConstructGenerator(updateModify.getInsertAcc().getQuads(),updateModify.getWithIRI().getURI());	
 				insertStrings=cg.getConstructsWithGraphs(updateModify.getWherePattern().toString());		
 			}
+			
 			
 			if(insertStrings!=null && deleteStrings!=null) {
 				Set<String> graphs = new HashSet<String>(insertStrings.keySet());

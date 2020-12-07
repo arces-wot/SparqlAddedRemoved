@@ -53,7 +53,7 @@ public class AddedRemovedManager {
 							
 							try {
 								//System.out.println("triple-->"+tripleToString(triple)); //ok
-								String temp = TripleConverter.tripleToString(triple);
+								String temp = TripleConverter.tripleToString(triple)+ " .";
 								if(temp!=null) {
 									delete+=temp+"\n";
 								}
@@ -75,7 +75,7 @@ public class AddedRemovedManager {
 							
 							try {
 								//System.out.println("triple-->"+tripleToString(triple)); //ok
-								String temp = TripleConverter.tripleToString(triple);
+								String temp = TripleConverter.tripleToString(triple) + " .";
 								if(temp!=null) {
 									insert+=temp+"\n";
 								}
@@ -135,7 +135,7 @@ public class AddedRemovedManager {
 							
 							try {
 								//System.out.println("triple-->"+tripleToString(triple)); //ok
-								String temp = TripleConverter.tripleToString(triple);
+								String temp = TripleConverter.tripleToString(triple) + " .";
 								if(temp!=null) {
 									insert+=temp+"\n";
 								}
@@ -185,7 +185,7 @@ public class AddedRemovedManager {
 							
 							try {
 								//System.out.println("triple-->"+tripleToString(triple)); //ok
-								String temp = TripleConverter.tripleToString(triple);
+								String temp = TripleConverter.tripleToString(triple)+ " .";
 								if(temp!=null) {
 									delete+=temp+"\n";
 								}
