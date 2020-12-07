@@ -1,6 +1,5 @@
-package it.unibo.arces.wot.sepa.engine.scheduling.updateprocessing.epspec;
+package addedremoved.epspec;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import com.google.gson.JsonParser;
@@ -58,9 +57,15 @@ public class EpSpecFactory {
 		try {
 			FileReader in = new FileReader(endpointJpar);
 			name= new JsonParser().parse(in).getAsJsonObject().get("endpointname").getAsString();
-		} catch (FileNotFoundException e) {
+		}
+//		catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("Warning: impossible to read end point name from "+endpointJpar+", EpSpecification is setted as defualt (VIRTUOSO).");
 		}	
 		setInstance(name);
 	}
