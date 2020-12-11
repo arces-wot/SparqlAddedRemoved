@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.reasoner.TriplePattern;
 import org.apache.jena.shacl.engine.constraint.SparqlComponent;
@@ -24,7 +25,7 @@ public class ConstructGenerator {
 		}		
 	}
 	
-	public ConstructGenerator(List<Quad> quadList, String withGraph) {
+	public ConstructGenerator(List<Quad> quadList, Node withGraph) {
 		if(withGraph==null) {
 			for(Quad q :quadList) {
 				this.add(q.getGraph().getURI(),q.asTriple());
@@ -33,7 +34,7 @@ public class ConstructGenerator {
 			for(Quad q :quadList) {
 				//la clausola WITH vince solo sul default graph, ma non sulla clausola GRAPH
 				if(q.getGraph().getURI().compareTo(Quad.defaultGraphNodeGenerated.getURI())==0) {
-					this.add(withGraph,q.asTriple());
+					this.add(withGraph.getURI(),q.asTriple());
 				}else {
 					this.add(q.getGraph().getURI(),q.asTriple());
 				}

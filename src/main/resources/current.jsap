@@ -63,7 +63,7 @@
 				"RollbackLink" : "INSERT_DELETE_2",
 				"QueryLink": "QUERY_1",
 				"Pot" : 1,
-				"Reiteration": 1,
+				"Reiteration": 0,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				},
@@ -96,7 +96,7 @@
 				"RollbackLink" : "INSERT_DELETE_WHERE_1",
 				"QueryLink": "QUERY_1",
 				"Pot" : 1,
-				"Reiteration": 1,
+				"Reiteration": 0,
 				"AskTestEnable": true,
 				"PreparationPercentage":100 
 				}

@@ -132,12 +132,12 @@ public class SPARQLAnalyzer {
 //			updateModify.getUsingNamed()
 //			updateModify.getUsing()
 			if (updateModify.hasDeleteClause() && !updateModify.getDeleteAcc().getQuads().isEmpty()) {				
-				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads(),updateModify.getWithIRI().getURI());				
+				ConstructGenerator cg = new ConstructGenerator(updateModify.getDeleteAcc().getQuads(),updateModify.getWithIRI());				
 				deleteStrings=cg.getConstructsWithGraphs(updateModify.getWherePattern().toString());				
 			}
 
 			if (updateModify.hasInsertClause() && !updateModify.getInsertAcc().getQuads().isEmpty()) {
-				ConstructGenerator cg = new ConstructGenerator(updateModify.getInsertAcc().getQuads(),updateModify.getWithIRI().getURI());	
+				ConstructGenerator cg = new ConstructGenerator(updateModify.getInsertAcc().getQuads(),updateModify.getWithIRI());	
 				insertStrings=cg.getConstructsWithGraphs(updateModify.getWherePattern().toString());		
 			}
 			
