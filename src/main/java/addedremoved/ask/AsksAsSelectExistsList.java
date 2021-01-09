@@ -2,15 +2,6 @@ package addedremoved.ask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import org.apache.jena.graph.Triple;
-import org.apache.jena.query.Query;
-import org.apache.jena.reasoner.TriplePattern;
-import org.apache.jena.shacl.engine.constraint.SparqlComponent;
-import org.apache.jena.sparql.core.Quad;
-import org.apache.jena.sparql.syntax.ElementGroup;
-import org.apache.jena.sparql.syntax.ElementTriplesBlock;
 
 import addedremoved.TripleConverter;
 import addedremoved.UpdateExtractedData;
@@ -18,13 +9,11 @@ import addedremoved.epspec.EpSpecFactory;
 import addedremoved.epspec.IEndPointSpecification;
 import connector.SparqlRequest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
-import it.unibo.arces.wot.sepa.commons.exceptions.SEPASecurityException;
 import it.unibo.arces.wot.sepa.commons.response.QueryResponse;
 import it.unibo.arces.wot.sepa.commons.sparql.Bindings;
 import it.unibo.arces.wot.sepa.commons.sparql.BindingsResults;
 import model.EndPoint;
 import model.SparqlObj;
-import model.TestMetric;
 
 public class AsksAsSelectExistsList implements IAsk{
 	

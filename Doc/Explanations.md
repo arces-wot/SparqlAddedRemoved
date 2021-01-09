@@ -33,39 +33,28 @@ The **Single-Execution** has other indicators as counters or validation flags.
 It is not mandatory to use our specific Phases.
 Possible phases list:
 
-Phase1) Preparation
-  It consists of an initial Update to prepare the database for the test (UpdatePreparation).
+Phase1) Preparation, it consists of an initial Update to prepare the database for the test (UpdatePreparation).
 
-Phase2)Added removed triples extraction and generation of **Insert Delete Update**
-	Extraction, build, and execution of the Construct from the Update of the test and Ask from the Construct result.
-Phase2.1) Construct  
-	Execution of the **Construct** query.  
-Phase2.2) ASKs
-	Execution of the **Ask** query.
+Phase2)Added removed triples extraction and generation of **Insert Delete Update**, 
+	extraction, build, and execution of the Construct from the Update of the test and Ask from the Construct result.
+Phase2.1) Construct, execution of the **Construct** query.  
+Phase2.2) ASKs,	execution of the **Ask** query.
   
-Phase3) Pre-Query
-	Relative test **Query** execution, to get the kb state before the update or the analogous insert-delete.
+Phase3) Pre-Query, relative test **Query** execution to get the kb state before the update or the analogous insert-delete.
     
-Phase4) Execution insert and delete
-	**Insert Delete Update** execution, with the analogous effect of the **Update**
+Phase4) Execution insert and delete, **Insert Delete Update** execution with the analogous effect of the **Update**
   
-Phase6) Query
-	**Query** execution, to get the **Insert Delete Update** effects.
+Phase6)	**Query** execution, to get the **Insert Delete Update** effects.
   
-Phase7) Rollback
-	**Rollback** execution to undo the  **Insert Delete Update** effects.
+Phase7) **Rollback** execution to undo the  **Insert Delete Update** effects.
   
-Phase8) Update
-	**Update** execution.
+Phase8) **Update** execution.
   
-Phase9) Query
-	**Query** execution, to get the **Update** effects.
+Phase9) **Query** execution to get the **Update** effects.
   
-Phase10) Rollback
-	**Rollback** execution to undo the  **Update** effects.
+Phase10)**Rollback** execution to undo the  **Update** effects.
  
-Phase11) Rollback Preparation
-	RollbackPreparation execution to undo the Preparation effects.
+Phase11) Rollback Preparation execution to undo the Preparation effects.
 
 
 **Single-Execution** indicators list:

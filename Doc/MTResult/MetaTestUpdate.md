@@ -65,21 +65,6 @@ DELETE {
 } WHERE {}
 ```
 
-- UpdateModify
-
-```sparql
-PREFIX ub: <http://swat.cse.lehigh.edu/onto/univ-bench.owl#>
-DELETE { 
-	GRAPH <http://lumb/for.sepa.test/workspace/defaultgraphX>  {
-		<http://www.unibo.it/StudentY> ub:memberOf <http://www.unibo.it>
-	} 
-} INSERT {
-	GRAPH <http://lumb/for.sepa.test/workspace/defaultgraphX> {		
-		<http://www.unibo.it/GraduatedStudentY> ub:memberOf <http://www.unibo.it>
-	}
-} WHERE {}
-```
-
 
 - UpdateModify2
 
