@@ -42,7 +42,6 @@ public class AsksAsSelectFilter implements IAsk{
 		this.ueds=ueds;
 		this.sparql=sparql;
 		this.endPoint=endPoint;
-		this.init();
 	}
 
 	protected void init() {
@@ -204,6 +203,7 @@ public class AsksAsSelectFilter implements IAsk{
 	}
 	
 	public ArrayList<UpdateExtractedData> filter() throws SEPABindingsException {
+		this.init();
 		HashMap<String,BindingsResults> alredyExistFilter  = this.getReorganizedBindingsForAdded();
 		HashMap<String,BindingsResults> realRemovedEGFilter  = this.getReorganizedBindingsForRemoved();
 		for (UpdateExtractedData constructs : ueds) {

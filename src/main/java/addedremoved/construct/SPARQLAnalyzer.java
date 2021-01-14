@@ -223,6 +223,25 @@ public class SPARQLAnalyzer {
 
 		// TODO: Move
 
+		@Override
+		public void visit(UpdateMove move) {
+			
+			System.out.println("9");
+		}
+		
+		@Override
+		public void visit(UpdateCreate move) {
+			
+			System.out.println("10");	
+		}
+
+		@Override
+		public void visit(UpdateLoad move) {
+			
+			System.out.println("11");
+		}
+
+		
 		public ArrayList<UpdateExtractedData> getResult() {
 			return results;
 		}

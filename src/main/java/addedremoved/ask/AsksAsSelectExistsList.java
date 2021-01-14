@@ -39,11 +39,10 @@ public class AsksAsSelectExistsList implements IAsk{
 	private SparqlObj sparql;
 	private EndPoint endPoint;
 	
-	public AsksAsSelectExistsList(ArrayList<UpdateExtractedData> ueds, SparqlObj sparql, EndPoint endPoint) throws SEPABindingsException {
+	public AsksAsSelectExistsList(ArrayList<UpdateExtractedData> ueds, SparqlObj sparql, EndPoint endPoint) {
 		this.ueds=ueds;
 		this.sparql=sparql;
 		this.endPoint=endPoint;
-		this.init();
 	}
 	
 	protected void init() throws SEPABindingsException {
@@ -83,6 +82,7 @@ public class AsksAsSelectExistsList implements IAsk{
 				}
 			}
 		}
+		System.out.println("Total number of quad to check: "+ orderIndex);
 	}
 	
 	
@@ -141,6 +141,7 @@ public class AsksAsSelectExistsList implements IAsk{
 	
 
 	public ArrayList<UpdateExtractedData> filter() throws SEPABindingsException {
+		init();
 		HashMap<String,BindingsResults> alredyExist_E  = this.getReorganizedBindingsForAdded();
 		HashMap<String,BindingsResults> realRemoved_E = this.getReorganizedBindingsForRemoved();
 		for (UpdateExtractedData constructs : ueds) {

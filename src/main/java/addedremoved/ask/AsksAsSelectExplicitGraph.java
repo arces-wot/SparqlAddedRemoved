@@ -43,7 +43,6 @@ public class AsksAsSelectExplicitGraph implements IAsk{
 		this.ueds=ueds;
 		this.sparql=sparql;
 		this.endPoint=endPoint;
-		this.init();
 	}
 	
 	protected void init() {
@@ -220,6 +219,7 @@ public class AsksAsSelectExplicitGraph implements IAsk{
 	}
 
 	public ArrayList<UpdateExtractedData> filter() throws SEPABindingsException {
+		this.init();
 		HashMap<String,BindingsResults> alredyExistEG  = this.getReorganizedBindingsForAdded();
 		HashMap<String,BindingsResults> realRemovedEG  =  this.getReorganizedBindingsForRemoved();
 		for (UpdateExtractedData constructs : ueds) {

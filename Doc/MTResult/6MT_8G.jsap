@@ -46,10 +46,10 @@
 				"PreparationPercentage":0
 			},
 			"UpdateModify" : {
-				"PreUpdateLink": "INSERT_DATA_1",
+				"PreUpdateLink": "INSERT_DATA_2",
 				"PreUpdateRollbackLink" : "DELETE_WHERE_1",
-				"UpdateLink" : "INSERT_DATA_1",
-				"RollbackLink" : "DELETE_WHERE_1",
+				"UpdateLink" : "INSERT_DELETE_1",
+				"RollbackLink" : "INSERT_DELETE_2",
 				"QueryLink": "QUERY_1",
 				"Pot" : 6,
 				"Reiteration": 3,

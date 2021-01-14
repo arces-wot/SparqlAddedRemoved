@@ -17,6 +17,7 @@ import addedremoved.ask.AsksAsSelectExistsList;
 import addedremoved.ask.AsksAsSelectGraphAsVar;
 import addedremoved.ask.IAsk;
 import addedremoved.construct.SPARQLAnalyzer;
+import addedremoved.epspec.EpSpecFactory;
 import connector.SparqlRequest;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPABindingsException;
 import it.unibo.arces.wot.sepa.commons.exceptions.SEPASecurityException;
@@ -273,15 +274,12 @@ public class AddedRemovedManager {
 //				tm4.stop();
 //				m.add(tm4);
 				
-				
-				TestMetric tm5 = new TestMetric("ASKs"); //new TestMetric("ASKsAsSelectExistsList");
-				tm5.start();
-				IAsk asks3= new AsksAsSelectExistsList(constructsList, sparql, ep);
-				asks3.filter();
-				tm5.stop();
-				m.add(tm5);
-				
-				
+//				TestMetric tm5 = new TestMetric("ASKs"); //new TestMetric("ASKsAsSelectExistsList");
+//				tm5.start();
+//				IAsk asks3= new AsksAsSelectExistsList(constructsList, sparql, ep);
+//				asks3.filter();
+//				tm5.stop();
+//				m.add(tm5);
 								
 //				
 //				TestMetric tm2 = new TestMetric("ASKs");
@@ -291,8 +289,13 @@ public class AddedRemovedManager {
 //				tm2.stop();
 //				m.add(tm2);
 				
-			
-			
+				//dinamico
+				TestMetric tmAsks = new TestMetric("ASKs");
+				tmAsks.start();
+				constructsList=EpSpecFactory.getInstance().getAsk(constructsList, sparql, ep).filter();
+				tmAsks.stop();
+				m.add(tmAsks);
+				
 				return constructsList;
 			}
 			

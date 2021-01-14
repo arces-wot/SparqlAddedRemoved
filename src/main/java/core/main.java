@@ -20,11 +20,11 @@ public class main {
 
     private static String graph=Environment.graph;
     private static String ontology = Environment.ontology;	     
-    private static boolean ONTOLOGY = true;
+    private static boolean ONTOLOGY = false;
     private static boolean POPOLATE = false;
     private static boolean RUN = false;
-    private static boolean CLEAN = false;//non rimuove l'ontologia
-    private static int graphsNumber = 1;
+    private static boolean CLEAN = true;//non rimuove l'ontologia
+    private static int graphsNumber =8;
     
 	public static void main (String[] args) {
 
@@ -155,7 +155,7 @@ public class main {
 	
 	private static void loadOntology() {
 		
-		Ontology.insertOntology();
+		System.out.println("LoadOntology error: "+ Ontology.insertOntology());
 		
 	}
 	

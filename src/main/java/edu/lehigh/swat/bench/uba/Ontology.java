@@ -14,6 +14,7 @@ public class Ontology {
 					"LOAD " +Environment.closeOntology + " INTO GRAPH "+Environment.closeOntology 
 					);
 			EndPoint endPointHost= new EndPoint(Environment.protocol,Environment.host,Environment.port,"/update");
+			
 			return new SparqlRequest(sparql,endPointHost).execute().isError();
 		}
 		
